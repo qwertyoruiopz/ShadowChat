@@ -1,0 +1,309 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EA00940D14143FE90059261C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA00940C14143FE90059261C /* UIKit.framework */; };
+		EA00940F14143FE90059261C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA00940E14143FE90059261C /* Foundation.framework */; };
+		EA00941114143FE90059261C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA00941014143FE90059261C /* CoreGraphics.framework */; };
+		EA00941714143FEA0059261C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EA00941514143FEA0059261C /* InfoPlist.strings */; };
+		EA00941914143FEA0059261C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EA00941814143FEA0059261C /* main.m */; };
+		EA00941D14143FEA0059261C /* ShadowChatAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA00941C14143FEA0059261C /* ShadowChatAppDelegate.m */; };
+		EA00942014143FEA0059261C /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA00941E14143FEA0059261C /* MainWindow.xib */; };
+		EA00942314143FEA0059261C /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA00942214143FEA0059261C /* FirstViewController.m */; };
+		EA00942614143FEB0059261C /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA00942514143FEB0059261C /* SecondViewController.m */; };
+		EA00942914143FEB0059261C /* FirstView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA00942714143FEB0059261C /* FirstView.xib */; };
+		EA00942C14143FEB0059261C /* SecondView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA00942A14143FEB0059261C /* SecondView.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		EA00940814143FE90059261C /* ShadowChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShadowChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA00940C14143FE90059261C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		EA00940E14143FE90059261C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		EA00941014143FE90059261C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		EA00941414143FEA0059261C /* ShadowChat-Info.plist */ = {isa = PBXFileReference; path = "ShadowChat-Info.plist"; sourceTree = "<group>"; };
+		EA00941614143FEA0059261C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		EA00941814143FEA0059261C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		EA00941A14143FEA0059261C /* ShadowChat-Prefix.pch */ = {isa = PBXFileReference; path = "ShadowChat-Prefix.pch"; sourceTree = "<group>"; };
+		EA00941B14143FEA0059261C /* ShadowChatAppDelegate.h */ = {isa = PBXFileReference; path = ShadowChatAppDelegate.h; sourceTree = "<group>"; };
+		EA00941C14143FEA0059261C /* ShadowChatAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShadowChatAppDelegate.m; sourceTree = "<group>"; };
+		EA00941F14143FEA0059261C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		EA00942114143FEA0059261C /* FirstViewController.h */ = {isa = PBXFileReference; path = FirstViewController.h; sourceTree = "<group>"; };
+		EA00942214143FEA0059261C /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		EA00942414143FEA0059261C /* SecondViewController.h */ = {isa = PBXFileReference; path = SecondViewController.h; sourceTree = "<group>"; };
+		EA00942514143FEB0059261C /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		EA00942814143FEB0059261C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FirstView.xib; sourceTree = "<group>"; };
+		EA00942B14143FEB0059261C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SecondView.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EA00940514143FE90059261C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA00940D14143FE90059261C /* UIKit.framework in Frameworks */,
+				EA00940F14143FE90059261C /* Foundation.framework in Frameworks */,
+				EA00941114143FE90059261C /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EA0093FD14143FE90059261C = {
+			isa = PBXGroup;
+			children = (
+				EA00941214143FE90059261C /* ShadowChat */,
+				EA00940B14143FE90059261C /* Frameworks */,
+				EA00940914143FE90059261C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EA00940914143FE90059261C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EA00940814143FE90059261C /* ShadowChat.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EA00940B14143FE90059261C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EA00940C14143FE90059261C /* UIKit.framework */,
+				EA00940E14143FE90059261C /* Foundation.framework */,
+				EA00941014143FE90059261C /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EA00941214143FE90059261C /* ShadowChat */ = {
+			isa = PBXGroup;
+			children = (
+				EA00941B14143FEA0059261C /* ShadowChatAppDelegate.h */,
+				EA00941C14143FEA0059261C /* ShadowChatAppDelegate.m */,
+				EA00941E14143FEA0059261C /* MainWindow.xib */,
+				EA00942114143FEA0059261C /* FirstViewController.h */,
+				EA00942214143FEA0059261C /* FirstViewController.m */,
+				EA00942414143FEA0059261C /* SecondViewController.h */,
+				EA00942514143FEB0059261C /* SecondViewController.m */,
+				EA00942714143FEB0059261C /* FirstView.xib */,
+				EA00942A14143FEB0059261C /* SecondView.xib */,
+				EA00941314143FEA0059261C /* Supporting Files */,
+			);
+			path = ShadowChat;
+			sourceTree = "<group>";
+		};
+		EA00941314143FEA0059261C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EA00941414143FEA0059261C /* ShadowChat-Info.plist */,
+				EA00941514143FEA0059261C /* InfoPlist.strings */,
+				EA00941814143FEA0059261C /* main.m */,
+				EA00941A14143FEA0059261C /* ShadowChat-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EA00940714143FE90059261C /* ShadowChat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA00942F14143FEB0059261C /* Build configuration list for PBXNativeTarget "ShadowChat" */;
+			buildPhases = (
+				EA00940414143FE90059261C /* Sources */,
+				EA00940514143FE90059261C /* Frameworks */,
+				EA00940614143FE90059261C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShadowChat;
+			productName = ShadowChat;
+			productReference = EA00940814143FE90059261C /* ShadowChat.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EA0093FF14143FE90059261C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = uiop;
+			};
+			buildConfigurationList = EA00940214143FE90059261C /* Build configuration list for PBXProject "ShadowChat" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = EA0093FD14143FE90059261C;
+			productRefGroup = EA00940914143FE90059261C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EA00940714143FE90059261C /* ShadowChat */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EA00940614143FE90059261C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA00941714143FEA0059261C /* InfoPlist.strings in Resources */,
+				EA00942014143FEA0059261C /* MainWindow.xib in Resources */,
+				EA00942914143FEB0059261C /* FirstView.xib in Resources */,
+				EA00942C14143FEB0059261C /* SecondView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EA00940414143FE90059261C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA00941914143FEA0059261C /* main.m in Sources */,
+				EA00941D14143FEA0059261C /* ShadowChatAppDelegate.m in Sources */,
+				EA00942314143FEA0059261C /* FirstViewController.m in Sources */,
+				EA00942614143FEB0059261C /* SecondViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		EA00941514143FEA0059261C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EA00941614143FEA0059261C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		EA00941E14143FEA0059261C /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EA00941F14143FEA0059261C /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		EA00942714143FEB0059261C /* FirstView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EA00942814143FEB0059261C /* en */,
+			);
+			name = FirstView.xib;
+			sourceTree = "<group>";
+		};
+		EA00942A14143FEB0059261C /* SecondView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EA00942B14143FEB0059261C /* en */,
+			);
+			name = SecondView.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		EA00942D14143FEB0059261C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		EA00942E14143FEB0059261C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EA00943014143FEB0059261C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ShadowChat/ShadowChat-Prefix.pch";
+				INFOPLIST_FILE = "ShadowChat/ShadowChat-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		EA00943114143FEB0059261C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ShadowChat/ShadowChat-Prefix.pch";
+				INFOPLIST_FILE = "ShadowChat/ShadowChat-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EA00940214143FE90059261C /* Build configuration list for PBXProject "ShadowChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA00942D14143FEB0059261C /* Debug */,
+				EA00942E14143FEB0059261C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EA00942F14143FEB0059261C /* Build configuration list for PBXNativeTarget "ShadowChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA00943014143FEB0059261C /* Debug */,
+				EA00943114143FEB0059261C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EA0093FF14143FE90059261C /* Project object */;
+}
