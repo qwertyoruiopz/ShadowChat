@@ -209,7 +209,7 @@
                     [cell addSubview: port];
                     [port release];
                 } else if (indexPath.row == 3) {
-                    [cell.textLabel setText: @"SSL"];
+                    [cell.textLabel setText: @"Connect via SSL"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
                     UISwitch* sslSwitch=[[UISwitch alloc] initWithFrame:CGRectZero];
                     sslSwitch.tag = 12350;
