@@ -84,6 +84,7 @@
     }
     if(!commandsWaiting) commandsWaiting=[NSMutableArray new];
     [commandsWaiting addObject:cmd];
+    return YES;
 }
 - (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent
 {

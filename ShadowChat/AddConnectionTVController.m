@@ -176,6 +176,7 @@
                     descr.placeholder = @"Enter a description";
                     descr.returnKeyType = UIReturnKeyNext;
                     descr.tag = 12340;
+                    descr.keyboardAppearance = UIKeyboardAppearanceAlert;
                     [descr setDelegate:self];
                     [cell addSubview: descr];
                     [descr release];
@@ -189,6 +190,7 @@
                     addr.keyboardType = UIKeyboardTypeURL;
                     addr.returnKeyType = UIReturnKeyNext;
                     addr.tag = 12341;
+                    addr.keyboardAppearance = UIKeyboardAppearanceAlert;
                     [addr setDelegate:self];
                     [cell addSubview: addr];
                     [addr release];
@@ -202,6 +204,7 @@
                     port.keyboardType = UIKeyboardTypeNumberPad;
                     port.returnKeyType = UIReturnKeyNext;
                     port.tag = 12342;
+                    port.keyboardAppearance = UIKeyboardAppearanceAlert;
                     [port setDelegate:self];
                     [cell addSubview: port];
                     [port release];
@@ -221,9 +224,14 @@
                     
                     UITextField *user = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
                     user.adjustsFontSizeToFitWidth = YES;
-                    user.placeholder = [[UIDevice currentDevice] name];
+                    @try {
+                        user.placeholder = [[[[UIDevice currentDevice] name] componentsSeparatedByString:@" "] objectAtIndex:0];
+                    }
+                    @catch (NSException *exception) {
+                    }
                     user.returnKeyType = UIReturnKeyNext;
-                    user.tag = 12343;
+                    user.keyboardAppearance = UIKeyboardAppearanceAlert;
+                   user.tag = 12343;
                     [user setDelegate:self];
                     [cell addSubview: user];
                     [user release];
@@ -232,7 +240,12 @@
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
                     UITextField *nick = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
                     nick.adjustsFontSizeToFitWidth = YES;
-                    nick.placeholder = [[UIDevice currentDevice] name];
+                    nick.keyboardAppearance = UIKeyboardAppearanceAlert;
+                    @try {
+                        nick.placeholder = [[[[UIDevice currentDevice] name] componentsSeparatedByString:@" "] objectAtIndex:0];
+                    }
+                    @catch (NSException *exception) {
+                    }
                     nick.returnKeyType = UIReturnKeyNext;
                     nick.tag = 12344;
                     [nick setDelegate:self];
@@ -244,7 +257,12 @@
                     
                     UITextField *rlname = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
                     rlname.adjustsFontSizeToFitWidth = YES;
-                    rlname.placeholder = [[UIDevice currentDevice] name];
+                    rlname.keyboardAppearance = UIKeyboardAppearanceAlert;
+                    @try {
+                        rlname.placeholder = [[[[UIDevice currentDevice] name] componentsSeparatedByString:@" "] objectAtIndex:0];
+                    }
+                    @catch (NSException *exception) {
+                    }
                     rlname.returnKeyType = UIReturnKeyNext;
                     rlname.tag = 12345;
                     [rlname setDelegate:self];
@@ -261,6 +279,7 @@
                     spass.adjustsFontSizeToFitWidth = YES;
                     spass.placeholder = @"";
                     spass.returnKeyType = UIReturnKeyNext;
+                    spass.keyboardAppearance = UIKeyboardAppearanceAlert;
                     spass.secureTextEntry = YES;
                     spass.tag = 12346;
                     [spass setDelegate:self];
@@ -271,6 +290,7 @@
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
                     
                     UITextField *nserv = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
+                    nserv.keyboardAppearance = UIKeyboardAppearanceAlert;
                     nserv.adjustsFontSizeToFitWidth = YES;
                     nserv.placeholder = @"";
                     nserv.returnKeyType = UIReturnKeyDone;
@@ -286,6 +306,23 @@
     }
 
     return cell;
+}
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if ([textField tag] == 12341||[textField tag] == 12344||[textField tag] == 12343) {
+        if ([string isEqualToString:@" "]) {
+            return NO;
+        }
+        if ([textField tag] == 12341) {
+            if (range.length==1&&[[textField text]length]==1) {
+                self.navigationItem.rightBarButtonItem.enabled=NO;
+            } else if (range.length==0&&range.location==0)
+            {
+                self.navigationItem.rightBarButtonItem.enabled=YES;
+            }
+        }
+    }
+    return YES;
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {

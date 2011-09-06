@@ -27,6 +27,7 @@
 		EA1D5D4D1415FE2000114BFF /* minus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1D5D471415FE2000114BFF /* minus@2x.png */; };
 		EA1D5D4E1415FE2000114BFF /* ppl.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1D5D481415FE2000114BFF /* ppl.png */; };
 		EA1D5D4F1415FE2000114BFF /* ppl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1D5D491415FE2000114BFF /* ppl@2x.png */; };
+		EAAD2BA51416C8F700E1D951 /* SHIRCNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAD2BA41416C8F700E1D951 /* SHIRCNetwork.m */; };
 		EAE46C1514159CD8008BBA8D /* SHIRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE46C1414159CD8008BBA8D /* SHIRCChannel.m */; };
 		EAE46C1814159DE4008BBA8D /* SHIRCSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE46C1714159DE4008BBA8D /* SHIRCSocket.m */; };
 		EAE46C1C1415A110008BBA8D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE46C1B1415A110008BBA8D /* MobileCoreServices.framework */; };
@@ -65,6 +66,8 @@
 		EA1D5D471415FE2000114BFF /* minus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "minus@2x.png"; sourceTree = "<group>"; };
 		EA1D5D481415FE2000114BFF /* ppl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ppl.png; sourceTree = "<group>"; };
 		EA1D5D491415FE2000114BFF /* ppl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ppl@2x.png"; sourceTree = "<group>"; };
+		EAAD2BA31416C8F700E1D951 /* SHIRCNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHIRCNetwork.h; sourceTree = "<group>"; };
+		EAAD2BA41416C8F700E1D951 /* SHIRCNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHIRCNetwork.m; sourceTree = "<group>"; };
 		EAE46C1314159CD8008BBA8D /* SHIRCChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHIRCChannel.h; path = ../SHIRCChannel.h; sourceTree = "<group>"; };
 		EAE46C1414159CD8008BBA8D /* SHIRCChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHIRCChannel.m; path = ../SHIRCChannel.m; sourceTree = "<group>"; };
 		EAE46C1614159DE4008BBA8D /* SHIRCSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHIRCSocket.h; path = ../SHIRCSocket.h; sourceTree = "<group>"; };
@@ -97,6 +100,8 @@
 		EA0093FD14143FE90059261C = {
 			isa = PBXGroup;
 			children = (
+				EAAD2BA31416C8F700E1D951 /* SHIRCNetwork.h */,
+				EAAD2BA41416C8F700E1D951 /* SHIRCNetwork.m */,
 				EAE46C1D1415A146008BBA8D /* CFNetwork.framework */,
 				EAE46C1B1415A110008BBA8D /* MobileCoreServices.framework */,
 				EAE46C191415A0C6008BBA8D /* CoreFoundation.framework */,
@@ -254,6 +259,7 @@
 				EAE46C281415D10B008BBA8D /* SHIRCPrivateChat.m in Sources */,
 				1AD9BF96141683EB002E1C6A /* ConnectionsTVController.m in Sources */,
 				1AD9BF9A141684D2002E1C6A /* AddConnectionTVController.m in Sources */,
+				EAAD2BA51416C8F700E1D951 /* SHIRCNetwork.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
