@@ -51,7 +51,7 @@
     AddConnectionTVController *addConnectionVC = [[AddConnectionTVController alloc] initWithStyle:UITableViewStyleGrouped];
     UINavigationController *addConnectionNavController = [[UINavigationController alloc] initWithRootViewController:addConnectionVC];
     [self presentModalViewController:addConnectionNavController animated:YES];
-    //[addConnectionVC release];
+    [addConnectionVC release];
     [addConnectionNavController release];
 }
 
