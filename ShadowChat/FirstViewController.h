@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SCChanPart.h"
 
 @interface FirstViewController : UIViewController
-
+{
+    SCChanPart* callout;
+}
+-(IBAction)lolwat:(id)sender;
 @end

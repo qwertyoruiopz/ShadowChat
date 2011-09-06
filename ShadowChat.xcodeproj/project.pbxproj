@@ -18,6 +18,20 @@
 		EA00942614143FEB0059261C /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA00942514143FEB0059261C /* SecondViewController.m */; };
 		EA00942914143FEB0059261C /* FirstView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA00942714143FEB0059261C /* FirstView.xib */; };
 		EA00942C14143FEB0059261C /* SecondView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA00942A14143FEB0059261C /* SecondView.xib */; };
+		EA0094361415377D0059261C /* SCChanPart.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0094351415377D0059261C /* SCChanPart.m */; };
+		EA1D5D4A1415FE2000114BFF /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1D5D441415FE2000114BFF /* background.png */; };
+		EA1D5D4B1415FE2000114BFF /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1D5D451415FE2000114BFF /* background@2x.png */; };
+		EA1D5D4C1415FE2000114BFF /* minus.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1D5D461415FE2000114BFF /* minus.png */; };
+		EA1D5D4D1415FE2000114BFF /* minus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1D5D471415FE2000114BFF /* minus@2x.png */; };
+		EA1D5D4E1415FE2000114BFF /* ppl.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1D5D481415FE2000114BFF /* ppl.png */; };
+		EA1D5D4F1415FE2000114BFF /* ppl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1D5D491415FE2000114BFF /* ppl@2x.png */; };
+		EAE46C1514159CD8008BBA8D /* SHIRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE46C1414159CD8008BBA8D /* SHIRCChannel.m */; };
+		EAE46C1814159DE4008BBA8D /* SHIRCSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE46C1714159DE4008BBA8D /* SHIRCSocket.m */; };
+		EAE46C1A1415A0C6008BBA8D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE46C191415A0C6008BBA8D /* CoreFoundation.framework */; };
+		EAE46C1C1415A110008BBA8D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE46C1B1415A110008BBA8D /* MobileCoreServices.framework */; };
+		EAE46C1E1415A146008BBA8D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE46C1D1415A146008BBA8D /* CFNetwork.framework */; };
+		EAE46C211415B228008BBA8D /* SHIRCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE46C201415B228008BBA8D /* SHIRCManager.m */; };
+		EAE46C281415D10B008BBA8D /* SHIRCPrivateChat.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE46C271415D10B008BBA8D /* SHIRCPrivateChat.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,19 +39,38 @@
 		EA00940C14143FE90059261C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		EA00940E14143FE90059261C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EA00941014143FE90059261C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		EA00941414143FEA0059261C /* ShadowChat-Info.plist */ = {isa = PBXFileReference; path = "ShadowChat-Info.plist"; sourceTree = "<group>"; };
+		EA00941414143FEA0059261C /* ShadowChat-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ShadowChat-Info.plist"; sourceTree = "<group>"; };
 		EA00941614143FEA0059261C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EA00941814143FEA0059261C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		EA00941A14143FEA0059261C /* ShadowChat-Prefix.pch */ = {isa = PBXFileReference; path = "ShadowChat-Prefix.pch"; sourceTree = "<group>"; };
-		EA00941B14143FEA0059261C /* ShadowChatAppDelegate.h */ = {isa = PBXFileReference; path = ShadowChatAppDelegate.h; sourceTree = "<group>"; };
+		EA00941A14143FEA0059261C /* ShadowChat-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ShadowChat-Prefix.pch"; sourceTree = "<group>"; };
+		EA00941B14143FEA0059261C /* ShadowChatAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShadowChatAppDelegate.h; sourceTree = "<group>"; };
 		EA00941C14143FEA0059261C /* ShadowChatAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShadowChatAppDelegate.m; sourceTree = "<group>"; };
 		EA00941F14143FEA0059261C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
-		EA00942114143FEA0059261C /* FirstViewController.h */ = {isa = PBXFileReference; path = FirstViewController.h; sourceTree = "<group>"; };
+		EA00942114143FEA0059261C /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
 		EA00942214143FEA0059261C /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		EA00942414143FEA0059261C /* SecondViewController.h */ = {isa = PBXFileReference; path = SecondViewController.h; sourceTree = "<group>"; };
+		EA00942414143FEA0059261C /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
 		EA00942514143FEB0059261C /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		EA00942814143FEB0059261C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FirstView.xib; sourceTree = "<group>"; };
 		EA00942B14143FEB0059261C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SecondView.xib; sourceTree = "<group>"; };
+		EA0094341415377D0059261C /* SCChanPart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCChanPart.h; sourceTree = "<group>"; };
+		EA0094351415377D0059261C /* SCChanPart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCChanPart.m; sourceTree = "<group>"; };
+		EA1D5D441415FE2000114BFF /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		EA1D5D451415FE2000114BFF /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
+		EA1D5D461415FE2000114BFF /* minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = minus.png; sourceTree = "<group>"; };
+		EA1D5D471415FE2000114BFF /* minus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "minus@2x.png"; sourceTree = "<group>"; };
+		EA1D5D481415FE2000114BFF /* ppl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ppl.png; sourceTree = "<group>"; };
+		EA1D5D491415FE2000114BFF /* ppl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ppl@2x.png"; sourceTree = "<group>"; };
+		EAE46C1314159CD8008BBA8D /* SHIRCChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHIRCChannel.h; path = ../SHIRCChannel.h; sourceTree = "<group>"; };
+		EAE46C1414159CD8008BBA8D /* SHIRCChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHIRCChannel.m; path = ../SHIRCChannel.m; sourceTree = "<group>"; };
+		EAE46C1614159DE4008BBA8D /* SHIRCSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHIRCSocket.h; path = ../SHIRCSocket.h; sourceTree = "<group>"; };
+		EAE46C1714159DE4008BBA8D /* SHIRCSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHIRCSocket.m; path = ../SHIRCSocket.m; sourceTree = "<group>"; };
+		EAE46C191415A0C6008BBA8D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		EAE46C1B1415A110008BBA8D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		EAE46C1D1415A146008BBA8D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		EAE46C1F1415B228008BBA8D /* SHIRCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHIRCManager.h; path = ../SHIRCManager.h; sourceTree = "<group>"; };
+		EAE46C201415B228008BBA8D /* SHIRCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHIRCManager.m; path = ../SHIRCManager.m; sourceTree = "<group>"; };
+		EAE46C261415D10B008BBA8D /* SHIRCPrivateChat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHIRCPrivateChat.h; path = ../SHIRCPrivateChat.h; sourceTree = "<group>"; };
+		EAE46C271415D10B008BBA8D /* SHIRCPrivateChat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHIRCPrivateChat.m; path = ../SHIRCPrivateChat.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +78,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAE46C1E1415A146008BBA8D /* CFNetwork.framework in Frameworks */,
+				EAE46C1C1415A110008BBA8D /* MobileCoreServices.framework in Frameworks */,
+				EAE46C1A1415A0C6008BBA8D /* CoreFoundation.framework in Frameworks */,
 				EA00940D14143FE90059261C /* UIKit.framework in Frameworks */,
 				EA00940F14143FE90059261C /* Foundation.framework in Frameworks */,
 				EA00941114143FE90059261C /* CoreGraphics.framework in Frameworks */,
@@ -57,6 +93,9 @@
 		EA0093FD14143FE90059261C = {
 			isa = PBXGroup;
 			children = (
+				EAE46C1D1415A146008BBA8D /* CFNetwork.framework */,
+				EAE46C1B1415A110008BBA8D /* MobileCoreServices.framework */,
+				EAE46C191415A0C6008BBA8D /* CoreFoundation.framework */,
 				EA00941214143FE90059261C /* ShadowChat */,
 				EA00940B14143FE90059261C /* Frameworks */,
 				EA00940914143FE90059261C /* Products */,
@@ -89,8 +128,18 @@
 				EA00941E14143FEA0059261C /* MainWindow.xib */,
 				EA00942114143FEA0059261C /* FirstViewController.h */,
 				EA00942214143FEA0059261C /* FirstViewController.m */,
+				EA0094341415377D0059261C /* SCChanPart.h */,
+				EA0094351415377D0059261C /* SCChanPart.m */,
 				EA00942414143FEA0059261C /* SecondViewController.h */,
 				EA00942514143FEB0059261C /* SecondViewController.m */,
+				EAE46C1314159CD8008BBA8D /* SHIRCChannel.h */,
+				EAE46C1414159CD8008BBA8D /* SHIRCChannel.m */,
+				EAE46C261415D10B008BBA8D /* SHIRCPrivateChat.h */,
+				EAE46C271415D10B008BBA8D /* SHIRCPrivateChat.m */,
+				EAE46C1614159DE4008BBA8D /* SHIRCSocket.h */,
+				EAE46C1714159DE4008BBA8D /* SHIRCSocket.m */,
+				EAE46C1F1415B228008BBA8D /* SHIRCManager.h */,
+				EAE46C201415B228008BBA8D /* SHIRCManager.m */,
 				EA00942714143FEB0059261C /* FirstView.xib */,
 				EA00942A14143FEB0059261C /* SecondView.xib */,
 				EA00941314143FEA0059261C /* Supporting Files */,
@@ -101,6 +150,12 @@
 		EA00941314143FEA0059261C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EA1D5D441415FE2000114BFF /* background.png */,
+				EA1D5D451415FE2000114BFF /* background@2x.png */,
+				EA1D5D461415FE2000114BFF /* minus.png */,
+				EA1D5D471415FE2000114BFF /* minus@2x.png */,
+				EA1D5D481415FE2000114BFF /* ppl.png */,
+				EA1D5D491415FE2000114BFF /* ppl@2x.png */,
 				EA00941414143FEA0059261C /* ShadowChat-Info.plist */,
 				EA00941514143FEA0059261C /* InfoPlist.strings */,
 				EA00941814143FEA0059261C /* main.m */,
@@ -163,6 +218,12 @@
 				EA00942014143FEA0059261C /* MainWindow.xib in Resources */,
 				EA00942914143FEB0059261C /* FirstView.xib in Resources */,
 				EA00942C14143FEB0059261C /* SecondView.xib in Resources */,
+				EA1D5D4A1415FE2000114BFF /* background.png in Resources */,
+				EA1D5D4B1415FE2000114BFF /* background@2x.png in Resources */,
+				EA1D5D4C1415FE2000114BFF /* minus.png in Resources */,
+				EA1D5D4D1415FE2000114BFF /* minus@2x.png in Resources */,
+				EA1D5D4E1415FE2000114BFF /* ppl.png in Resources */,
+				EA1D5D4F1415FE2000114BFF /* ppl@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +238,11 @@
 				EA00941D14143FEA0059261C /* ShadowChatAppDelegate.m in Sources */,
 				EA00942314143FEA0059261C /* FirstViewController.m in Sources */,
 				EA00942614143FEB0059261C /* SecondViewController.m in Sources */,
+				EA0094361415377D0059261C /* SCChanPart.m in Sources */,
+				EAE46C1514159CD8008BBA8D /* SHIRCChannel.m in Sources */,
+				EAE46C1814159DE4008BBA8D /* SHIRCSocket.m in Sources */,
+				EAE46C211415B228008BBA8D /* SHIRCManager.m in Sources */,
+				EAE46C281415D10B008BBA8D /* SHIRCPrivateChat.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,6 +368,7 @@
 				EA00943114143FEB0059261C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

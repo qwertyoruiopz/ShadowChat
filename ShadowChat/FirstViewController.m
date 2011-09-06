@@ -7,8 +7,31 @@
 //
 
 #import "FirstViewController.h"
-
+#import "SCChanPart.h"
+#import "SHIRCSocket.h"
+#import "SHIRCChannel.h"
 @implementation FirstViewController
+-(IBAction)lolwat:(id)sender
+{
+    if(!callout)
+    {
+        callout = [[SCChanPart alloc] initWithFrame:CGRectZero];
+        SHIRCSocket* sock=[SHIRCSocket socketWithServer:@"irc.icj.me" andPort:6697 usesSSL:YES]; 
+        [sock connectWithNick:@"woot" andUser:@"lolrly"];
+        [callout setChan:[[SHIRCChannel alloc] initWithSocket:sock andChanName:@"#sc"]];
+        //[callout addTarget:self action:@selector(closeCalloutView:)];
+        [self.view addSubview:callout];
+        [callout setAnchorPoint:CGPointMake(80, 40) boundaryRect:[UIScreen mainScreen].applicationFrame animate:YES];
+        [callout setOpacity:0.8f];
+        [callout release];
+        [sender setTitle:@"Disconnect"];
+    } else
+    {
+        [callout die];
+        [sender setTitle:@"Connect"];
+        callout=nil;
+    }
+}
 
 /*
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
