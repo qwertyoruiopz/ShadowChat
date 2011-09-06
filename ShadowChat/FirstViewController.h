@@ -16,5 +16,4 @@
     SHIRCSocket* sock;
 }
 -(IBAction)lolwat:(id)sender;
-- (IBAction)test:(id)sender;
 @end

@@ -32,10 +32,6 @@
     }
 }
 
-- (IBAction)test:(id)sender {
-    [sock sendCommand:@"PRIVMSG #sc" withArguments:@"muddykipz"];
-}
-
 /*
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad

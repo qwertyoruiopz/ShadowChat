@@ -27,7 +27,6 @@
 }
 - (BOOL)sendMessage:(NSString*)message flavor:(SHMessageFlavor)flavor
 {
-    NSLog(@"MUDDYKIPZ");
     if (![socket didRegister]) return NO;
     NSString* command;
     switch (flavor) {

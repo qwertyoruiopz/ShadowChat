@@ -113,7 +113,6 @@
     [self sendCommand:@"JOIN" withArguments:[chan formattedName] waitUntilRegistered:YES];
     if(!channels) channels=[NSMutableArray new];
     [channels addObject:chan];
-    [chan sendMessage:@"#sc: Mudkipz :D" flavor:SHMessageFlavorNormal];
 }
 - (void)removeChannel:(SHIRCChannel*)chan
 {
