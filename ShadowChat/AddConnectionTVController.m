@@ -42,8 +42,7 @@
     UIBarButtonItem *leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelConnection)];
     self.navigationItem.leftBarButtonItem = leftBarButtonItem;
     
-    [self.tableView setBackgroundColor: [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
-    
+    [self.tableView setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background.png"] ] ];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     
     // Uncomment the following line to preserve selection between presentations.

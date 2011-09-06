@@ -54,8 +54,10 @@
 {
     if(mode_)
     {
-        [[self rightView] retain];
+        savedRect=_title.frame;
+        [roundView retain];
         [self setRightView:nil];
+        [self _layoutSubviews:NO];
         [UIView beginAnimations:@"btnRoto" context:nil];
         [UIView setAnimationDuration:0.3f];
         btn.transform = CGAffineTransformMakeRotation(M_PI/2);
@@ -65,11 +67,13 @@
         CGPoint pt=_title.center;
         pt.y=36;
         _title.center=pt;
-
     }
     else
     {
+        roundView.frame=CGRectMake(0, 0, 80, 30);
         [self setRightView:roundView];
+        [roundView sizeToFit];
+        [self setAccessoryText:[self accessoryText]];
         [roundView release];
         [UIView beginAnimations:@"btnRoto" context:nil];
         [UIView setAnimationDuration:0.3f];
@@ -77,7 +81,9 @@
         [UIView commitAnimations];
         [self setSubtitle:[chan net]];
         [self setTitle:[chan name]];
+        _title.frame=savedRect;
         [self sizeToFit];
+        [self _layoutSubviews:YES];
     }
     mode=mode_;
 }

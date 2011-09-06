@@ -51,6 +51,8 @@
     BOOL mode;
     UIView* roundView;
     id chan;
+    CGRect savedRect;
+    CGRect savedRectTwo;
 }
 -(void)setOpacity:(CGFloat)opacity;
 -(void)setAccessoryText:(NSString*)text;
