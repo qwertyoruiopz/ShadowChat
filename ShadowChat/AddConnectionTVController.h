@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddConnectionTVController : UITableViewController
-
+@interface AddConnectionTVController : UITableViewController <UITextFieldDelegate>
+{
+}
 @end

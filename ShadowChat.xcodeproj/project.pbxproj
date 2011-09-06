@@ -29,7 +29,6 @@
 		EA1D5D4F1415FE2000114BFF /* ppl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1D5D491415FE2000114BFF /* ppl@2x.png */; };
 		EAE46C1514159CD8008BBA8D /* SHIRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE46C1414159CD8008BBA8D /* SHIRCChannel.m */; };
 		EAE46C1814159DE4008BBA8D /* SHIRCSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE46C1714159DE4008BBA8D /* SHIRCSocket.m */; };
-		EAE46C1A1415A0C6008BBA8D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE46C191415A0C6008BBA8D /* CoreFoundation.framework */; };
 		EAE46C1C1415A110008BBA8D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE46C1B1415A110008BBA8D /* MobileCoreServices.framework */; };
 		EAE46C1E1415A146008BBA8D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE46C1D1415A146008BBA8D /* CFNetwork.framework */; };
 		EAE46C211415B228008BBA8D /* SHIRCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE46C201415B228008BBA8D /* SHIRCManager.m */; };
@@ -86,7 +85,6 @@
 			files = (
 				EAE46C1E1415A146008BBA8D /* CFNetwork.framework in Frameworks */,
 				EAE46C1C1415A110008BBA8D /* MobileCoreServices.framework in Frameworks */,
-				EAE46C1A1415A0C6008BBA8D /* CoreFoundation.framework in Frameworks */,
 				EA00940D14143FE90059261C /* UIKit.framework in Frameworks */,
 				EA00940F14143FE90059261C /* Foundation.framework in Frameworks */,
 				EA00941114143FE90059261C /* CoreGraphics.framework in Frameworks */,
@@ -200,6 +198,7 @@
 		EA0093FF14143FE90059261C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0410;
 				ORGANIZATIONNAME = uiop;
 			};
 			buildConfigurationList = EA00940214143FE90059261C /* Build configuration list for PBXProject "ShadowChat" */;
@@ -301,6 +300,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -316,6 +316,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -325,6 +327,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -334,6 +337,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

@@ -56,7 +56,7 @@
         
         CFReadStreamSetProperty((CFReadStreamRef)iStream, kCFStreamPropertySSLSettings, (CFTypeRef)settings);
         CFWriteStreamSetProperty((CFWriteStreamRef)oStream, kCFStreamPropertySSLSettings, (CFTypeRef)settings);
-        
+        [settings release];
     }
     didRegister=NO;
     [self sendCommand:[NSString stringWithFormat:@"USER %@ %@ %@ %@\r\n", user, user, user, user] withArguments:nil];

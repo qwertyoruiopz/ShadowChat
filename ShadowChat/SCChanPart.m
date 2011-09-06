@@ -128,7 +128,9 @@
 {
     [self setTitle:[chan_ name]];
     [self setSubtitle:[chan_ net]];
+    [chan release];
     chan=chan_;
+    [chan_ retain];
 }
 -(void)setTitle:(id)title
 {

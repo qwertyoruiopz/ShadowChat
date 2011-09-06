@@ -43,13 +43,16 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addConnection)];
     self.navigationItem.rightBarButtonItem = rightBarButtonItem;
+    [rightBarButtonItem release];
 }
 
 - (void)addConnection {
     NSLog(@"MUDKIPZ CONNECT! :D");
     AddConnectionTVController *addConnectionVC = [[AddConnectionTVController alloc] initWithStyle:UITableViewStyleGrouped];
-    UINavigationController *addConnectionNavController = [[[UINavigationController alloc] initWithRootViewController:addConnectionVC] autorelease];
+    UINavigationController *addConnectionNavController = [[UINavigationController alloc] initWithRootViewController:addConnectionVC];
     [self presentModalViewController:addConnectionNavController animated:YES];
+    //[addConnectionVC release];
+    [addConnectionNavController release];
 }
 
 - (void)viewDidUnload

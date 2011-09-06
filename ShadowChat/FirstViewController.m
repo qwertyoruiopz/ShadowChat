@@ -17,7 +17,7 @@
         callout = [[SCChanPart alloc] initWithFrame:CGRectZero];
         sock=[SHIRCSocket socketWithServer:@"irc.icj.me" andPort:6697 usesSSL:YES]; 
         [sock connectWithNick:@"woot" andUser:@"lolrly"];
-        [callout setChan:[[SHIRCChannel alloc] initWithSocket:sock andChanName:@"#sc"]];
+        [callout setChan:[[[SHIRCChannel alloc] initWithSocket:sock andChanName:@"#sc"] autorelease]];
         //[callout addTarget:self action:@selector(closeCalloutView:)];
         [self.view addSubview:callout];
         [callout setAnchorPoint:CGPointMake(80, 40) boundaryRect:[UIScreen mainScreen].applicationFrame animate:YES];
