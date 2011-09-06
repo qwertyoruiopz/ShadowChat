@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1AD9BF96141683EB002E1C6A /* ConnectionsTVController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD9BF95141683EA002E1C6A /* ConnectionsTVController.m */; };
+		1AD9BF9A141684D2002E1C6A /* AddConnectionTVController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD9BF99141684D2002E1C6A /* AddConnectionTVController.m */; };
 		EA00940D14143FE90059261C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA00940C14143FE90059261C /* UIKit.framework */; };
 		EA00940F14143FE90059261C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA00940E14143FE90059261C /* Foundation.framework */; };
 		EA00941114143FE90059261C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA00941014143FE90059261C /* CoreGraphics.framework */; };
@@ -35,6 +37,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1AD9BF94141683EA002E1C6A /* ConnectionsTVController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionsTVController.h; sourceTree = "<group>"; };
+		1AD9BF95141683EA002E1C6A /* ConnectionsTVController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionsTVController.m; sourceTree = "<group>"; };
+		1AD9BF98141684D1002E1C6A /* AddConnectionTVController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddConnectionTVController.h; sourceTree = "<group>"; };
+		1AD9BF99141684D2002E1C6A /* AddConnectionTVController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddConnectionTVController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		EA00940814143FE90059261C /* ShadowChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShadowChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA00940C14143FE90059261C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		EA00940E14143FE90059261C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -143,6 +149,10 @@
 				EA00942714143FEB0059261C /* FirstView.xib */,
 				EA00942A14143FEB0059261C /* SecondView.xib */,
 				EA00941314143FEA0059261C /* Supporting Files */,
+				1AD9BF94141683EA002E1C6A /* ConnectionsTVController.h */,
+				1AD9BF95141683EA002E1C6A /* ConnectionsTVController.m */,
+				1AD9BF98141684D1002E1C6A /* AddConnectionTVController.h */,
+				1AD9BF99141684D2002E1C6A /* AddConnectionTVController.m */,
 			);
 			path = ShadowChat;
 			sourceTree = "<group>";
@@ -243,6 +253,8 @@
 				EAE46C1814159DE4008BBA8D /* SHIRCSocket.m in Sources */,
 				EAE46C211415B228008BBA8D /* SHIRCManager.m in Sources */,
 				EAE46C281415D10B008BBA8D /* SHIRCPrivateChat.m in Sources */,
+				1AD9BF96141683EB002E1C6A /* ConnectionsTVController.m in Sources */,
+				1AD9BF9A141684D2002E1C6A /* AddConnectionTVController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

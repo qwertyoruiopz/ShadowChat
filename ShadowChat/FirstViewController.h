@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "SCChanPart.h"
+#import "SHIRCSocket.h"
 
 @interface FirstViewController : UIViewController
 {
     SCChanPart* callout;
+    SHIRCSocket* sock;
 }
 -(IBAction)lolwat:(id)sender;
+- (IBAction)test:(id)sender;
 @end

@@ -10,7 +10,7 @@
 #import "Foundation/NSStream.h"
 #import "SHIRCManager.h"
 @implementation SHIRCSocket
-@synthesize input, output, port, server, usesSSL, didRegister, nick_;
+@synthesize input, output, port, server, usesSSL, didRegister, nick_, channels;
 +(SHIRCSocket*)socketWithServer:(NSString*)srv andPort:(int)prt usesSSL:(BOOL)ssl
 {
     SHIRCSocket* ret=[[[(Class)self alloc]init] autorelease];
@@ -113,6 +113,7 @@
     [self sendCommand:@"JOIN" withArguments:[chan formattedName] waitUntilRegistered:YES];
     if(!channels) channels=[NSMutableArray new];
     [channels addObject:chan];
+    [chan sendMessage:@"#sc: Mudkipz :D" flavor:SHMessageFlavorNormal];
 }
 - (void)removeChannel:(SHIRCChannel*)chan
 {
