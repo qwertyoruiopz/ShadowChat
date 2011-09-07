@@ -35,5 +35,6 @@
                             description:(NSString*)description withUsername:(NSString*)username andNickname:(NSString*)nickname
                             andRealname:(NSString*)realname serverPassword:(NSString*)password nickServPassword:(NSString*)nickserv;
 +(void)saveDefaults;
+-(BOOL)isOpen;
 +(NSArray*)allNetworks;
 @end

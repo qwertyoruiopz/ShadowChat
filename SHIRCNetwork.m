@@ -95,16 +95,20 @@ static NSMutableArray* networks=nil;
         {
             NSArray* stuff=[NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"Networks"]];//  mutableCopy];
             networks = [stuff mutableCopy];
-            [pawl release];
         } else {
             networks = [[NSMutableArray alloc] init];
         }
+        [pawl release];
     }
     return networks;
 }
 -(void)disconnect
 {
     [socket disconnect];
+}
+-(BOOL)isOpen
+{
+    return ([socket status] == SHSocketStausOpen || [socket status] == SHSocketStausConnecting);
 }
 -(SHIRCSocket*)connect
 {
