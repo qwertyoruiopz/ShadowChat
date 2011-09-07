@@ -38,10 +38,26 @@ static SHIRCManager* sharedSHManager;
     [scan scanUpToString:@" " intoString:&command];
     [scan scanUpToString:@"\r\n" intoString:&argument];
     if ([sender isEqualToString:@"PING"]) {
-        [socket sendCommand:@"PONG" withArguments:command];
+        [socket sendCommand:[@"PONG " stringByAppendingString:command] withArguments:nil];
         NSLog(@"Pingie!");
         return;
     }
+    if ([command isEqualToString:@"PRIVMSG"]) {
+        NSArray* arr=[argument componentsSeparatedByString:@" "];
+        if (![arr count]) {
+            goto cont;
+        }
+        if ([[arr objectAtIndex:1] hasPrefix:@":\x01"]&&[[arr objectAtIndex:1] hasSuffix:@"\x01"])
+        {
+            NSLog(@"Got a CTCP request from %@ [%@]", sender, [arr objectAtIndex:1]);
+            NSString* nick=nil;
+            NSString* user=nil;
+            NSString* hostmask=nil;
+            [self parseUsermask:sender nick:&nick user:&user hostmask:&hostmask];
+            [socket sendCommand:[@"NOTICE " stringByAppendingString:nick] withArguments:@"\x01VERSION ShadowChat\x01"];
+        }
+    }
+    cont:
     if ([command isEqualToString:@"433"]) {
         if (!socket.didRegister)
         {
@@ -50,17 +66,13 @@ static SHIRCManager* sharedSHManager;
         }
         NSLog(@"Nick is being used.");
     }
-    else if ([command isEqualToString:@"376"])
+    else if ([command isEqualToString:@"001"])
     {
         socket.didRegister=YES;
-        NSLog(@"Did register (motd command ended)");
+        NSLog(@"Did register");
         
     }
-    NSString* nick=nil;
-    NSString* user=nil;
-    NSString* hostmask=nil;
-    [self parseUsermask:sender nick:&nick user:&user hostmask:&hostmask];
-    NSLog(@"%@ - %@ - %@ - %@ - %@", nick, user, hostmask, command, argument);
+    NSLog(@"%@", msg);
 }
 - (void)parseUsermask:(NSString*)mask nick:(NSString**)nick user:(NSString**)user hostmask:(NSString**)hostmask
 {

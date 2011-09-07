@@ -37,7 +37,9 @@
     if ([oStream streamStatus] == NSStreamStatusNotOpen)
         [oStream open];
     
-
+    if ([self status] == SHSocketStausOpen || [self status] == SHSocketStausConnecting) {
+        return NO;
+    }
     if (usesSSL) {
 		[iStream setProperty:NSStreamSocketSecurityLevelNegotiatedSSL 
                        forKey:NSStreamSocketSecurityLevelKey];
@@ -56,6 +58,7 @@
         [settings release];
     }
     didRegister = NO;
+    status = SHSocketStausConnecting;
     [self sendCommand:[NSString stringWithFormat:@"USER %@ %@ %@ %@\r\n", user, user, user, user] withArguments:nil];
     [self sendCommand:[NSString stringWithFormat:@"NICK %@\r\n", nick] withArguments:nil];
     return YES;
@@ -87,7 +90,6 @@
         [queuedCommands appendFormat:@"%@\r\n", cmd];
         return YES;
     }
-    status = SHSocketStausConnecting;
     if(!commandsWaiting) commandsWaiting=[NSMutableArray new];
     [commandsWaiting addObject:cmd];
     return YES;

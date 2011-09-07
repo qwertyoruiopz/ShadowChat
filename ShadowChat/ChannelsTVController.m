@@ -7,7 +7,7 @@
 //
 
 #import "ChannelsTVController.h"
-
+#import "SHIRCNetwork.h"
 
 @implementation ChannelsTVController
 
@@ -28,6 +28,12 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:[self tableView]];
+    [super dealloc];
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -39,6 +45,11 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [[NSNotificationCenter defaultCenter] addObserver:[self tableView]
+                                             selector:@selector(reloadData) 
+                                                 name:@"ReloadNetworks"
+                                               object:nil];
+
 }
 
 - (void)viewDidUnload
@@ -50,6 +61,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [[self tableView] reloadData];
     [super viewWillAppear:animated];
 }
 
@@ -79,37 +91,24 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 2;
+    return [[SHIRCNetwork allNetworks] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    switch (section) {
-        case 0:
-            return 1;
-            break;
-        case 1:
-            return 2;
-            break;
-        default:
-            break;
-    }
-    return 1;
+
+    return [[[(SHIRCNetwork*)[[SHIRCNetwork allNetworks] objectAtIndex:section] socket] channels] count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    switch (section) {
-        case 0:
-            return @"mudkipz irc";
-            break;
-        case 1:
-            return @"liamnet irc";
-            break;
-        default:
-            return nil;
-            break;
-    }
+    /*
+    for (SHIRCNetwork* networks in [SHIRCNetwork allNetworks]) {
+        if () {
+            <#statements#>
+        }
+    }*/
+    return [[[SHIRCNetwork allNetworks] objectAtIndex:section] descr] ? [[[SHIRCNetwork allNetworks] objectAtIndex:section] descr] : [[[SHIRCNetwork allNetworks] objectAtIndex:section] server];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -120,8 +119,8 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
-    
-    // Configure the cell...
+    cell.textLabel.text=[[[[(SHIRCNetwork*)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.section] socket] channels] objectAtIndex:indexPath.row] formattedName];
+    // Confgure the cell...
     
     return cell;
 }
