@@ -141,7 +141,6 @@
         // Delete the row from the data source
         [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] disconnect];
         [[SHIRCNetwork allNetworks] removeObjectAtIndex:indexPath.row];
-        //[[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] release];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [SHIRCNetwork saveDefaults];
     }   
@@ -173,7 +172,11 @@
 {
     // Navigation logic may go here. Create and push another view controller.
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [[[SHIRCChannel alloc] initWithSocket:[[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] connect] andChanName:@"sc"] release];
+    id sockz = [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] connect];
+    if ( sockz ) {
+        NSLog(@"Wee!!??!");
+        [[[SHIRCChannel alloc] initWithSocket:sockz andChanName:@"sc"] release];
+    }
 }
 
 @end

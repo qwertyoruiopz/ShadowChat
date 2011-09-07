@@ -140,6 +140,8 @@
     [output close];
     [input release];
     [output release];
+    input = nil;
+    output = nil;
 }
 - (void)addChannel:(SHIRCChannel*)chan
 {
@@ -151,7 +153,6 @@
 {
     [self sendCommand:@"PART" withArguments:[chan formattedName] waitUntilRegistered:YES];
     [channels removeObject:chan];
-    [chan release];
 }
 - (void)setDidRegister:(BOOL)didReg
 {
@@ -174,6 +175,11 @@
 }
 - (void)dealloc
 {
+    [self disconnect];
+    NSLog(@"lol wtf");
+    for (id obj in channels) {
+        [obj release];
+    }
     [channels release];
     [input release];
     [output release];

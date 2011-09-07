@@ -34,7 +34,7 @@ typedef enum SHSocketStaus
 @property(retain, readwrite) NSOutputStream* output;
 @property(retain, readwrite) NSString* server;
 @property(retain, readwrite) NSString* nick_;
-@property(retain, readwrite) NSMutableArray* channels;
+@property(assign, readwrite) NSMutableArray* channels;
 @property(assign, readwrite) int port;
 @property(assign, readwrite) BOOL usesSSL;
 @property(assign, readwrite) BOOL didRegister;

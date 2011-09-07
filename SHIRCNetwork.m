@@ -66,7 +66,6 @@ static NSMutableArray* networks=nil;
             serverPassword = [[coder decodeObjectForKey:@"serverPassword"] retain];
         if ([coder containsValueForKey:@"nickServPassword"])
             nickServPassword = [[coder decodeObjectForKey:@"nickServPassword"] retain];
-        NSLog(@"%@", server);
         [poolz release];
     }
     return self;
@@ -82,6 +81,8 @@ static NSMutableArray* networks=nil;
 }
 -(void)dealloc
 {
+    NSLog(@"OMG HAX");
+    [socket disconnect];
     [socket release];
     [super dealloc];
 }

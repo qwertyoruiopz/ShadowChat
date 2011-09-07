@@ -21,7 +21,7 @@ typedef enum SHMessageFlavor
 }
 @property(retain) NSString* net;
 @property(retain) NSString* name;
-@property(retain) SHIRCSocket* socket;
+@property(assign) SHIRCSocket* socket;
 - (id)initWithSocket:(SHIRCSocket*)sock andChanName:(NSString*)chName;
 - (BOOL)sendMessage:(NSString*)message flavor:(SHMessageFlavor)flavor;
 - (NSString*)formattedName;
