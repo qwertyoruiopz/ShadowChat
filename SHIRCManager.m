@@ -18,8 +18,7 @@ static SHIRCManager* sharedSHManager;
         sharedSHManager=[[(Class)self alloc] init];
     return sharedSHManager;
 }
-- (void)dealloc
-{
+- (void)dealloc {
     // [super dealloc];
 }
 - (void)parseMessage:(NSMutableString*)msg fromSocket:(SHIRCSocket*)socket

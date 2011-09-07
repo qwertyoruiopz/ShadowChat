@@ -11,13 +11,11 @@
 #define UIColorFromRGB(rgbValue, alpha_) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:alpha_]
 #define kIRCNETTag -9837254
 @implementation SCChanPart
--(void)die
-{
+- (void)die {
     [super fadeOutWithDuration:1];
     [[chan socket] sendCommand:@"QUIT" withArguments:@"The game"];
 }
--(id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame]))
     {
         UIButton* removeButton=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -37,14 +35,14 @@
         accessoryText.textAlignment=UITextAlignmentCenter;
         accessoryText.shadowOffset=CGSizeMake(0, -1);
         [roundView addSubview:accessoryText];
-        ppl=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ppl.png"]];
-        [roundView addSubview:ppl];
-        [self setAccessoryText:@"12"];
-        [accessoryText release];
-        [ppl release];
-        [roundView release];
-    }
-    return self;
+		ppl = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ppl.png"]];
+		[roundView addSubview:ppl];
+		[self setAccessoryText:@"12"];
+		[accessoryText release];
+		[ppl release];
+		[roundView release];
+	}
+	return self;
 }
 -(NSString*)accessoryText
 {

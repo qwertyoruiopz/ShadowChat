@@ -11,28 +11,26 @@
 #import "SHIRCManager.h"
 @implementation SHIRCSocket
 @synthesize input, output, port, server, usesSSL, didRegister, nick_, channels;
-+(SHIRCSocket*)socketWithServer:(NSString*)srv andPort:(int)prt usesSSL:(BOOL)ssl
-{
-    SHIRCSocket* ret=[[[(Class)self alloc]init] autorelease];
-    ret.server=srv;
-    ret.port=prt;
-    ret.usesSSL=ssl;
-    NSInputStream* iStream;
-    NSOutputStream* oStream;
-    CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)srv, prt, (CFReadStreamRef*)&iStream, (CFWriteStreamRef*)&oStream);
-    ret.input=iStream;
-    ret.output=oStream;
++ (SHIRCSocket*)socketWithServer:(NSString *)srv andPort:(int)prt usesSSL:(BOOL)ssl {
+    SHIRCSocket* ret = [[[(Class)self alloc]init] autorelease];
+    ret.server = srv;
+    ret.port = prt;
+    ret.usesSSL = ssl;
+    NSInputStream *iStream;
+    NSOutputStream *oStream;
+    CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)srv, prt, (CFReadStreamRef*)&iStream, (CFWriteStreamRef *)&oStream);
+    ret.input = iStream;
+    ret.output = oStream;
     [iStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     [oStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     iStream.delegate = ret;
     oStream.delegate = ret;
     return ret;
 }
--(BOOL)connectWithNick:(NSString*)nick andUser:(NSString*)user
-{
-    nick_=nick;
-    NSInputStream* iStream=input;
-    NSOutputStream* oStream=output;
+- (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user {
+    nick_ = nick;
+    NSInputStream *iStream = input;
+    NSOutputStream *oStream = output;
     if ([iStream streamStatus] == NSStreamStatusNotOpen)
         [iStream open];
     
@@ -40,9 +38,8 @@
         [oStream open];
     
 
-    if (usesSSL)
-    {            
-        [iStream setProperty:NSStreamSocketSecurityLevelNegotiatedSSL 
+    if (usesSSL) {
+		[iStream setProperty:NSStreamSocketSecurityLevelNegotiatedSSL 
                        forKey:NSStreamSocketSecurityLevelKey];
         [oStream setProperty:NSStreamSocketSecurityLevelNegotiatedSSL 
                         forKey:NSStreamSocketSecurityLevelKey];  
@@ -58,27 +55,25 @@
         CFWriteStreamSetProperty((CFWriteStreamRef)oStream, kCFStreamPropertySSLSettings, (CFTypeRef)settings);
         [settings release];
     }
-    didRegister=NO;
+    didRegister = NO;
     [self sendCommand:[NSString stringWithFormat:@"USER %@ %@ %@ %@\r\n", user, user, user, user] withArguments:nil];
     return [self sendCommand:[NSString stringWithFormat:@"NICK %@\r\n", nick] withArguments:nil];
 }
--(BOOL)sendCommand:(NSString*)command withArguments:(NSString*)args
-{
-    NSString* cmd;
+- (BOOL)sendCommand:(NSString *)command withArguments:(NSString *)args {
+    NSString *cmd;
     if(args)
-        cmd=[command stringByAppendingFormat:@" :%@\r\n", args];
+        cmd = [command stringByAppendingFormat:@" :%@\r\n", args];
     else
-        cmd=command;
+        cmd = command;
     return [output write:(uint8_t*)[cmd UTF8String] maxLength:[cmd length]];
 }
--(BOOL)sendCommand:(NSString*)command withArguments:(NSString*)args waitUntilRegistered:(BOOL)wur
-{
-    if(didRegister) wur=NO;
-    NSString* cmd;
+- (BOOL)sendCommand:(NSString *)command withArguments:(NSString*)args waitUntilRegistered:(BOOL)wur {
+    if(didRegister) wur = NO;
+    NSString *cmd;
     if(args)
-        cmd=[command stringByAppendingFormat:@" :%@\r\n", args];
+		cmd = [command stringByAppendingFormat:@" :%@\r\n", args];
     else
-        cmd=command;
+        cmd = command;
     if(!wur){
         return [output write:(uint8_t*)[cmd UTF8String] maxLength:[cmd length]];
     }

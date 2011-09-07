@@ -29,6 +29,7 @@
 @property(assign, readwrite) int port;
 @property(assign, readwrite) BOOL usesSSL;
 @property(assign, readwrite) BOOL didRegister;
-+(SHIRCSocket*)socketWithServer:(NSString*)server andPort:(int)port usesSSL:(BOOL)ssl;
--(BOOL)sendCommand:(NSString*)command withArguments:(NSString*)args;
++ (SHIRCSocket*)socketWithServer:(NSString *)server andPort:(int)port usesSSL:(BOOL)ssl;
+- (BOOL)sendCommand:(NSString *)command withArguments:(NSString *)args;
+- (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user;
 @end

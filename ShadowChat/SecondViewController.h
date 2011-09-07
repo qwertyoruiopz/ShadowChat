@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SecondViewController : UIViewController
-
+@interface SecondViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource>{
+    UIPickerView *myPickerView;
+    NSArray *pickerViewArray;
+    IBOutlet UINavigationBar *omg;
+}
+- (id)sSubviews:(id)a;
 @end
