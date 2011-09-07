@@ -9,7 +9,7 @@
 #import "ConnectionsTVController.h"
 #import "AddConnectionTVController.h"
 #import "SHIRCNetwork.h"
-
+#import "SHIRCChannel.h"
 @implementation ConnectionsTVController
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -139,7 +139,9 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
+        [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] disconnect];
         [[SHIRCNetwork allNetworks] removeObjectAtIndex:indexPath.row];
+        //[[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] release];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [SHIRCNetwork saveDefaults];
     }   
@@ -171,7 +173,7 @@
 {
     // Navigation logic may go here. Create and push another view controller.
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] connect];
+    [[[SHIRCChannel alloc] initWithSocket:[[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] connect] andChanName:@"sc"] release];
 }
 
 @end

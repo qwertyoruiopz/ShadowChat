@@ -28,7 +28,7 @@
     return ret;
 }
 - (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user {
-    nick_ = nick;
+    self.nick_ = nick;
     NSInputStream *iStream = input;
     NSOutputStream *oStream = output;
     if ([iStream streamStatus] == NSStreamStatusNotOpen)
@@ -67,10 +67,8 @@
     else
         cmd = command;
     if (canWrite) {
-        NSLog(@"yayz");
         return [output write:(uint8_t*)[cmd UTF8String] maxLength:[cmd length]];
     }
-    NSLog(@"queuing D;");
     if (!queuedCommands) queuedCommands = [NSMutableString new];
     [queuedCommands appendFormat:@"%@\r\n", cmd];
     return YES;
@@ -140,6 +138,8 @@
     [self sendCommand:@"QUIT" withArguments:@"ShadowChat BETA"];
     [input close];
     [output close];
+    [input release];
+    [output release];
 }
 - (void)addChannel:(SHIRCChannel*)chan
 {
@@ -171,6 +171,13 @@
         [commandsWaiting release];
         commandsWaiting=nil;
     }
+}
+- (void)dealloc
+{
+    [channels release];
+    [input release];
+    [output release];
+    [super dealloc];
 }
 
 @end

@@ -32,6 +32,14 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        description=nil;
+        server=nil;
+        user=nil;
+        nick=nil;
+        name=nil;
+        spass=nil;
+        npass=nil;
+        hasSSL=NO;
     }
     return self;
 }

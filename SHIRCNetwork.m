@@ -47,24 +47,27 @@ static NSMutableArray* networks=nil;
 {
     if (self = [super init])
     {
+        NSAutoreleasePool* poolz=[NSAutoreleasePool new];
         if ([coder containsValueForKey:@"server"])
-        self.server = [coder decodeObjectForKey:@"server"];
+            server = [[coder decodeObjectForKey:@"server"] retain];
         if ([coder containsValueForKey:@"description"])
-        self.descr = [coder decodeObjectForKey:@"description"];
+            descr = [[coder decodeObjectForKey:@"description"] retain];
         if ([coder containsValueForKey:@"port"])
-        self.port = [[coder decodeObjectForKey:@"port"] intValue];
+            port = [[coder decodeObjectForKey:@"port"] intValue];
         if ([coder containsValueForKey:@"hasSSL"])
-        self.hasSSL = [[coder decodeObjectForKey:@"hasSSL"] boolValue];
+            hasSSL = [[coder decodeObjectForKey:@"hasSSL"] boolValue];
         if ([coder containsValueForKey:@"nickname"])
-        self.nickname = [coder decodeObjectForKey:@"nickname"];
+            nickname = [[coder decodeObjectForKey:@"nickname"] retain];
         if ([coder containsValueForKey:@"realname"])
-        self.realname = [coder decodeObjectForKey:@"realname"];
+            realname = [[coder decodeObjectForKey:@"realname"] retain];
         if ([coder containsValueForKey:@"username"])
-        self.username = [coder decodeObjectForKey:@"username"];
+            username = [[coder decodeObjectForKey:@"username"] retain];
         if ([coder containsValueForKey:@"serverPassword"])
-        self.serverPassword = [coder decodeObjectForKey:@"serverPassword"];
+            serverPassword = [[coder decodeObjectForKey:@"serverPassword"] retain];
         if ([coder containsValueForKey:@"nickServPassword"])
-        self.nickServPassword = [coder decodeObjectForKey:@"nickServPassword"];
+            nickServPassword = [[coder decodeObjectForKey:@"nickServPassword"] retain];
+        NSLog(@"%@", server);
+        [poolz release];
     }
     return self;
 }
