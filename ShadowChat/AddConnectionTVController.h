@@ -10,5 +10,14 @@
 
 @interface AddConnectionTVController : UITableViewController <UITextFieldDelegate>
 {
+    NSString* user;
+    NSString* nick;
+    NSString* name;
+    NSString* spass;
+    NSString* npass;
+    NSString* description;
+    NSString* server;
+    int port;
+    BOOL hasSSL;
 }
 @end

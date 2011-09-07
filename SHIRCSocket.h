@@ -32,4 +32,5 @@
 + (SHIRCSocket*)socketWithServer:(NSString *)server andPort:(int)port usesSSL:(BOOL)ssl;
 - (BOOL)sendCommand:(NSString *)command withArguments:(NSString *)args;
 - (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user;
+- (void)disconnect;
 @end

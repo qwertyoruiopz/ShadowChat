@@ -1,3 +1,4 @@
+
 //
 //  AddConnectionTVController.m
 //  ShadowChat
@@ -7,7 +8,22 @@
 //
 
 #import "AddConnectionTVController.h"
-
+#import "SHIRCNetwork.h"
+#import "SHIRCChannel.h"
+@implementation UIView (FindAndResignFirstResponder)
+- (BOOL)findAndResignFirstResponder
+{
+    if (self.isFirstResponder) {
+        [self resignFirstResponder];
+        return YES;     
+    }
+    for (UIView *subView in self.subviews) {
+        if ([subView findAndResignFirstResponder])
+            return YES;
+    }
+    return NO;
+}
+@end
 
 @implementation AddConnectionTVController
 
@@ -55,6 +71,15 @@
 
 - (void)doneConnection {
     NSLog(@"Done :D");
+    [[self tableView] findAndResignFirstResponder];
+    id stuff=[[SHIRCNetwork createNetworkWithServer:server andPort:port isSSLEnabled:hasSSL description:description
+                              withUsername:user ? user : @"shadowchat"
+                               andNickname:nick ? nick : [[[[UIDevice currentDevice] name] componentsSeparatedByString:@" "] objectAtIndex:0]
+                               andRealname:name ? name : @"ShadowChat User"
+                            serverPassword:spass
+                          nickServPassword:npass]
+     connect];
+    [[[SHIRCChannel alloc] initWithSocket:stuff andChanName:@"sc"] release];
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -159,7 +184,7 @@
  */
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"serverconnection";
+    NSString *CellIdentifier = [[NSString alloc] initWithFormat:@"serverconnection-%d-%d", indexPath.section, indexPath.row];
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -213,6 +238,7 @@
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
                     UISwitch* sslSwitch=[[UISwitch alloc] initWithFrame:CGRectZero];
                     sslSwitch.tag = 12350;
+                    [sslSwitch addTarget: self action: @selector(flip:) forControlEvents:UIControlEventValueChanged];
                     [cell setAccessoryView:sslSwitch];
                     [sslSwitch release];
                 }
@@ -224,11 +250,7 @@
                     
                     UITextField *user = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
                     user.adjustsFontSizeToFitWidth = YES;
-                    @try {
-                        user.placeholder = [[[[UIDevice currentDevice] name] componentsSeparatedByString:@" "] objectAtIndex:0];
-                    }
-                    @catch (NSException *exception) {
-                    }
+                    user.placeholder = @"shadowchat";
                     user.returnKeyType = UIReturnKeyNext;
                     user.keyboardAppearance = UIKeyboardAppearanceAlert;
                    user.tag = 12343;
@@ -258,11 +280,7 @@
                     UITextField *rlname = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
                     rlname.adjustsFontSizeToFitWidth = YES;
                     rlname.keyboardAppearance = UIKeyboardAppearanceAlert;
-                    @try {
-                        rlname.placeholder = [[[[UIDevice currentDevice] name] componentsSeparatedByString:@" "] objectAtIndex:0];
-                    }
-                    @catch (NSException *exception) {
-                    }
+                    rlname.placeholder = @"ShadowChat User";
                     rlname.returnKeyType = UIReturnKeyNext;
                     rlname.tag = 12345;
                     [rlname setDelegate:self];
@@ -304,7 +322,8 @@
                 break;
         }
     }
-
+    cell.tag=1227;
+    [CellIdentifier release];
     return cell;
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -324,12 +343,55 @@
     }
     return YES;
 }
+- (void)flip:(id)sender
+{
+    hasSSL=[sender isOn];
+}
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    [textField resignFirstResponder];
     [[[self tableView] viewWithTag:textField.tag+1] becomeFirstResponder];
     [[self tableView] scrollToRowAtIndexPath:[self.tableView indexPathForCell:(UITableViewCell*)
                                               [textField superview]] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     return NO;
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    NSLog(@"Saving!");
+    switch ([textField tag]) {
+        case 12340:
+            [description release];
+            description=[[textField text] copy];
+            break;
+        case 12341:
+            [server release];
+            server=[[textField text]copy];
+            break;
+        case 12342:
+            port=[[textField text] intValue];
+            break;
+        case 12343:
+            [user release];
+            user=(![[textField text] isEqualToString:@""]) ? [[textField text]copy] : nil;
+            break;
+        case 12344:
+            [nick release];
+            nick=(![[textField text] isEqualToString:@""]) ? [[textField text]copy] : nil;
+            break;
+        case 12345:
+            [name release];
+            name=(![[textField text] isEqualToString:@""]) ? [[textField text]copy] : nil;
+            break;
+        case 12346:
+            [npass release];
+            npass=[[textField text]copy];
+            break;
+        case 12347:
+            [spass release];
+            spass=[[textField text]copy];
+            break;
+        default:
+            break;
+    }
 }
 #pragma mark - Table view delegate
 
@@ -347,6 +409,7 @@
 - (void) dealloc
 {
     NSLog(@"Deallocating");
+    
     [super dealloc];
 }
 

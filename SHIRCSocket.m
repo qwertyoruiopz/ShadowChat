@@ -12,13 +12,13 @@
 @implementation SHIRCSocket
 @synthesize input, output, port, server, usesSSL, didRegister, nick_, channels;
 + (SHIRCSocket*)socketWithServer:(NSString *)srv andPort:(int)prt usesSSL:(BOOL)ssl {
-    SHIRCSocket* ret = [[[(Class)self alloc]init] autorelease];
+    SHIRCSocket* ret = [[(Class)self alloc]init];
     ret.server = srv;
     ret.port = prt;
     ret.usesSSL = ssl;
     NSInputStream *iStream;
     NSOutputStream *oStream;
-    CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)srv, prt, (CFReadStreamRef*)&iStream, (CFWriteStreamRef *)&oStream);
+    CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)srv, prt ? prt : 6667, (CFReadStreamRef*)&iStream, (CFWriteStreamRef *)&oStream);
     ret.input = iStream;
     ret.output = oStream;
     [iStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
@@ -103,6 +103,12 @@
         [input release];
         [output release];
     }
+}
+-(void)disconnect
+{
+    [self sendCommand:@"QUIT" withArguments:@"ShadowChat BETA"];
+    [input close];
+    [output close];
 }
 - (void)addChannel:(SHIRCChannel*)chan
 {

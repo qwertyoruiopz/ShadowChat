@@ -8,7 +8,7 @@
 
 #import "ConnectionsTVController.h"
 #import "AddConnectionTVController.h"
-
+#import "SHIRCNetwork.h"
 
 @implementation ConnectionsTVController
 
@@ -30,9 +30,18 @@
 }
 
 #pragma mark - View lifecycle
-
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:[self tableView]];
+    [super dealloc];
+}
 - (void)viewDidLoad
 {
+    [[NSNotificationCenter defaultCenter] addObserver:[self tableView]
+                                             selector:@selector(reloadData) 
+                                                 name:@"ReloadNetworks"
+                                               object:nil];
+
     [super viewDidLoad];
     
     self.title = @"Connections";
@@ -92,12 +101,12 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 0;
+    return [[SHIRCNetwork allNetworks] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -107,21 +116,22 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell.selectionStyle=UITableViewCellSelectionStyleGray;
     }
-    
+    cell.textLabel.text=[[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] objectForKey:@"description"] ? [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] objectForKey:@"description"] : [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] objectForKey:@"server"];
     // Configure the cell...
     
     return cell;
 }
 
-/*
+
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
     return YES;
 }
-*/
+
 
 /*
 // Override to support editing the table view.
@@ -158,13 +168,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+    
+    [[SHIRCNetwork networkWithDict:[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]] connect];
 }
 
 @end
