@@ -79,7 +79,6 @@
                             serverPassword:spass
                           nickServPassword:npass]
      connect];
-    [[[SHIRCChannel alloc] initWithSocket:stuff andChanName:@"sc"] release];
     [self dismissModalViewControllerAnimated:YES];
 }
 

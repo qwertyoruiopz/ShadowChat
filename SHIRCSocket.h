@@ -7,7 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-
+typedef enum SHSocketStaus
+{
+    SHSocketStausNotOpen,
+    SHSocketStausConnecting,
+    SHSocketStausOpen,
+    SHSocketStausClosed
+} SHSocketStaus;
 @interface SHIRCSocket : NSObject <NSStreamDelegate>
 {
     NSInputStream* input;
@@ -15,11 +21,14 @@
     NSString* server;
     int port;
     BOOL usesSSL;
+    SHSocketStaus status;
     NSMutableString* data;
     BOOL didRegister;
     NSMutableArray* commandsWaiting;
+    NSMutableString* queuedCommands;
     NSMutableArray* channels;
     NSString* nick_;
+    BOOL canWrite;
 }
 @property(retain, readwrite) NSInputStream* input;
 @property(retain, readwrite) NSOutputStream* output;
@@ -29,6 +38,7 @@
 @property(assign, readwrite) int port;
 @property(assign, readwrite) BOOL usesSSL;
 @property(assign, readwrite) BOOL didRegister;
+@property(assign, readwrite) SHSocketStaus status;
 + (SHIRCSocket*)socketWithServer:(NSString *)server andPort:(int)port usesSSL:(BOOL)ssl;
 - (BOOL)sendCommand:(NSString *)command withArguments:(NSString *)args;
 - (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user;

@@ -116,9 +116,9 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-        cell.selectionStyle=UITableViewCellSelectionStyleGray;
+        cell.selectionStyle=UITableViewCellSelectionStyleBlue;
     }
-    cell.textLabel.text=[[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] objectForKey:@"description"] ? [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] objectForKey:@"description"] : [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] objectForKey:@"server"];
+    cell.textLabel.text=[[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] descr] ? [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] descr] : [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] server];
     // Configure the cell...
     
     return cell;
@@ -133,19 +133,21 @@
 }
 
 
-/*
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
+        [[SHIRCNetwork allNetworks] removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [SHIRCNetwork saveDefaults];
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.
@@ -168,8 +170,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
-    
-    [[SHIRCNetwork networkWithDict:[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]] connect];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] connect];
 }
 
 @end

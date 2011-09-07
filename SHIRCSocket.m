@@ -10,7 +10,7 @@
 #import "Foundation/NSStream.h"
 #import "SHIRCManager.h"
 @implementation SHIRCSocket
-@synthesize input, output, port, server, usesSSL, didRegister, nick_, channels;
+@synthesize input, output, port, server, usesSSL, didRegister, nick_, channels, status;
 + (SHIRCSocket*)socketWithServer:(NSString *)srv andPort:(int)prt usesSSL:(BOOL)ssl {
     SHIRCSocket* ret = [[(Class)self alloc]init];
     ret.server = srv;
@@ -57,7 +57,8 @@
     }
     didRegister = NO;
     [self sendCommand:[NSString stringWithFormat:@"USER %@ %@ %@ %@\r\n", user, user, user, user] withArguments:nil];
-    return [self sendCommand:[NSString stringWithFormat:@"NICK %@\r\n", nick] withArguments:nil];
+    [self sendCommand:[NSString stringWithFormat:@"NICK %@\r\n", nick] withArguments:nil];
+    return YES;
 }
 - (BOOL)sendCommand:(NSString *)command withArguments:(NSString *)args {
     NSString *cmd;
@@ -65,7 +66,14 @@
         cmd = [command stringByAppendingFormat:@" :%@\r\n", args];
     else
         cmd = command;
-    return [output write:(uint8_t*)[cmd UTF8String] maxLength:[cmd length]];
+    if (canWrite) {
+        NSLog(@"yayz");
+        return [output write:(uint8_t*)[cmd UTF8String] maxLength:[cmd length]];
+    }
+    NSLog(@"queuing D;");
+    if (!queuedCommands) queuedCommands = [NSMutableString new];
+    [queuedCommands appendFormat:@"%@\r\n", cmd];
+    return YES;
 }
 - (BOOL)sendCommand:(NSString *)command withArguments:(NSString*)args waitUntilRegistered:(BOOL)wur {
     if(didRegister) wur = NO;
@@ -75,8 +83,13 @@
     else
         cmd = command;
     if(!wur){
-        return [output write:(uint8_t*)[cmd UTF8String] maxLength:[cmd length]];
+        if (canWrite) 
+            return [output write:(uint8_t*)[cmd UTF8String] maxLength:[cmd length]];
+        if (!queuedCommands) queuedCommands = [NSMutableString new];
+        [queuedCommands appendFormat:@"%@\r\n", cmd];
+        return YES;
     }
+    status = SHSocketStausConnecting;
     if(!commandsWaiting) commandsWaiting=[NSMutableArray new];
     [commandsWaiting addObject:cmd];
     return YES;
@@ -98,14 +111,32 @@
     }
     else if (streamEvent == NSStreamEventEndEncountered)
     {
+        if (status == SHSocketStausClosed) {
+            return;
+        }
+        status = SHSocketStausClosed;
         [data release];
         data=nil;
         [input release];
         [output release];
+    } else if (streamEvent == NSStreamEventHasSpaceAvailable)
+    {
+        if (status == SHSocketStausConnecting)
+            status = SHSocketStausOpen;
+        if (queuedCommands) {
+            canWrite=NO;
+            [theStream write:(uint8_t*)[queuedCommands UTF8String] maxLength:[queuedCommands length]];
+            [queuedCommands release];
+            queuedCommands=nil;
+        }
+        canWrite=YES;
     }
 }
 -(void)disconnect
 {
+    if (status == SHSocketStausClosed) {
+        return;
+    }
     [self sendCommand:@"QUIT" withArguments:@"ShadowChat BETA"];
     [input close];
     [output close];
