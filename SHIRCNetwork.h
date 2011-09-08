@@ -37,4 +37,5 @@
 +(void)saveDefaults;
 -(BOOL)isOpen;
 +(NSArray*)allNetworks;
+- (SHIRCSocket *)connect;
 @end

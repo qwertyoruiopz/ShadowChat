@@ -5,7 +5,9 @@
 //  Created by qwerty or on 05/09/11.
 //  Copyright 2011 uiop. All rights reserved.
 //
-
+@interface UIView (Private)
+- (void)_layoutSubviews;
+@end
 @interface UICalloutView : UIView
 {
     UIImageView* _leftCap;

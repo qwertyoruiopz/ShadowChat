@@ -6,7 +6,11 @@
 //  Copyright 2011 uiop. All rights reserved.
 //
 
+
 #import <Foundation/Foundation.h>
+@interface NSStream (Private)
+- (void)write:(const uint8_t *) maxLength:(NSUInteger)length;
+@end
 typedef enum SHSocketStaus
 {
     SHSocketStausNotOpen,
@@ -43,4 +47,5 @@ typedef enum SHSocketStaus
 - (BOOL)sendCommand:(NSString *)command withArguments:(NSString *)args;
 - (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user;
 - (void)disconnect;
+- (void)addChannel:(id)chan;
 @end
