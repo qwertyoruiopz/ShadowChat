@@ -6,6 +6,7 @@
 //  Copyright 2011 uiop. All rights reserved.
 //
 
+
 #import <Foundation/Foundation.h>
 #import "Foundation/NSStream.h"
 @class SHIRCChannel;

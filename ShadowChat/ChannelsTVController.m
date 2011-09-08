@@ -120,7 +120,8 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
-    cell.textLabel.text=[[[[(SHIRCNetwork*)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.section] socket] channels] objectAtIndex:indexPath.row] formattedName];
+
+    cell.textLabel.text=[((SHIRCChannel *)[[[(SHIRCNetwork*)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.section] socket] channels] objectAtIndex:indexPath.row]) formattedName];
     // Confgure the cell...
     
     return cell;

@@ -140,7 +140,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] disconnect];
-        [[SHIRCNetwork allNetworks] removeObjectAtIndex:indexPath.row];
+        [((NSMutableArray *)[SHIRCNetwork allNetworks]) removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [SHIRCNetwork saveDefaults];
     }   

@@ -10,7 +10,7 @@
 #import "SHIRCManager.h"
 #import "SHIRCChannel.h"
 @implementation SHIRCSocket
-@synthesize input, output, port, server, usesSSL, didRegister, nick_, channels, status;
+@synthesize input, output, port, server, usesSSL, nick_, channels, status;
 + (SHIRCSocket*)socketWithServer:(NSString *)srv andPort:(int)prt usesSSL:(BOOL)ssl {
     SHIRCSocket* ret = [[(Class)self alloc]init];
     ret.server = srv;
@@ -157,6 +157,10 @@
 {
     [self sendCommand:@"PART" withArguments:[chan formattedName] waitUntilRegistered:YES];
     [channels removeObject:chan];
+}
+- (BOOL) didRegister
+{
+    return didRegister;
 }
 - (void)setDidRegister:(BOOL)didReg
 {

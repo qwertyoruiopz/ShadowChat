@@ -10,7 +10,7 @@
 
 @implementation SHIRCChannel
 @synthesize net, name, socket;
-- (id)initWithSocket:(SHIRCSocket*)sock andChanName:(NSString*)chName
+- (id)initWithSocket:(SHIRCSocket *)sock andChanName:(NSString*)chName
 {
     self = [super init];
     if (self) {

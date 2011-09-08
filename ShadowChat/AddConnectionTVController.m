@@ -14,6 +14,7 @@
 - (BOOL)findAndResignFirstResponder;
 @end
 @implementation UIView (FindAndResignFirstResponder)
+
 - (BOOL)findAndResignFirstResponder
 {
     if (self.isFirstResponder) {
@@ -83,7 +84,7 @@
 - (void)doneConnection {
     NSLog(@"Done :D");
     [[self tableView] findAndResignFirstResponder];
-    [[SHIRCNetwork createNetworkWithServer:server andPort:port isSSLEnabled:hasSSL description:description
+	[[SHIRCNetwork createNetworkWithServer:server andPort:port isSSLEnabled:hasSSL description:description
                               withUsername:user ? user : @"shadowchat"
                                andNickname:nick ? nick : [[[[UIDevice currentDevice] name] componentsSeparatedByString:@" "] objectAtIndex:0]
                                andRealname:name ? name : @"ShadowChat User"
@@ -232,17 +233,16 @@
                 } else if (indexPath.row == 2) {
                     [cell.textLabel setText: @"Port"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
-                    
-                    UITextField *pport = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
-                    pport.adjustsFontSizeToFitWidth = YES;
-                    pport.placeholder = @"6667";
-                    pport.keyboardType = UIKeyboardTypeNumberPad;
-                    pport.returnKeyType = UIReturnKeyNext;
-                    pport.tag = 12342;
-                    pport.keyboardAppearance = UIKeyboardAppearanceAlert;
-                    [pport setDelegate:self];
-                    [cell addSubview: pport];
-                    [pport release];
+                    UITextField *portField = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
+                    portField.adjustsFontSizeToFitWidth = YES;
+                    portField.placeholder = @"6667";
+                    portField.keyboardType = UIKeyboardTypeNumberPad;
+                    portField.returnKeyType = UIReturnKeyNext;
+                    portField.tag = 12342;
+                    portField.keyboardAppearance = UIKeyboardAppearanceAlert;
+                    [portField setDelegate:self];
+                    [cell addSubview: portField];
+                    [portField release];
                 } else if (indexPath.row == 3) {
                     [cell.textLabel setText: @"Connect via SSL"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
@@ -257,33 +257,32 @@
                 if (indexPath.row == 0) {                
                     [cell.textLabel setText: @"Username"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
-                    
-                    UITextField *auser = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
-                    auser.adjustsFontSizeToFitWidth = YES;
-                    auser.placeholder = @"shadowchat";
-                    auser.returnKeyType = UIReturnKeyNext;
-                    auser.keyboardAppearance = UIKeyboardAppearanceAlert;
-                    auser.tag = 12343;
-                    [auser setDelegate:self];
-                    [cell addSubview: auser];
-                    [auser release];
+                    UITextField *userField = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
+                    userField.adjustsFontSizeToFitWidth = YES;
+                    userField.placeholder = @"shadowchat";
+                    userField.returnKeyType = UIReturnKeyNext;
+                    userField.keyboardAppearance = UIKeyboardAppearanceAlert;
+                   userField.tag = 12343;
+                    [userField setDelegate:self];
+                    [cell addSubview: userField];
+                    [userField release];
                 } else if (indexPath.row == 1) {
                     [cell.textLabel setText: @"Nickname"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
-                    UITextField *anick = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
-                    anick.adjustsFontSizeToFitWidth = YES;
-                    anick.keyboardAppearance = UIKeyboardAppearanceAlert;
+                    UITextField *nickField = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
+                    nickField.adjustsFontSizeToFitWidth = YES;
+                    nickField.keyboardAppearance = UIKeyboardAppearanceAlert;
                     @try {
-                        anick.placeholder = [[[[UIDevice currentDevice] name] componentsSeparatedByString:@" "] objectAtIndex:0];
+                        nickField.placeholder = [[[[UIDevice currentDevice] name] componentsSeparatedByString:@" "] objectAtIndex:0];
                     }
                     @catch (NSException *exception) {
-                        anick.placeholder = @"Something";
+                        nickField.placeholder = @"Something";
                     }
-                    anick.returnKeyType = UIReturnKeyNext;
-                    anick.tag = 12344;
-                    [anick setDelegate:self];
-                    [cell addSubview: anick];
-                    [anick release];
+                    nickField.returnKeyType = UIReturnKeyNext;
+                    nickField.tag = 12344;
+                    [nickField setDelegate:self];
+                    [cell addSubview: nickField];
+                    [nickField release];
                 } else if (indexPath.row == 2) {
                     [cell.textLabel setText: @"Real Name"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
@@ -304,16 +303,16 @@
                     [cell.textLabel setText: @"Password"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
                     
-                    UITextField *aspass = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
-                    aspass.adjustsFontSizeToFitWidth = YES;
-                    aspass.placeholder = @"";
-                    aspass.returnKeyType = UIReturnKeyNext;
-                    aspass.keyboardAppearance = UIKeyboardAppearanceAlert;
-                    aspass.secureTextEntry = YES;
-                    aspass.tag = 12346;
-                    [aspass setDelegate:self];
-                    [cell addSubview: aspass];
-                    [aspass release];
+                    UITextField *passField = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
+                    passField.adjustsFontSizeToFitWidth = YES;
+                    passField.placeholder = @"";
+                    passField.returnKeyType = UIReturnKeyNext;
+                    passField.keyboardAppearance = UIKeyboardAppearanceAlert;
+                    passField.secureTextEntry = YES;
+                    passField.tag = 12346;
+                    [passField setDelegate:self];
+                    [cell addSubview: passField];
+                    [passField release];
                 } else if (indexPath.row == 1) {
                     [cell.textLabel setText: @"Nick password"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
