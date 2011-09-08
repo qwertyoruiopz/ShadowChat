@@ -41,6 +41,9 @@
 }
 -(void)setTitle:(id)title;
 -(void)setSubtitle:(id)subtitle;
+-(void)fadeOutWithDuration:(CGFloat)duration;
+-(void)setAnchorPoint:(CGPoint)point boundaryRect:(CGRect)rect animate:(BOOL)animate;
+-(void)_layoutSubviews:(BOOL)animated;
 @property(retain, nonatomic) UIView* leftView;
 @property(retain, nonatomic) UIView* rightView;
 @end
@@ -54,7 +57,14 @@
     CGRect savedRect;
     CGRect savedRectTwo;
 }
+- (void)die;
+- (id)initWithFrame:(CGRect)frame;
+-(NSString*)accessoryText;
+-(void)setMode:(BOOL)mode_ rotateBtn:(UIButton*)btn;
+-(void)rotateButton:(UIButton*)sender;
 -(void)setOpacity:(CGFloat)opacity;
 -(void)setAccessoryText:(NSString*)text;
--(NSString*)accessoryText;
+-(void)setChan:(id)chan_;
+-(void)setTitle:(id)title;
+-(void)setSubtitle:(id)subtitle;
 @end

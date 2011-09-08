@@ -49,23 +49,23 @@ static NSMutableArray* networks=nil;
     {
         NSAutoreleasePool* poolz=[NSAutoreleasePool new];
         if ([coder containsValueForKey:@"server"])
-            server = [[coder decodeObjectForKey:@"server"] retain];
+            self.server = [coder decodeObjectForKey:@"server"];
         if ([coder containsValueForKey:@"description"])
-            descr = [[coder decodeObjectForKey:@"description"] retain];
+            self.descr = [coder decodeObjectForKey:@"description"];
         if ([coder containsValueForKey:@"port"])
-            port = [[coder decodeObjectForKey:@"port"] intValue];
+            self.port = [[coder decodeObjectForKey:@"port"] intValue];
         if ([coder containsValueForKey:@"hasSSL"])
-            hasSSL = [[coder decodeObjectForKey:@"hasSSL"] boolValue];
+            self.hasSSL = [[coder decodeObjectForKey:@"hasSSL"] boolValue];
         if ([coder containsValueForKey:@"nickname"])
-            nickname = [[coder decodeObjectForKey:@"nickname"] retain];
+            self.nickname = [[coder decodeObjectForKey:@"nickname"] retain];
         if ([coder containsValueForKey:@"realname"])
-            realname = [[coder decodeObjectForKey:@"realname"] retain];
+            self.realname = [coder decodeObjectForKey:@"realname"];
         if ([coder containsValueForKey:@"username"])
-            username = [[coder decodeObjectForKey:@"username"] retain];
+            self.username = [coder decodeObjectForKey:@"username"];
         if ([coder containsValueForKey:@"serverPassword"])
-            serverPassword = [[coder decodeObjectForKey:@"serverPassword"] retain];
+            self.serverPassword = [coder decodeObjectForKey:@"serverPassword"];
         if ([coder containsValueForKey:@"nickServPassword"])
-            nickServPassword = [[coder decodeObjectForKey:@"nickServPassword"] retain];
+            self.nickServPassword = [coder decodeObjectForKey:@"nickServPassword"];
         [poolz release];
     }
     return self;
@@ -86,7 +86,7 @@ static NSMutableArray* networks=nil;
     [socket release];
     [super dealloc];
 }
-+(NSArray*)allNetworks
++(NSMutableArray*)allNetworks
 {
     if(!networks)
     {

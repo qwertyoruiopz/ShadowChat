@@ -30,6 +30,8 @@
 		EA1D5D4E1415FE2000114BFF /* ppl.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1D5D481415FE2000114BFF /* ppl.png */; };
 		EA1D5D4F1415FE2000114BFF /* ppl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1D5D491415FE2000114BFF /* ppl@2x.png */; };
 		EAAD2BA51416C8F700E1D951 /* SHIRCNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAD2BA41416C8F700E1D951 /* SHIRCNetwork.m */; };
+		EAC95DF614183882000256CE /* SHChatPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC95DF414183882000256CE /* SHChatPanel.m */; };
+		EAC95DF714183882000256CE /* SHChatPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAC95DF514183882000256CE /* SHChatPanel.xib */; };
 		EAE46C1514159CD8008BBA8D /* SHIRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE46C1414159CD8008BBA8D /* SHIRCChannel.m */; };
 		EAE46C1814159DE4008BBA8D /* SHIRCSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE46C1714159DE4008BBA8D /* SHIRCSocket.m */; };
 		EAE46C1C1415A110008BBA8D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE46C1B1415A110008BBA8D /* MobileCoreServices.framework */; };
@@ -74,6 +76,9 @@
 		EA1D5D491415FE2000114BFF /* ppl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ppl@2x.png"; sourceTree = "<group>"; };
 		EAAD2BA31416C8F700E1D951 /* SHIRCNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHIRCNetwork.h; path = ../SHIRCNetwork.h; sourceTree = "<group>"; };
 		EAAD2BA41416C8F700E1D951 /* SHIRCNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHIRCNetwork.m; path = ../SHIRCNetwork.m; sourceTree = "<group>"; };
+		EAC95DF314183882000256CE /* SHChatPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHChatPanel.h; path = ../SHChatPanel.h; sourceTree = "<group>"; };
+		EAC95DF414183882000256CE /* SHChatPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHChatPanel.m; path = ../SHChatPanel.m; sourceTree = "<group>"; };
+		EAC95DF514183882000256CE /* SHChatPanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SHChatPanel.xib; path = ../SHChatPanel.xib; sourceTree = "<group>"; };
 		EAE46C1314159CD8008BBA8D /* SHIRCChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHIRCChannel.h; path = ../SHIRCChannel.h; sourceTree = "<group>"; };
 		EAE46C1414159CD8008BBA8D /* SHIRCChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHIRCChannel.m; path = ../SHIRCChannel.m; sourceTree = "<group>"; };
 		EAE46C1614159DE4008BBA8D /* SHIRCSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHIRCSocket.h; path = ../SHIRCSocket.h; sourceTree = "<group>"; };
@@ -136,6 +141,9 @@
 		EA00941214143FE90059261C /* ShadowChat */ = {
 			isa = PBXGroup;
 			children = (
+				EAC95DF314183882000256CE /* SHChatPanel.h */,
+				EAC95DF414183882000256CE /* SHChatPanel.m */,
+				EAC95DF514183882000256CE /* SHChatPanel.xib */,
 				EAAD2BA31416C8F700E1D951 /* SHIRCNetwork.h */,
 				EAAD2BA41416C8F700E1D951 /* SHIRCNetwork.m */,
 				EA00941B14143FEA0059261C /* ShadowChatAppDelegate.h */,
@@ -248,6 +256,7 @@
 				EA1D5D4D1415FE2000114BFF /* minus@2x.png in Resources */,
 				EA1D5D4E1415FE2000114BFF /* ppl.png in Resources */,
 				EA1D5D4F1415FE2000114BFF /* ppl@2x.png in Resources */,
+				EAC95DF714183882000256CE /* SHChatPanel.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +281,7 @@
 				EAAD2BA51416C8F700E1D951 /* SHIRCNetwork.m in Sources */,
 				507424751416F3FC0080EC23 /* SHRoomsTable.m in Sources */,
 				1AABE8FD1417FFEC00F9532E /* ChannelsTVController.m in Sources */,
+				EAC95DF614183882000256CE /* SHChatPanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

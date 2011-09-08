@@ -7,6 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Foundation/NSStream.h"
+@class SHIRCChannel;
+@class SHIRCSocket;
 typedef enum SHSocketStaus
 {
     SHSocketStausNotOpen,
@@ -39,8 +42,14 @@ typedef enum SHSocketStaus
 @property(assign, readwrite) BOOL usesSSL;
 @property(assign, readwrite) BOOL didRegister;
 @property(assign, readwrite) SHSocketStaus status;
-+ (SHIRCSocket*)socketWithServer:(NSString *)server andPort:(int)port usesSSL:(BOOL)ssl;
-- (BOOL)sendCommand:(NSString *)command withArguments:(NSString *)args;
++ (SHIRCSocket*)socketWithServer:(NSString *)srv andPort:(int)prt usesSSL:(BOOL)ssl;
 - (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user;
+- (BOOL)sendCommand:(NSString *)command withArguments:(NSString *)args;
+- (BOOL)sendCommand:(NSString *)command withArguments:(NSString*)args waitUntilRegistered:(BOOL)wur;
+- (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent;
 - (void)disconnect;
+- (void)addChannel:(SHIRCChannel*)chan;
+- (void)removeChannel:(SHIRCChannel*)chan;
+- (void)setDidRegister:(BOOL)didReg;
+- (void)dealloc;
 @end

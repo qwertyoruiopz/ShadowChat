@@ -7,8 +7,8 @@
 //
 
 #import "SHIRCSocket.h"
-#import "Foundation/NSStream.h"
 #import "SHIRCManager.h"
+#import "SHIRCChannel.h"
 @implementation SHIRCSocket
 @synthesize input, output, port, server, usesSSL, didRegister, nick_, channels, status;
 + (SHIRCSocket*)socketWithServer:(NSString *)srv andPort:(int)prt usesSSL:(BOOL)ssl {
@@ -25,6 +25,8 @@
     [oStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     iStream.delegate = ret;
     oStream.delegate = ret;
+    [iStream release];
+    [oStream release];
     return ret;
 }
 - (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user {
@@ -125,7 +127,7 @@
             status = SHSocketStausOpen;
         if (queuedCommands) {
             canWrite=NO;
-            [theStream write:(uint8_t*)[queuedCommands UTF8String] maxLength:[queuedCommands length]];
+            [(NSOutputStream*)theStream write:(uint8_t*)[queuedCommands UTF8String] maxLength:[queuedCommands length]];
             [queuedCommands release];
             queuedCommands=nil;
         }

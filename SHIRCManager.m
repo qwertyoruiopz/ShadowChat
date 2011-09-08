@@ -21,8 +21,25 @@ static SHIRCManager* sharedSHManager;
 - (void)dealloc {
     // [super dealloc];
 }
+- (void)parseMessageWithArray:(NSArray*)args
+{
+    id pool=[NSAutoreleasePool new];
+    if ([args count]!=2) {
+        [args release];
+        [pool release];
+        return;
+    }
+    [self parseMessage:[args objectAtIndex:0] fromSocket:[args objectAtIndex:1]];
+}
+#define NO_THREADING 1
 - (void)parseMessage:(NSMutableString*)msg fromSocket:(SHIRCSocket*)socket
 {
+    #ifndef NO_THREADING
+    if ([NSThread isMainThread]) {
+        [self performSelectorInBackground:@selector(parseMessageWithArray:) withObject:[[NSArray alloc] initWithObjects:msg, socket, nil]];
+        return;
+    }
+    #endif
     NSScanner* scan=[NSScanner scannerWithString:msg];
     @try {
         if([msg hasPrefix:@":"])
@@ -44,7 +61,7 @@ static SHIRCManager* sharedSHManager;
     }
     if ([command isEqualToString:@"PRIVMSG"]) {
         NSArray* arr=[argument componentsSeparatedByString:@" "];
-        if (![arr count]) {
+        if ([arr count]==1) {
             goto cont;
         }
         if ([[arr objectAtIndex:1] hasPrefix:@":\x01"]&&[[arr objectAtIndex:1] hasSuffix:@"\x01"])

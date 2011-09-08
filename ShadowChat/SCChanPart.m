@@ -13,7 +13,7 @@
 @implementation SCChanPart
 - (void)die {
     [super fadeOutWithDuration:1];
-    [[chan socket] sendCommand:@"QUIT" withArguments:@"The game"];
+    [(SHIRCSocket*)[chan socket] sendCommand:@"QUIT" withArguments:@"The game"];
 }
 - (id)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame]))

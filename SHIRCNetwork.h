@@ -34,7 +34,13 @@
 +(SHIRCNetwork*)createNetworkWithServer:(NSString*)server andPort:(int)port isSSLEnabled:(BOOL)ssl
                             description:(NSString*)description withUsername:(NSString*)username andNickname:(NSString*)nickname
                             andRealname:(NSString*)realname serverPassword:(NSString*)password nickServPassword:(NSString*)nickserv;
-+(void)saveDefaults;
--(BOOL)isOpen;
-+(NSArray*)allNetworks;
+- (void)encodeWithCoder:(NSCoder *)coder;
+- (id)initWithCoder:(NSCoder *)coder;
++ (void)saveDefaults;
+- (void)saveDefaults;
+- (void)dealloc;
++ (NSMutableArray*)allNetworks;
+- (void)disconnect;
+- (BOOL)isOpen;
+- (SHIRCSocket*)connect;
 @end

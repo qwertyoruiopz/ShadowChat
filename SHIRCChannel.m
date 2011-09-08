@@ -39,7 +39,7 @@
             command=@"PRIVMSG";
             break;
     }
-    return [socket sendCommand:[command stringByAppendingFormat:@" %@", [self formattedName]] withArguments:[NSString stringWithFormat:@"%@%@%@", (flavor==SHMessageFlavorAction) ? @"/x01 ACTION ", message, @"/x01" : message]];
+    return [socket sendCommand:[command stringByAppendingFormat:@" %@", [self formattedName]] withArguments:[NSString stringWithFormat:@"%@%@%@", (flavor==SHMessageFlavorAction) ? @"/x01 ACTION ", message, @"/x01" : @"", message, @""]];
 }
 - (void)part
 {

@@ -8,6 +8,7 @@
 
 #import "ChannelsTVController.h"
 #import "SHIRCNetwork.h"
+#import "SHChatPanel.h"
 
 @implementation ChannelsTVController
 
@@ -168,6 +169,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    id vc=[SHChatPanel new];
+    [vc setChan:[[[(SHIRCNetwork*)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.section] socket] channels] objectAtIndex:indexPath.row]];
+    [[self navigationController] pushViewController:vc animated:YES];
+    [vc release];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
