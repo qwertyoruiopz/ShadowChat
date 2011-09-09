@@ -33,4 +33,5 @@ typedef enum SHMessageFlavor
 - (void)didRecieveMessageFrom:(NSString*)nick text:(NSString*)ircMessage;
 - (void)parseCommand:(NSString*)command;
 - (void)parseAndEventuallySendMessage:(NSString *)command;
+- (void)didRecieveActionFrom:(NSString*)nick text:(NSString*)ircMessage;
 @end

@@ -19,7 +19,9 @@ static SHIRCManager* sharedSHManager;
     return sharedSHManager;
 }
 - (void)dealloc {
-    // [super dealloc];
+    if (1 == 2) {
+        [super dealloc];
+    }
 }
 - (void)parseMessageWithArray:(NSArray*)args
 {
@@ -34,6 +36,7 @@ static SHIRCManager* sharedSHManager;
 #define NO_THREADING 1
 - (void)parseMessage:(NSMutableString*)msg fromSocket:(SHIRCSocket*)socket
 {
+    id pool=[NSAutoreleasePool new];
     #ifndef NO_THREADING
     if ([NSThread isMainThread]) {
         [self performSelectorInBackground:@selector(parseMessageWithArray:) withObject:[[NSArray alloc] initWithObjects:msg, socket, nil]];
@@ -72,11 +75,30 @@ static SHIRCManager* sharedSHManager;
         [scan_ scanUpToString:@"" intoString:&message];
         if ([message hasPrefix:@"\x01"]&&[message hasSuffix:@"\x01"])
         {
-            NSLog(@"Got a CTCP request from %@ [%@]", sender, message);
-            [socket sendCommand:[@"NOTICE " stringByAppendingString:nick] withArguments:@"\x01VERSION ShadowChat\x01"];
+            NSString* command=nil;
+            NSString* arg=nil;
+            [scan_ setScanLocation:0];
+            [scan_ scanUpToString:@"\x01" intoString:nil];
+            @try {
+                [scan_ setScanLocation:[scan_ scanLocation]+1 ];
+            } @catch (id e) {
+                NSLog(@"Catched error %@", e);
+            }
+            [scan_ scanUpToString:@" " intoString:&command];
+            [scan_ scanUpToString:@"\x01" intoString:&arg];
+            if ([command isEqualToString:@"ACTION"]) {
+                id chan=[socket retainedChannelWithFormattedName:toChannel];
+                [chan didRecieveActionFrom:nick text:arg];
+                [chan release];
+            } else if ([command isEqualToString:@"VERSION"])
+            {
+                [socket sendCommand:[@"NOTICE " stringByAppendingString:nick] withArguments:@"\x01VERSION ShadowChat\x01"];
+            }
         } else {
             NSLog(@"zomg a message %@ to %@ from %@", message, toChannel, nick);
-            [[socket retainedChannelWithFormattedName:toChannel] didRecieveMessageFrom:nick text:message];
+            id chan=[socket retainedChannelWithFormattedName:toChannel];
+            [chan didRecieveMessageFrom:nick text:message];
+            [chan release];
         }
     }
     cont:
@@ -94,7 +116,7 @@ static SHIRCManager* sharedSHManager;
         NSLog(@"Did register");
         
     }
-    NSLog(@"%@", msg);
+    [pool release];
 }
 - (void)parseUsermask:(NSString*)mask nick:(NSString**)nick user:(NSString**)user hostmask:(NSString**)hostmask
 {

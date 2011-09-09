@@ -39,7 +39,11 @@
             command=@"PRIVMSG";
             break;
     }
-    [self didRecieveMessageFrom:[socket nick_] text:message];
+    if (flavor == SHMessageFlavorNormal) {
+        [self didRecieveMessageFrom:[socket nick_] text:message];
+    } else if (flavor == SHMessageFlavorAction) {
+        [self didRecieveActionFrom:[socket nick_] text:message];
+    }
     return [socket sendCommand:[command stringByAppendingFormat:@" %@", [self formattedName]]withArguments:(flavor==SHMessageFlavorAction) ? [NSString stringWithFormat:@"%c%@%@%c", 0x01, @"ACTION ", message, 0x01] : [NSString stringWithFormat:@"%@%@%@", @"", message, @""]];
 }
 - (void)parseAndEventuallySendMessage:(NSString *)command {
@@ -77,9 +81,16 @@
     [socket sendCommand:@"PART" withArguments:[self formattedName]];
     [self release];
 }
+
 - (void)didRecieveMessageFrom:(NSString*)nick text:(NSString*)ircMessage
 {
-    NSLog(@"oh mah gawd %@", delegate);
+    if ([delegate respondsToSelector:_cmd])
+    {
+        [delegate performSelector:_cmd withObject:nick withObject:ircMessage];
+    }
+}
+- (void)didRecieveActionFrom:(NSString*)nick text:(NSString*)ircMessage
+{
     if ([delegate respondsToSelector:_cmd])
     {
         [delegate performSelector:_cmd withObject:nick withObject:ircMessage];

@@ -87,6 +87,16 @@
     [pool release];
 }
 
+- (void)didRecieveActionFrom:(NSString*)nick text:(NSString*)ircMessage
+{
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+    NSString *java = [NSString stringWithFormat:@"addAction('%@','%@');",
+                      [[nick stringByReplacingOccurrencesOfString:@"\'" withString:@"\\'"] stringByReplacingOccurrencesOfString:@"'" withString:@"\'"],
+                      [[ircMessage stringByReplacingOccurrencesOfString:@"\'" withString:@"\\'"] stringByReplacingOccurrencesOfString:@"'" withString:@"\'"]];
+    [output stringByEvaluatingJavaScriptFromString:java];
+    [pool release];
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if ([[tfield text] isEqualToString:@""]) {
@@ -104,9 +114,12 @@
 {
     [super viewDidLoad];
     [[self navigationItem] setTitle:[chan formattedName]];
-    [output loadHTMLString:@"<html><head><script>function htmlEntities(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;'); } function addMessage(nick, msg) { document.body.innerHTML += '</br><strong>' + htmlEntities(nick) + ':</strong> ' + htmlEntities(msg) + ''; window.scrollTo(0, document.body.scrollHeight); }</script><body style=\"word-wrap: break-word; background-color: #FFFFFF;\"><center>ShadowChat beta</center></body></html>" baseURL:[NSURL URLWithString:@"http://zomg.com"]];  //dae0ec
+    [output loadHTMLString:@"<html><head><script>function htmlEntities(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;'); } \
+     function addMessage(nick, msg) { document.body.innerHTML += '<div><strong>' + htmlEntities(nick) + ':</strong> ' + htmlEntities(msg) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
+     function addAction(nick, msg) { document.body.innerHTML += '<div><strong><span style=\"font-size: 24; vertical-align: middle; position:relative;\">•</span> ' + htmlEntities(nick) + '</strong> ' + htmlEntities(msg) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
+     </script><body style=\"word-wrap: break-word; background-color: #FFFFFF;\"><center>ShadowChat beta</center></body></html>" baseURL:[NSURL URLWithString:@"http://zomg.com"]];  //dae0ec
     //[[self view] setBackgroundColor:];
-    NSLog(@"lolwat, %@", [output stringByEvaluatingJavaScriptFromString:@"document.bgColor"]);
+    NSLog(@"lolwat, %@", [output stringByEvaluatingJavaScriptFromString:@"return document.bgColor"]);
     // Do any additional setup after loading the view from its nib.
 }
 
