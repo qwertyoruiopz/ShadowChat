@@ -31,4 +31,5 @@ typedef enum SHMessageFlavor
 - (NSString *)formattedName;
 - (void)part;
 - (void)didRecieveMessageFrom:(NSString*)nick text:(NSString*)ircMessage;
+- (void)parseCommand:(NSString*)command;
 @end

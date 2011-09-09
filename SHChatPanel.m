@@ -92,7 +92,12 @@
     if ([[tfield text] isEqualToString:@""]) {
         return YES;
     }
-    [chan sendMessage:[tfield text] flavor:SHMessageFlavorNormal];
+    
+    if ([[tfield text] hasPrefix:@"/"]) {
+        [chan parseCommand:[tfield text]];
+    } else {    
+        [chan sendMessage:[tfield text] flavor:SHMessageFlavorNormal];
+    }
     [tfield setText:@""];
     sendbtn.enabled=NO;
     return YES;
