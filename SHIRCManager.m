@@ -41,13 +41,8 @@ static SHIRCManager* sharedSHManager;
     }
     #endif
     NSScanner* scan=[NSScanner scannerWithString:msg];
-    @try {
-        if([msg hasPrefix:@":"])
-            [scan setScanLocation:1];
-    }
-    @catch (id e) {
-        NSLog(@"Catched error %@", e);
-    }
+    if([msg hasPrefix:@":"])
+        [scan setScanLocation:1];
     NSString* sender=nil;
     NSString* command=nil;
     NSString* argument=nil;

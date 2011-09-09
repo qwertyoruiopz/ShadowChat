@@ -40,17 +40,36 @@
             break;
     }
     [self didRecieveMessageFrom:[socket nick_] text:message];
-   
     return [socket sendCommand:[command stringByAppendingFormat:@" %@", [self formattedName]]withArguments:(flavor==SHMessageFlavorAction) ? [NSString stringWithFormat:@"%c%@%@%c", 0x01, @"ACTION ", message, 0x01] : [NSString stringWithFormat:@"%@%@%@", @"", message, @""]];
 }
-
-- (void)parseCommand:(NSString*)command {
-    NSLog(@"Command received");
-    NSMutableString *txt = [command mutableCopy];
-    if ([command hasPrefix:@"/me"]) {
-        [txt replaceOccurrencesOfString:@"/me " withString:@"" options:NSCaseInsensitiveSearch range:(NSRange){0, [txt length]}];
-        [self sendMessage:txt flavor:SHMessageFlavorAction];
+- (void)parseAndEventuallySendMessage:(NSString *)command {
+    if ([command hasPrefix:@"/"]) {
+        [self parseCommand:command];
+    } else {    
+        [self sendMessage:command flavor:SHMessageFlavorNormal];
     }
+}
+- (void)parseCommand:(NSString*)command {
+    NSAutoreleasePool* pool = [NSAutoreleasePool new];
+    NSScanner* scan = [NSScanner scannerWithString:command];
+    if ([command hasPrefix:@"/"])
+        [scan setScanLocation:1];
+    else
+        return; //lolwat
+    NSString* command_=nil;
+    NSString* argument=nil;
+    [scan scanUpToString:@" " intoString:&command_];
+    [scan scanUpToString:@"" intoString:&argument];
+    if ([command_ isEqualToString:@"me"])
+    {
+        [self sendMessage:argument flavor:SHMessageFlavorAction];
+    } else if ([command_ hasPrefix:@"/"])
+    {
+        [scan setScanLocation:1];
+        [scan scanUpToString:@"" intoString:&argument];
+        [self sendMessage:argument flavor:SHMessageFlavorNormal];
+    }
+    [pool drain];
 }
 
 - (void)part

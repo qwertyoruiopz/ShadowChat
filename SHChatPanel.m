@@ -92,12 +92,7 @@
     if ([[tfield text] isEqualToString:@""]) {
         return YES;
     }
-    
-    if ([[tfield text] hasPrefix:@"/"]) {
-        [chan parseCommand:[tfield text]];
-    } else {    
-        [chan sendMessage:[tfield text] flavor:SHMessageFlavorNormal];
-    }
+    [chan parseAndEventuallySendMessage:[tfield text]];
     [tfield setText:@""];
     sendbtn.enabled=NO;
     return YES;
@@ -109,7 +104,9 @@
 {
     [super viewDidLoad];
     [[self navigationItem] setTitle:[chan formattedName]];
-    [output loadHTMLString:@"<html><head><script>function htmlEntities(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;'); } function addMessage(nick, msg) { document.body.innerHTML += '</br><strong>' + htmlEntities(nick) + ':</strong> ' + htmlEntities(msg) + ''; window.scrollTo(0, document.body.scrollHeight); }</script><body>ShadowChat beta</body></html>" baseURL:[NSURL URLWithString:@"http://google.com"]];  
+    [output loadHTMLString:@"<html><head><script>function htmlEntities(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;'); } function addMessage(nick, msg) { document.body.innerHTML += '</br><strong>' + htmlEntities(nick) + ':</strong> ' + htmlEntities(msg) + ''; window.scrollTo(0, document.body.scrollHeight); }</script><body style=\"word-wrap: break-word; background-color: #FFFFFF;\"><center>ShadowChat beta</center></body></html>" baseURL:[NSURL URLWithString:@"http://zomg.com"]];  //dae0ec
+    //[[self view] setBackgroundColor:];
+    NSLog(@"lolwat, %@", [output stringByEvaluatingJavaScriptFromString:@"document.bgColor"]);
     // Do any additional setup after loading the view from its nib.
 }
 
