@@ -10,7 +10,7 @@
 #import "SHIRCManager.h"
 #import "SHIRCChannel.h"
 @implementation SHIRCSocket
-@synthesize input, output, port, server, usesSSL, nick_, channels, status;
+@synthesize input, output, port, server, usesSSL, channels, status;
 + (SHIRCSocket*)socketWithServer:(NSString *)srv andPort:(int)prt usesSSL:(BOOL)ssl {
     SHIRCSocket* ret = [[(Class)self alloc]init];
     ret.server = srv;
@@ -65,13 +65,23 @@
     [self sendCommand:[NSString stringWithFormat:@"NICK %@\r\n", nick] withArguments:nil];
     return YES;
 }
+- (NSString*)nick_
+{
+    return nick_;
+}
+- (void)setNick_:(NSString *)nick
+{
+    [nick_ release];
+    nick_ = [nick retain];
+    [self sendCommand:@"NICK" withArguments:nick];
+}
 - (BOOL)sendCommand:(NSString *)command withArguments:(NSString *)args {
     NSString *cmd;
     NSLog(@"Command: %@ Args: %@", command, args);
     if(args)
         cmd = [command stringByAppendingFormat:@" :%@\r\n", args];
     else
-        cmd = command;
+        cmd = [command stringByAppendingString:@"\r\n"];
     if (canWrite) {
         return [output write:(uint8_t*)[cmd UTF8String] maxLength:[cmd length]];
     }

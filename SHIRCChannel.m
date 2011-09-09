@@ -129,6 +129,14 @@
         [socket sendCommand:[NSString stringWithFormat:@"PRIVMSG %@ :%@\r\n", user, msg] withArguments:nil];        
     } else if ([command_ isEqualToStringNoCase:@"raw"]) {
         [socket sendCommand:[NSString stringWithFormat:@"%@\r\n", argument] withArguments:nil];
+    } else if ([command_ isEqualToStringNoCase:@"nick"]) {
+        if ([[argument componentsSeparatedByString:@" "] count]<1) goto out;
+        [socket setNick_:[[argument componentsSeparatedByString:@" "] objectAtIndex:0]];
+    } else {
+        NSString* all=nil;
+        [scan setScanLocation:1];
+        [scan scanUpToString:@"" intoString:&all];
+        [socket sendCommand:all withArguments:nil];
     }
     out:
     [pool drain];

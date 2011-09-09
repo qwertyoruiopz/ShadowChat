@@ -86,7 +86,7 @@ static SHIRCManager* sharedSHManager;
             }
             [scan_ scanUpToString:@" " intoString:&command];
             if ([scan isAtEnd]) {
-                [scan_ setScanLocation:[scan_ scanLocation]+1 ];
+                [scan_ setScanLocation:1 ];
                 [scan_ scanUpToString:@"\x01" intoString:&command];
                 goto singlearg;
             }
