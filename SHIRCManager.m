@@ -60,18 +60,28 @@ static SHIRCManager* sharedSHManager;
         return;
     }
     if ([command isEqualToString:@"PRIVMSG"]) {
-        NSArray* arr=[argument componentsSeparatedByString:@" "];
-        if ([arr count]==1) {
-            goto cont;
+        NSScanner* scan_=[NSScanner scannerWithString:argument];
+        NSString* nick=nil;
+        NSString* user=nil;
+        NSString* hostmask=nil;
+        [self parseUsermask:sender nick:&nick user:&user hostmask:&hostmask];
+        NSString* message=nil;
+        NSString* toChannel=nil;
+        [scan_ scanUpToString:@" " intoString:&toChannel];
+        @try {
+            [scan_ setScanLocation:[scan_ scanLocation]+2 ];
         }
-        if ([[arr objectAtIndex:1] hasPrefix:@":\x01"]&&[[arr objectAtIndex:1] hasSuffix:@"\x01"])
+        @catch (id e) {
+            NSLog(@"Catched error %@", e);
+        }
+        [scan_ scanUpToString:@"" intoString:&message];
+        if ([message hasPrefix:@"\x01"]&&[message hasSuffix:@"\x01"])
         {
-            NSLog(@"Got a CTCP request from %@ [%@]", sender, [arr objectAtIndex:1]);
-            NSString* nick=nil;
-            NSString* user=nil;
-            NSString* hostmask=nil;
-            [self parseUsermask:sender nick:&nick user:&user hostmask:&hostmask];
+            NSLog(@"Got a CTCP request from %@ [%@]", sender, message);
             [socket sendCommand:[@"NOTICE " stringByAppendingString:nick] withArguments:@"\x01VERSION ShadowChat\x01"];
+        } else {
+            NSLog(@"zomg a message %@ to %@ from %@", message, toChannel, nick);
+            [[socket retainedChannelWithFormattedName:toChannel] didRecieveMessageFrom:nick text:message];
         }
     }
     cont:

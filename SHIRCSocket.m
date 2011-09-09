@@ -193,5 +193,13 @@
     [output release];
     [super dealloc];
 }
-
+- (SHIRCChannel*)retainedChannelWithFormattedName:(NSString*)fName;
+{
+    for (SHIRCChannel* rtn in [self channels]) {
+        if ([[rtn formattedName] isEqualToString:fName]) {
+            return [rtn retain];
+        }
+    }
+    return nil;
+}
 @end

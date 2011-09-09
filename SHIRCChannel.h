@@ -20,12 +20,15 @@ typedef enum SHMessageFlavor
     NSString* net;
     NSString* name;
     SHIRCSocket* socket;
+    id delegate;
 }
 @property(retain) NSString* net;
 @property(retain) NSString* name;
 @property(assign) SHIRCSocket* socket;
+@property(assign) id delegate;
 - (id)initWithSocket:(SHIRCSocket *)sock andChanName:(NSString*)chName;
 - (BOOL)sendMessage:(NSString*)message flavor:(SHMessageFlavor)flavor;
 - (NSString *)formattedName;
 - (void)part;
+- (void)didRecieveMessageFrom:(NSString*)nick text:(NSString*)ircMessage;
 @end

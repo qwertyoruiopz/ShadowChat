@@ -9,7 +9,7 @@
 #import "SHIRCChannel.h"
 
 @implementation SHIRCChannel
-@synthesize net, name, socket;
+@synthesize net, name, socket, delegate;
 - (id)initWithSocket:(SHIRCSocket *)sock andChanName:(NSString*)chName
 {
     self = [super init];
@@ -39,11 +39,20 @@
             command=@"PRIVMSG";
             break;
     }
+    [self didRecieveMessageFrom:[socket nick_] text:message];
     return [socket sendCommand:[command stringByAppendingFormat:@" %@", [self formattedName]] withArguments:[NSString stringWithFormat:@"%@%@%@", (flavor==SHMessageFlavorAction) ? @"/x01 ACTION ", message, @"/x01" : @"", message, @""]];
 }
 - (void)part
 {
     [socket sendCommand:@"PART" withArguments:[self formattedName]];
     [self release];
+}
+- (void)didRecieveMessageFrom:(NSString*)nick text:(NSString*)ircMessage
+{
+    NSLog(@"oh mah gawd %@", delegate);
+    if ([delegate respondsToSelector:_cmd])
+    {
+        [delegate performSelector:_cmd withObject:nick withObject:ircMessage];
+    }
 }
 @end

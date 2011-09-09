@@ -12,9 +12,14 @@
 {
     SHIRCChannel* chan;
     UITextField* tfield;
+    UIWebView* output;
+    UIBarButtonItem* sendbtn;
 }
 @property(retain) SHIRCChannel* chan;
 @property(retain) IBOutlet UITextField* tfield;
+@property(retain) IBOutlet UIWebView* output;
+@property(retain) IBOutlet UIBarButtonItem* sendbtn;
 - (BOOL)textFieldShouldReturn:(UITextField *)textField;
 - (IBAction)sendMessagePlz;
+- (void)didRecieveMessageFrom:(NSString*)nick text:(NSString*)ircMessage;
 @end
