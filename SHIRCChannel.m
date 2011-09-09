@@ -72,6 +72,32 @@
         [scan setScanLocation:1];
         [scan scanUpToString:@"" intoString:&argument];
         [self sendMessage:argument flavor:SHMessageFlavorNormal];
+    } else if ([command_ isEqualToString:@"mode"]) {
+        [socket sendCommand:[NSString stringWithFormat:@"MODE %@ %@\r\n", [self formattedName], argument] withArguments:nil];
+    } else if ([command_ isEqualToString:@"op"]) {
+        [socket sendCommand:[NSString stringWithFormat:@"MODE %@ +o %@\r\n", [self formattedName], argument] withArguments:nil];
+    } else if ([command_ isEqualToString:@"deop"]) {
+        [socket sendCommand:[NSString stringWithFormat:@"MODE %@ -o %@\r\n", [self formattedName], argument] withArguments:nil];
+    } else if ([command_ isEqualToString:@"voice"]) {
+        [socket sendCommand:[NSString stringWithFormat:@"MODE %@ +v %@\r\n", [self formattedName], argument] withArguments:nil];
+    } else if ([command_ isEqualToString:@"devoice"]) {
+        [socket sendCommand:[NSString stringWithFormat:@"MODE %@ -v %@\r\n", [self formattedName], argument] withArguments:nil];
+    } else if ([command_ isEqualToString:@"halfop"]) {
+        [socket sendCommand:[NSString stringWithFormat:@"MODE %@ +h %@\r\n", [self formattedName], argument] withArguments:nil];
+    } else if ([command_ isEqualToString:@"dehalfop"]) {
+        [socket sendCommand:[NSString stringWithFormat:@"MODE %@ -h %@\r\n", [self formattedName], argument] withArguments:nil];
+    } else if ([command_ isEqualToString:@"oper"]) {
+        [socket sendCommand:[NSString stringWithFormat:@"OPER %@\r\n", argument] withArguments:nil];
+    } else if ([command_ isEqualToString:@"msg"] || [command_ isEqualToString:@"query"]) {
+        NSString *user;
+        NSString *msg;
+        NSScanner* tmpscan=[NSScanner scannerWithString:argument];
+        [tmpscan scanUpToString:@" " intoString:&user];
+        [tmpscan scanUpToString:@"" intoString:&msg];
+        
+        [socket sendCommand:[NSString stringWithFormat:@"PRIVMSG %@ :%@\r\n", user, msg] withArguments:nil];        
+    } else if ([command_ isEqualToString:@"raw"]) {
+        [socket sendCommand:[NSString stringWithFormat:@"%@\r\n", argument] withArguments:nil];
     }
     [pool drain];
 }

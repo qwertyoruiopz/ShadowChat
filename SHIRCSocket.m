@@ -67,6 +67,7 @@
 }
 - (BOOL)sendCommand:(NSString *)command withArguments:(NSString *)args {
     NSString *cmd;
+    NSLog(@"Command: %@ Args: %@", command, args);
     if(args)
         cmd = [command stringByAppendingFormat:@" :%@\r\n", args];
     else
