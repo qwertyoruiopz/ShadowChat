@@ -9,7 +9,7 @@
 #import "SHChatPanel.h"
 
 @implementation SHChatPanel
-@synthesize tfield, output, sendbtn;
+@synthesize tfield, output, sendbtn, bar;
 
 - (SHIRCChannel *)chan
 {
@@ -26,6 +26,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        NSLog(@"no u");
         // Custom initialization
     }
     return self;
@@ -42,21 +43,31 @@
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     /*
-     FIXME: hax
+     FIXME: hax used to fix apple's bugs
      */
     if (![textField inputAccessoryView]) {
-        [textField setInputAccessoryView:[textField superview]];
-        [textField becomeFirstResponder];
+        [tfield setInputAccessoryView:bar];
+        [tfield becomeFirstResponder];
+        return YES;
     }
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    /*
+     FIXME: hax used to fix apple's bugs
+     */
     return YES;
 }
 
 - (void) viewWillDisappear:(BOOL)animated
 {
+    /*[tfield setInputAccessoryView:nil];
     if ([tfield isFirstResponder]) {
         [tfield resignFirstResponder];
-    }
-    [chan release];
+    }*/
+    [tfield resignFirstResponder];
     [super viewDidDisappear:animated];
 }
 
@@ -121,6 +132,7 @@
     //[[self view] setBackgroundColor:];
     NSLog(@"lolwat, %@", [output stringByEvaluatingJavaScriptFromString:@"return document.bgColor"]);
     // Do any additional setup after loading the view from its nib.
+    
 }
 
 - (void)viewDidUnload
@@ -128,6 +140,13 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     [super viewDidUnload];
+}
+
+- (void)dealloc
+{
+    NSLog(@"cyah");
+    [chan setDelegate:nil];
+    [super dealloc];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -139,7 +158,12 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    NSLog(@"%@", tfield);
+    NSLog(@"%@", [tfield superview]);
+    [[self view] addSubview:[tfield superview]];
     [tfield becomeFirstResponder];
+    
+    //[tfield setInputAccessoryView:[tfield superview]];
 }
 
 @end

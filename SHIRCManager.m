@@ -85,7 +85,13 @@ static SHIRCManager* sharedSHManager;
                 NSLog(@"Catched error %@", e);
             }
             [scan_ scanUpToString:@" " intoString:&command];
+            if ([scan isAtEnd]) {
+                [scan_ setScanLocation:[scan_ scanLocation]+1 ];
+                [scan_ scanUpToString:@"\x01" intoString:&command];
+                goto singlearg;
+            }
             [scan_ scanUpToString:@"\x01" intoString:&arg];
+        singlearg:
             if ([command isEqualToString:@"ACTION"]) {
                 id chan=[socket retainedChannelWithFormattedName:toChannel];
                 [chan didRecieveActionFrom:nick text:arg];

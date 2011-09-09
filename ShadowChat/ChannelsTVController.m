@@ -170,10 +170,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    id vc=[SHChatPanel new];
-    [vc setChan:[[[(SHIRCNetwork*)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.section] socket] channels] objectAtIndex:indexPath.row]];
+    id vc=nil;
+    if ([[[[(SHIRCNetwork*)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.section] socket] channels] objectAtIndex:indexPath.row] delegate])
+        vc=[[[[(SHIRCNetwork*)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.section] socket] channels] objectAtIndex:indexPath.row] delegate];
+    else
+    {
+        vc=[SHChatPanel new];
+        [vc setChan:[[[(SHIRCNetwork*)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.section] socket] channels] objectAtIndex:indexPath.row]];
+    }
     [[self navigationController] pushViewController:vc animated:YES];
-    [vc release];
+    //[vc release];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

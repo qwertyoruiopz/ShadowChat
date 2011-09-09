@@ -8,17 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "SHIRCChannel.h"
-@interface SHChatPanel : UIViewController
+@interface SHChatPanel : UIViewController <UITextFieldDelegate>
 {
     SHIRCChannel* chan;
     UITextField* tfield;
     UIWebView* output;
     UIBarButtonItem* sendbtn;
+    UIToolbar* bar;
 }
 @property(retain) SHIRCChannel* chan;
 @property(retain) IBOutlet UITextField* tfield;
 @property(retain) IBOutlet UIWebView* output;
 @property(retain) IBOutlet UIBarButtonItem* sendbtn;
+@property(retain) IBOutlet UIToolbar* bar;
 - (BOOL)textFieldShouldReturn:(UITextField *)textField;
 - (IBAction)sendMessagePlz;
 - (void)didRecieveMessageFrom:(NSString*)nick text:(NSString*)ircMessage;
