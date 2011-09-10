@@ -7,6 +7,8 @@
 //
 
 #import "SHIRCChannel.h"
+
+
 @interface NSString (casecompare)
 - (BOOL)isEqualToStringNoCase:(NSString *)aString;
 @end

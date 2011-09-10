@@ -58,8 +58,7 @@
     /*
      FIXME: hax used to fix apple's bugs
      */
-    if (![textField inputAccessoryView]&&isViewHidden) {
-        [tfield setInputAccessoryView:nil];
+    if (![textField inputAccessoryView]) {
         return YES;
     }
     return NO;
@@ -67,11 +66,12 @@
 
 - (void) viewWillDisappear:(BOOL)animated
 {
+    [tfield setInputAccessoryView:nil];
     isViewHidden=YES;
     /*[tfield setInputAccessoryView:nil];
-    if ([tfield isFirstResponder]) {
-        [tfield resignFirstResponder];
-    }*/
+	 if ([tfield isFirstResponder]) {
+	 [tfield resignFirstResponder];
+	 }*/
     [tfield resignFirstResponder];
     [super viewDidDisappear:animated];
 }
@@ -93,19 +93,20 @@
     [self textFieldShouldReturn:nil];
 }
 
-- (void)didRecieveMessageFrom:(NSString*)nick text:(NSString*)ircMessage
-{
-    NSString *java = [NSString stringWithFormat:@"addMessage('%@','%@');",
+- (void)didRecieveMessageFrom:(NSString*)nick text:(NSString*)ircMessage {
+	NSLog(@"Nick:%@ Message:%@", nick, ircMessage);
+    NSString *java = [NSString stringWithFormat:@"addMessage('%@','%@','%@');",
                       [[nick stringByReplacingOccurrencesOfString:@"\'" withString:@"\\'"] stringByReplacingOccurrencesOfString:@"'" withString:@"\'"],
-                      [[ircMessage stringByReplacingOccurrencesOfString:@"\'" withString:@"\\'"] stringByReplacingOccurrencesOfString:@"'" withString:@"\'"]];
+                      [[ircMessage stringByReplacingOccurrencesOfString:@"\'" withString:@"\\'"] stringByReplacingOccurrencesOfString:@"'" withString:@"\'"], @"SHActionTypeMessage"];
     [output stringByEvaluatingJavaScriptFromString:java];
 }
 
-- (void)didRecieveActionFrom:(NSString*)nick text:(NSString*)ircMessage_
-{
-    NSString *java = [NSString stringWithFormat:@"addAction('%@','%@');",
+- (void)didRecieveActionFrom:(NSString*)nick text:(NSString*)ircMessage_ {
+	NSLog(@"Action(Nick:%@ Message:%@)",nick, ircMessage_);
+	
+    NSString *java = [NSString stringWithFormat:@"addAction('%@','%@', '%@');",
                       [[nick stringByReplacingOccurrencesOfString:@"\'" withString:@"\\'"] stringByReplacingOccurrencesOfString:@"'" withString:@"\'"],
-                      [[ircMessage_ stringByReplacingOccurrencesOfString:@"\'" withString:@"\\'"] stringByReplacingOccurrencesOfString:@"'" withString:@"\'"]];
+                      [[ircMessage_ stringByReplacingOccurrencesOfString:@"\'" withString:@"\\'"] stringByReplacingOccurrencesOfString:@"'" withString:@"\'"], @"SHActionTypeMessage"];
     [output stringByEvaluatingJavaScriptFromString:java];
 }
 
@@ -125,17 +126,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[self navigationItem] setTitle:[chan formattedName]];
-    [output loadHTMLString:@"<html><head><script>function htmlEntities(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;'); } \
-     function addMessage(nick, msg) { document.body.innerHTML += '<div><strong>' + htmlEntities(nick) + ':</strong> ' + htmlEntities(msg) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
+	[[self navigationItem] setTitle:[chan formattedName]];
+	[output loadHTMLString:@"<html><head><script>function htmlEntities(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;'); } \
+     function addMessage(nick, msg, type) { /*if (type == 'SHActionTypeMessage')*/ document.body.innerHTML += '<div><strong>' + htmlEntities(nick) + ':</strong> ' + htmlEntities(msg) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
      function addAction(nick, msg) { document.body.innerHTML += '<div><strong><span style=\"font-size: 24; vertical-align: middle; position:relative;\">•</span> ' + htmlEntities(nick) + '</strong> ' + htmlEntities(msg) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
      function background_color() { \
-        document.body.style.background=\"#dae0ec\"; \
-        return \"#dae0ec\"; \
+	 document.body.style.background=\"#dae0ec\"; \
+	 return \"#dae0ec\"; \
      } \
-     </script><body style=\"word-wrap: break-word;\"><center>ShadowChat beta</center></body></html>" baseURL:[NSURL URLWithString:@"http://zomg.com"]];  //dae0ec
+     </script><body style=\"word-wrap: break-word; \"><center>ShadowChat beta</center></body></html>" baseURL:[NSURL URLWithString:@"http://zomg.com"]];  //dae0ec
     NSLog(@"lolwat, %@", [output stringByEvaluatingJavaScriptFromString:@"alert( background_color());"]);
-
+	
     //[[self view] setBackgroundColor:];
     // Do any additional setup after loading the view from its nib.
     
@@ -170,7 +171,7 @@
     [[self view] addSubview:[tfield superview]];
     [tfield becomeFirstResponder];
     
-    //[tfield setInputAccessoryView:[tfield superview]];
+    [tfield setInputAccessoryView:[tfield superview]];
 }
 
 @end

@@ -15,6 +15,16 @@ typedef enum SHMessageFlavor
     SHMessageFlavorAction,
     SHMessageFlavorNotice
 } SHMessageFlavor;
+
+typedef enum SHActionType
+{
+    SHActionTypePart,
+    SHActionTypeJoin,
+    SHActionTypeKick,
+	SHActionTypeMessage,
+	SHActionTypeBan
+} SHActionType;
+
 @interface SHIRCChannel : NSObject
 {
     NSString* net;

@@ -34,21 +34,21 @@ static SHIRCManager* sharedSHManager;
     [self parseMessage:[args objectAtIndex:0] fromSocket:[args objectAtIndex:1]];
 }
 #define NO_THREADING 1
-- (void)parseMessage:(NSMutableString*)msg fromSocket:(SHIRCSocket*)socket
-{
-    id pool=[NSAutoreleasePool new];
-    #ifndef NO_THREADING
-    if ([NSThread isMainThread]) {
-        [self performSelectorInBackground:@selector(parseMessageWithArray:) withObject:[[NSArray alloc] initWithObjects:msg, socket, nil]];
-        return;
-    }
-    #endif
-    NSScanner* scan=[NSScanner scannerWithString:msg];
-    if([msg hasPrefix:@":"])
-        [scan setScanLocation:1];
-    NSString* sender=nil;
-    NSString* command=nil;
-    NSString* argument=nil;
+- (void)parseMessage:(NSMutableString*)msg fromSocket:(SHIRCSocket*)socket {
+	NSLog(@"fun %@", msg);
+	id pool = [NSAutoreleasePool new];
+	#ifndef NO_THREADING
+	if ([NSThread isMainThread]) {
+		[self performSelectorInBackground:@selector(parseMessageWithArray:) withObject:[[NSArray alloc] initWithObjects:msg, socket, nil]];
+		return;
+	}
+	#endif
+	NSScanner* scan=[NSScanner scannerWithString:msg];
+	if([msg hasPrefix:@":"])
+		[scan setScanLocation:1];
+	NSString *sender = nil;
+	NSString *command = nil;
+	NSString *argument = nil;
     [scan scanUpToString:@" " intoString:&sender];
     [scan scanUpToString:@" " intoString:&command];
     [scan scanUpToString:@"\r\n" intoString:&argument];
@@ -67,7 +67,7 @@ static SHIRCManager* sharedSHManager;
         NSString* toChannel=nil;
         [scan_ scanUpToString:@" " intoString:&toChannel];
         @try {
-            [scan_ setScanLocation:[scan_ scanLocation]+2 ];
+            [scan_ setScanLocation:[scan_ scanLocation]+2];
         }
         @catch (id e) {
             NSLog(@"Catched error %@", e);
@@ -76,9 +76,9 @@ static SHIRCManager* sharedSHManager;
         NSLog(@"%@ lolwat", message);
         if ([message hasPrefix:@"\x01"]&&[message hasSuffix:@"\x01"])
         {
-            NSString* command=nil;
-            NSString* arg=nil;
-            NSScanner* scan__=[NSScanner scannerWithString:message];
+            NSString *command = nil;
+            NSString *arg = nil;
+            NSScanner *scan__ = [NSScanner scannerWithString:message];
             [scan__ setScanLocation:1];
             [scan__ scanUpToString:@" " intoString:&command];
             NSLog(@"command is %@, %d", command, [command hasPrefix:@"\x01"]);
@@ -108,7 +108,7 @@ static SHIRCManager* sharedSHManager;
     if ([command isEqualToString:@"433"]) {
         if (!socket.didRegister)
         {
-            socket.nick_=[socket.nick_ stringByAppendingString:@"_"];
+            socket.nick_ = [socket.nick_ stringByAppendingString:@"_"];
             [socket sendCommand:[NSString stringWithFormat:@"NICK %@\r\n", socket.nick_] withArguments:nil];
         }
         NSLog(@"Nick is being used.");
@@ -121,12 +121,11 @@ static SHIRCManager* sharedSHManager;
     }
     [pool release];
 }
-- (void)parseUsermask:(NSString*)mask nick:(NSString**)nick user:(NSString**)user hostmask:(NSString**)hostmask
-{
-    *nick=nil;
-    *user=nil;
-    *hostmask=nil;
-    NSScanner* scan=[NSScanner scannerWithString:mask];
+- (void)parseUsermask:(NSString *)mask nick:(NSString **)nick user:(NSString **)user hostmask:(NSString **)hostmask {
+    *nick = nil;
+    *user = nil;
+    *hostmask = nil;
+    NSScanner *scan = [NSScanner scannerWithString:mask];
     [scan scanUpToString:@"!" intoString:nick];
     if([scan isAtEnd]) return;
     [scan setScanLocation:((int)[scan scanLocation])+1];

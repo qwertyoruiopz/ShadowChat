@@ -10,6 +10,7 @@
 #import "SHIRCSocket.h"
 #import "SHIRCChannel.h"
 
+
 @interface SHIRCManager : NSObject
 + (SHIRCManager*)sharedManager;
 - (void)parseMessage:(NSString*)msg fromSocket:(SHIRCSocket*)socket;
