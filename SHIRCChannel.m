@@ -8,7 +8,6 @@
 
 #import "SHIRCChannel.h"
 
-
 @interface NSString (casecompare)
 - (BOOL)isEqualToStringNoCase:(NSString *)aString;
 @end
@@ -120,7 +119,7 @@
         [scan scanUpToString:@" " intoString:nil];
         [scan scanUpToString:@" " intoString:&tokick];
         [scan scanUpToString:@"" intoString:&msg];
-        [socket sendCommand:[NSString stringWithFormat:@"KICK %@ %@ :%@", [self formattedName], tokick, msg] withArguments:nil];
+        [socket sendCommand:[NSString stringWithFormat:@"KICK %@ %@ :%@", [self formattedName], tokick, msg ? msg : tokick] withArguments:nil];
     } else if ([command_ isEqualToStringNoCase:@"msg"] || [command_ isEqualToStringNoCase:@"query"]) {
         NSString *user;
         NSString *msg;
@@ -163,6 +162,13 @@
     if ([delegate respondsToSelector:_cmd])
     {
         [delegate performSelector:_cmd withObject:nick withObject:ircMessage];
+    }
+}
+- (void)didRecieveEvent:(SHEventType)event from:(NSString*)from to:(NSString*)to extra:(NSString *)extra
+{
+    if ([delegate respondsToSelector:_cmd])
+    {
+        objc_msgSend(delegate, _cmd, event, from, to, extra);
     }
 }
 @end

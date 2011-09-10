@@ -18,11 +18,13 @@ static SHIRCManager* sharedSHManager;
         sharedSHManager=[[(Class)self alloc] init];
     return sharedSHManager;
 }
+
 - (void)dealloc {
     if (1 == 2) {
         [super dealloc];
     }
 }
+
 - (void)parseMessageWithArray:(NSArray*)args
 {
     id pool=[NSAutoreleasePool new];
@@ -33,6 +35,7 @@ static SHIRCManager* sharedSHManager;
     }
     [self parseMessage:[args objectAtIndex:0] fromSocket:[args objectAtIndex:1]];
 }
+
 #define NO_THREADING 1
 - (void)parseMessage:(NSMutableString*)msg fromSocket:(SHIRCSocket*)socket {
 	NSLog(@"fun %@", msg);
@@ -103,13 +106,12 @@ static SHIRCManager* sharedSHManager;
             [chan didRecieveMessageFrom:nick text:message];
             [chan release];
         }
-    }
+    } else
     cont:
     if ([command isEqualToString:@"433"]) {
         if (!socket.didRegister)
         {
-            socket.nick_ = [socket.nick_ stringByAppendingString:@"_"];
-            [socket sendCommand:[NSString stringWithFormat:@"NICK %@\r\n", socket.nick_] withArguments:nil];
+            [socket setNick_:[[socket nick_] stringByAppendingString:@"_"]];
         }
         NSLog(@"Nick is being used.");
     }
@@ -117,14 +119,92 @@ static SHIRCManager* sharedSHManager;
     {
         socket.didRegister=YES;
         NSLog(@"Did register");
+    }    else if ([command isEqualToString:@"KICK"])
+    {
+        NSString* nick=nil;
+        NSString* chan=nil;
+        NSString* target=nil;
+        NSString* message=nil;
+        NSScanner* scanz=[NSScanner scannerWithString:argument];
+        [scanz scanUpToString:@" " intoString:&chan];
+        if (![scanz isAtEnd]) 
+            [scanz setScanLocation:[scanz scanLocation]+1];
+        [self parseUsermask:sender nick:&nick user:nil hostmask:nil];
+        [scanz scanUpToString:@" " intoString:&target];
+        if (![scanz isAtEnd]) 
+            [scanz setScanLocation:[scanz scanLocation]+1];
+        int point=[scanz scanLocation];
+        [scanz scanUpToString:@"" intoString:&message];
+        if ([message hasPrefix:@":"])
+        {
+            @try {
+                [scanz setScanLocation:point+1];
+            }
+            @catch (id e) {
+                NSLog(@"Catched error %@", e);
+            }
+            [scanz scanUpToString:@"" intoString:&message];
+        }
+        SHIRCChannel* chanC=[socket retainedChannelWithFormattedName:chan];
+        [chanC didRecieveEvent:SHEventTypeKick from:nick to:target extra:message];
+        [chanC release];
+    }    else if ([command isEqualToString:@"MODE"])
+    {
+
+    }    else if ([command isEqualToString:@"JOIN"])
+    {
+        if ([argument hasPrefix:@":"]) {
+            NSScanner* scnr=[NSScanner scannerWithString:argument];
+            [scnr setScanLocation:1];
+            [scnr scanUpToString:@"" intoString:&argument];
+        }
+        NSString* nick=nil;
+        [self parseUsermask:sender nick:&nick user:nil hostmask:nil];
+        SHIRCChannel* chanC=[socket retainedChannelWithFormattedName:argument];
+        [chanC didRecieveEvent:SHEventTypeJoin from:nick to:argument extra:nil];
+        [chanC release];
+    }    else if ([command isEqualToString:@"PART"])
+    {
+        NSScanner* scnr=[NSScanner scannerWithString:argument];
+        NSString* chan=nil;
+        NSString* msg=nil;
+        NSString* nick=nil;
+        [scnr scanUpToString:@" " intoString:&chan];
+        @try {
+            [scnr setScanLocation:[scnr scanLocation]+1];
+        }
+        @catch (id e) {
+            NSLog(@"Catched error %@", e);
+        }
+        int point=[scnr scanLocation];
+        [scnr scanUpToString:@"" intoString:&msg];
+        if ([msg hasPrefix:@":"])
+        {
+            @try {
+                [scnr setScanLocation:point+1];
+            }
+            @catch (id e) {
+                NSLog(@"Catched error %@", e);
+            }
+            [scnr scanUpToString:@"" intoString:&msg];
+        }
         
-    }
+        [self parseUsermask:sender nick:&nick user:nil hostmask:nil];
+        NSLog(@"%@ parted from %@ with message %@", nick, chan, msg);
+        SHIRCChannel* chanC=[socket retainedChannelWithFormattedName:chan];
+        [chanC didRecieveEvent:SHEventTypePart from:nick to:argument extra:msg];
+        [chanC release];
+    } 
     [pool release];
 }
+
 - (void)parseUsermask:(NSString *)mask nick:(NSString **)nick user:(NSString **)user hostmask:(NSString **)hostmask {
-    *nick = nil;
-    *user = nil;
-    *hostmask = nil;
+    if (nick)
+        *nick = nil;
+    if (user)
+        *user = nil;
+    if (hostmask)
+        *hostmask = nil;
     NSScanner *scan = [NSScanner scannerWithString:mask];
     [scan scanUpToString:@"!" intoString:nick];
     if([scan isAtEnd]) return;
@@ -134,6 +214,7 @@ static SHIRCManager* sharedSHManager;
     if([scan isAtEnd]) return;
     [scan scanUpToString:@"" intoString:hostmask];
 }
+
 - (void)parseCommand:(NSString*)command fromChannel:(SHIRCChannel*)chat
 {
     

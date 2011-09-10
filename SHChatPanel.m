@@ -42,9 +42,6 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    /*
-     FIXME: hax used to fix apple's bugs
-     */
     if (![textField inputAccessoryView]) {
         [tfield setInputAccessoryView:bar];
         [tfield becomeFirstResponder];
@@ -55,10 +52,7 @@
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
-    /*
-     FIXME: hax used to fix apple's bugs
-     */
-    if (![textField inputAccessoryView]) {
+    if (isViewHidden) {
         return YES;
     }
     return NO;
@@ -95,18 +89,17 @@
 
 - (void)didRecieveMessageFrom:(NSString*)nick text:(NSString*)ircMessage {
 	NSLog(@"Nick:%@ Message:%@", nick, ircMessage);
-    NSString *java = [NSString stringWithFormat:@"addMessage('%@','%@','%@');",
-                      [[nick stringByReplacingOccurrencesOfString:@"\'" withString:@"\\'"] stringByReplacingOccurrencesOfString:@"'" withString:@"\'"],
-                      [[ircMessage stringByReplacingOccurrencesOfString:@"\'" withString:@"\\'"] stringByReplacingOccurrencesOfString:@"'" withString:@"\'"], @"SHActionTypeMessage"];
+    NSString *java = [NSString stringWithFormat:@"addMessage('%@','%@');",
+                      [[nick stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"],
+                      [[ircMessage stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"]];
     [output stringByEvaluatingJavaScriptFromString:java];
 }
 
 - (void)didRecieveActionFrom:(NSString*)nick text:(NSString*)ircMessage_ {
 	NSLog(@"Action(Nick:%@ Message:%@)",nick, ircMessage_);
-	
-    NSString *java = [NSString stringWithFormat:@"addAction('%@','%@', '%@');",
-                      [[nick stringByReplacingOccurrencesOfString:@"\'" withString:@"\\'"] stringByReplacingOccurrencesOfString:@"'" withString:@"\'"],
-                      [[ircMessage_ stringByReplacingOccurrencesOfString:@"\'" withString:@"\\'"] stringByReplacingOccurrencesOfString:@"'" withString:@"\'"], @"SHActionTypeMessage"];
+    NSString *java = [NSString stringWithFormat:@"addAction('%@','%@');",
+                      [[nick stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"],
+                      [[ircMessage_ stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"]];
     [output stringByEvaluatingJavaScriptFromString:java];
 }
 
@@ -127,15 +120,46 @@
 {
     [super viewDidLoad];
 	[[self navigationItem] setTitle:[chan formattedName]];
-	[output loadHTMLString:@"<html><head><script>function htmlEntities(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;'); } \
-     function addMessage(nick, msg, type) { /*if (type == 'SHActionTypeMessage')*/ document.body.innerHTML += '<div><strong>' + htmlEntities(nick) + ':</strong> ' + htmlEntities(msg) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
+	[output loadHTMLString:@"\
+     <html>\
+     <head>\
+     <script>\
+     function htmlEntities(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;'); }\
+     function addMessage(nick, msg) { document.body.innerHTML += '<div><strong>' + htmlEntities(nick) + ':</strong> ' + htmlEntities(msg) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
      function addAction(nick, msg) { document.body.innerHTML += '<div><strong><span style=\"font-size: 24; vertical-align: middle; position:relative;\">•</span> ' + htmlEntities(nick) + '</strong> ' + htmlEntities(msg) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
-     function background_color() { \
-	 document.body.style.background=\"#dae0ec\"; \
-	 return \"#dae0ec\"; \
-     } \
-     </script><body style=\"word-wrap: break-word; \"><center>ShadowChat beta</center></body></html>" baseURL:[NSURL URLWithString:@"http://zomg.com"]];  //dae0ec
-    NSLog(@"lolwat, %@", [output stringByEvaluatingJavaScriptFromString:@"alert( background_color());"]);
+     function background_color() {\
+         document.body.style.background=\"#dae0ec\";\
+         return \"#dae0ec\";\
+     }\
+     function addEvent(from, to, extra, type)\
+     {\
+         if(type==\"SHEventTypeKick\") {\
+             document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' has kicked ' + htmlEntities(to) + ' (' + htmlEntities(extra) + ')</center></div>';\
+             window.scrollTo(0, document.body.scrollHeight);\
+         }\
+         if(type==\"SHEventTypeJoin\") {\
+             document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' has joined the channel </center></div>';\
+             window.scrollTo(0, document.body.scrollHeight);\
+         }\
+         if(type==\"SHEventTypePart\") {\
+             if(extra=='(null)'){\
+                 document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' has left the channel </center></div>';\
+                 window.scrollTo(0, document.body.scrollHeight);\
+             }\
+             else {\
+                 document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' has left the channel (' + htmlEntities(extra) + ')</center></div>';\
+                 window.scrollTo(0, document.body.scrollHeight);\
+             }\
+         }\
+     }\
+     </script>\
+     </head>\
+     <body style=\"word-wrap: break-word; \">\
+     <center>ShadowChat beta</center>\
+     </body>\
+     </html>\
+    " baseURL:[NSURL URLWithString:@"http://zomg.com"]];  //dae0ec
+    NSLog(@"lolwat, %@", [output stringByEvaluatingJavaScriptFromString:@"background_color();"]);
 	
     //[[self view] setBackgroundColor:];
     // Do any additional setup after loading the view from its nib.
@@ -174,4 +198,18 @@
     [tfield setInputAccessoryView:[tfield superview]];
 }
 
+- (void)didRecieveEvent:(SHEventType)evt from:(NSString*)from to:(NSString*)to extra:(NSString *)extra
+{
+    NSLog(@"%d %@ %@", evt, from, to);
+    NSString *java = [NSString stringWithFormat:@"addEvent('%@','%@', '%@', '%@');",
+                      [[from stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"],
+                      [[to stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"],
+                      [[extra stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"],
+                      (evt == SHEventTypeKick) ? @"SHEventTypeKick" :
+                      (evt == SHEventTypeJoin) ? @"SHEventTypeJoin" :
+                      (evt == SHEventTypeMode) ? @"SHEventTypeMode" : 
+                      (evt == SHEventTypePart) ? @"SHEventTypePart" : nil
+                      ];
+    [output stringByEvaluatingJavaScriptFromString:java];
+}
 @end

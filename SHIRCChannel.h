@@ -16,14 +16,13 @@ typedef enum SHMessageFlavor
     SHMessageFlavorNotice
 } SHMessageFlavor;
 
-typedef enum SHActionType
+typedef enum SHEventType
 {
-    SHActionTypePart,
-    SHActionTypeJoin,
-    SHActionTypeKick,
-	SHActionTypeMessage,
-	SHActionTypeBan
-} SHActionType;
+    SHEventTypePart,
+    SHEventTypeMode,
+    SHEventTypeJoin,
+    SHEventTypeKick
+} SHEventType;
 
 @interface SHIRCChannel : NSObject
 {
@@ -44,4 +43,5 @@ typedef enum SHActionType
 - (void)parseCommand:(NSString*)command;
 - (void)parseAndEventuallySendMessage:(NSString *)command;
 - (void)didRecieveActionFrom:(NSString*)nick text:(NSString*)ircMessage;
+- (void)didRecieveEvent:(SHEventType)nick from:(NSString*)from to:(NSString*)to extra:(NSString*)extra;
 @end
