@@ -58,11 +58,16 @@
     /*
      FIXME: hax used to fix apple's bugs
      */
-    return YES;
+    if (![textField inputAccessoryView]&&isViewHidden) {
+        [tfield setInputAccessoryView:nil];
+        return YES;
+    }
+    return NO;
 }
 
 - (void) viewWillDisappear:(BOOL)animated
 {
+    isViewHidden=YES;
     /*[tfield setInputAccessoryView:nil];
     if ([tfield isFirstResponder]) {
         [tfield resignFirstResponder];
@@ -159,6 +164,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    isViewHidden=NO;
     NSLog(@"%@", tfield);
     NSLog(@"%@", [tfield superview]);
     [[self view] addSubview:[tfield superview]];

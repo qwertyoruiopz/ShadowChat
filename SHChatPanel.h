@@ -15,6 +15,7 @@
     UIWebView* output;
     UIBarButtonItem* sendbtn;
     UIToolbar* bar;
+    BOOL isViewHidden;
 }
 @property(retain) SHIRCChannel* chan;
 @property(retain) IBOutlet UITextField* tfield;

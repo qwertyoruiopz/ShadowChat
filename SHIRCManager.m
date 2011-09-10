@@ -73,24 +73,21 @@ static SHIRCManager* sharedSHManager;
             NSLog(@"Catched error %@", e);
         }
         [scan_ scanUpToString:@"" intoString:&message];
+        NSLog(@"%@ lolwat", message);
         if ([message hasPrefix:@"\x01"]&&[message hasSuffix:@"\x01"])
         {
             NSString* command=nil;
             NSString* arg=nil;
-            [scan_ setScanLocation:0];
-            [scan_ scanUpToString:@"\x01" intoString:nil];
-            @try {
-                [scan_ setScanLocation:[scan_ scanLocation]+1 ];
-            } @catch (id e) {
-                NSLog(@"Catched error %@", e);
-            }
-            [scan_ scanUpToString:@" " intoString:&command];
-            if ([scan isAtEnd]) {
-                [scan_ setScanLocation:1 ];
-                [scan_ scanUpToString:@"\x01" intoString:&command];
+            NSScanner* scan__=[NSScanner scannerWithString:message];
+            [scan__ setScanLocation:1];
+            [scan__ scanUpToString:@" " intoString:&command];
+            NSLog(@"command is %@, %d", command, [command hasPrefix:@"\x01"]);
+            if ([command hasSuffix:@"\x01"]) {
+                [scan__ setScanLocation:1 ];
+                [scan__ scanUpToString:@"\x01" intoString:&command];
                 goto singlearg;
             }
-            [scan_ scanUpToString:@"\x01" intoString:&arg];
+            [scan__ scanUpToString:@"\x01" intoString:&arg];
         singlearg:
             if ([command isEqualToString:@"ACTION"]) {
                 id chan=[socket retainedChannelWithFormattedName:toChannel];
