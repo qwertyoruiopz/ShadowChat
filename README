@@ -7,6 +7,9 @@ TODO::
     [x]: Receive and Reply
     [ ]: Whois
     [ ]: DCC (?)
+    [x]: SSL
+    [ ]: SASL
+    [ ]: Blowfish
 [ ]: Full multitasking support
 [ ]: Notification Service
 [ ]: Color Coat (CSS/Formatting)
