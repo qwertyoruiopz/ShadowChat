@@ -1,0 +1,16 @@
+TODO::
+[ ]: Backend
+    [x]: Connection
+    [x]: Server Info
+    [x]: Rooms list
+    [x]: User list
+    [x]: Receive and Reply
+    [ ]: Whois
+    [ ]: DCC (?)
+[ ]: Full multitasking support
+[ ]: Notification Service
+[ ]: Color Coat (CSS/Formatting)
+[ ]: Full rotation support
+[ ]: iPad support
+[x]: Scripting...(?)
+[x]: Better than colloquy/rooms/*
