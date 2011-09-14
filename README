@@ -1,4 +1,20 @@
-TODO::
+== Welcome to the ShadowChat IRC client's private git repo ==
+(c) 2011 devkip
+
+- Credits -
+ac3xx           - Developer
+Maximus         - Developer
+qwertyoruiop    - Developer
+lyetz           - Git repo owner
+Mud             - Kip
+
+- Info -
+ShadowChat is a lightweight easily themeable IRC client.
+With its blazing fast singlethreaded implementation it uses a really small CPU footprint.
+It relies on its own IRC backend and uses a WebKit-based rendering engine, natively themeable without jailbreak.
+The client is in beta stage at the moment.
+
+== TODO ==
 [ ]: Backend
     [x]: Connection
     [x]: Server Info
@@ -23,3 +39,5 @@ TODO::
  / //  ,'/ /_/ /_ 
 /_//_/`_\|__/|__/ 
                   
+
+we should so totally continue this project. fuck you, school.~ qwerty
