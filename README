@@ -2,11 +2,11 @@
 (c) 2011 devkip
 
 - Credits -
-ac3xx           - Developer
-Maximus         - Developer
-qwertyoruiop    - Developer
-lyetz           - Git repo owner
-Mud             - Kip
+ac3xx		- Developer
+Maximus		- Developer
+qwertyoruiop	- Developer
+lyetz		- Git repo owner
+Mud		- Kip
 
 - Info -
 ShadowChat is a lightweight easily themeable IRC client.
@@ -16,28 +16,36 @@ The client is in beta stage at the moment.
 
 == TODO ==
 [ ]: Backend
-    [x]: Connection
-    [x]: Server Info
-    [x]: Rooms list
-    [x]: User list
-    [x]: Receive and Reply
-    [ ]: Whois
-    [ ]: DCC (?)
-    [x]: SSL
-    [ ]: SASL
-    [ ]: Blowfish
-[ ]: Full multitasking support
-[ ]: Notification Service
-[ ]: Color Coat (CSS/Formatting)
-[ ]: Full rotation support
-[ ]: iPad support
-[x]: Scripting...(?)
-[x]: Better than colloquy/rooms/*
+	[x]: Connection
+	[x]: Server Info
+	[x]: Rooms list
+	[x]: User list
+	[x]: Receive and Reply
+	[ ]: Whois
+	[ ]: DCC (?)
+	[x]: SSL
+	[ ]: SASL
+	[ ]: Blowfish
+[ ]: User End
+	[ ]: Full multitasking support
+	[ ]: Notification Service
+	[ ]: Color Coat (CSS/Formatting)
+	[ ]: Full rotation support
+	[ ]: iPad support
+	[ ]: Editor/Theme(ing) Support
+	[ ]: Innovative UI
+	[ ]: Website
+	[x]: Scripting...(?)
+	[x]: Better than colloquy/rooms/*
 
    __ ___   __  __
   / // o |,'_/,'_/
  / //  ,'/ /_/ /_ 
 /_//_/`_\|__/|__/ 
-                  
 
 we should so totally continue this project. fuck you, school.~ qwerty
+I'm Dave Taylor, rock 'n' roll, good people, good times, right on, rock 'n' roll!
+Tim Smith, it's fun to say Tim Smith, yeah, Tim Smith will take you to the mountain!
+Rock 'N' Roll! ~ [Skrillex::Rock N' Roll]
+I'm failing world history because of this . . . ~maximus
+
