@@ -50,6 +50,11 @@
     return YES;
 }
 
+- (BOOL)resignFirstResponder {
+	NSLog(@"meh %s", _cmd);
+	return NO;
+}
+
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
     if (isViewHidden) {
@@ -110,7 +115,22 @@
     }
     [chan parseAndEventuallySendMessage:[tfield text]];
     [tfield setText:@""];
+		NSLog(@"source code: %@", [output stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML"]);
     sendbtn.enabled=NO;
+
+// Line colors.... needed help picking subtle colours... >< CSS? yes... will work on formatting asap, thinking about providing the js
+// the css so that we can load it more dynamically with the themes or whatever shit... >:D
+// font picking.... Not going so well... may need to include some :) 
+// http://d.pr/kTce , http://d.pr/rPuW , http://d.pr/xREJ , http://d.pr/qi2p , http://d.pr/6YCa
+	
+	NSMutableArray *colors = [[NSMutableArray alloc] init];
+	for (unsigned int i = 0; i < 26; i++) {
+		[colors addObject:[NSString stringWithFormat:@"%06X", arc4random() % 16777216]];
+	}
+	NSLog(@"meh %@", colors);
+	[output stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setColors(%@)", colors]];
+	
+	// don't mock me! >:D needs work.. :)
     return YES;
 }
 
@@ -123,6 +143,11 @@
 	[output loadHTMLString:@"\
      <html>\
      <head>\
+	 <style type=\"text/css\">\
+	 * {margin:0px;padding:0px;}\
+	 div { /*border-top:1px solid black;*/border-bottom:1px solid black;padding-left:3px;padding-right:3px;}\
+	 body {font-family:'Tahoma';}\
+	 </style>\
      <script>\
      function htmlEntities(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;'); }\
      function addMessage(nick, msg) { document.body.innerHTML += '<div><strong>' + htmlEntities(nick) + ':</strong> ' + htmlEntities(msg) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
@@ -160,7 +185,7 @@
      </html>\
     " baseURL:[NSURL URLWithString:@"http://zomg.com"]];  //dae0ec
     NSLog(@"lolwat, %@", [output stringByEvaluatingJavaScriptFromString:@"background_color();"]);
-	
+
     //[[self view] setBackgroundColor:];
     // Do any additional setup after loading the view from its nib.
     

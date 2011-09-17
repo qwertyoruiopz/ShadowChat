@@ -10,14 +10,12 @@
 #import "SHIRCChannel.h"
 
 
-
-@interface SHChatPanel : UIViewController <UITextFieldDelegate>
-{
-    SHIRCChannel* chan;
-    UITextField* tfield;
-    UIWebView* output;
-    UIBarButtonItem* sendbtn;
-    UIToolbar* bar;
+@interface SHChatPanel : UIViewController <UITextFieldDelegate> {
+    SHIRCChannel *chan;
+    UITextField *tfield;
+    UIWebView *output;
+    UIBarButtonItem *sendbtn;
+    UIToolbar *bar;
     BOOL isViewHidden;
 }
 @property(retain) SHIRCChannel* chan;
