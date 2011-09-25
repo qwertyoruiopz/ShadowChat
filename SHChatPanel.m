@@ -108,6 +108,14 @@
     [output stringByEvaluatingJavaScriptFromString:java];
 }
 
+- (void)didRecieveNamesList:(NSArray*)array {
+    NSLog(@"ZOMG I IS EPIC AND THIS IS MY ARRAYYYYY: %@", array);
+    ChannelUserList *cul = [[ChannelUserList alloc] init];
+    [cul setNames:[array mutableCopy]];
+    [self.navigationController pushViewController:cul animated:YES];
+    [cul release];
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if ([[tfield text] isEqualToString:@""]) {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A223129141CBC39009F9578 /* ChannelUserList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A223128141CBC39009F9578 /* ChannelUserList.m */; };
 		1AABE8FD1417FFEC00F9532E /* ChannelsTVController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AABE8FC1417FFEC00F9532E /* ChannelsTVController.m */; };
 		1AD9BF96141683EB002E1C6A /* ConnectionsTVController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD9BF95141683EA002E1C6A /* ConnectionsTVController.m */; };
 		1AD9BF9A141684D2002E1C6A /* AddConnectionTVController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD9BF99141684D2002E1C6A /* AddConnectionTVController.m */; };
@@ -41,6 +42,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1A223127141CBC39009F9578 /* ChannelUserList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelUserList.h; sourceTree = "<group>"; };
+		1A223128141CBC39009F9578 /* ChannelUserList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelUserList.m; sourceTree = "<group>"; };
 		1AABE8FB1417FFEC00F9532E /* ChannelsTVController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelsTVController.h; sourceTree = "<group>"; };
 		1AABE8FC1417FFEC00F9532E /* ChannelsTVController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelsTVController.m; sourceTree = "<group>"; };
 		1AD9BF94141683EA002E1C6A /* ConnectionsTVController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionsTVController.h; sourceTree = "<group>"; };
@@ -174,6 +177,8 @@
 				507424741416F3FC0080EC23 /* SHRoomsTable.m */,
 				1AABE8FB1417FFEC00F9532E /* ChannelsTVController.h */,
 				1AABE8FC1417FFEC00F9532E /* ChannelsTVController.m */,
+				1A223127141CBC39009F9578 /* ChannelUserList.h */,
+				1A223128141CBC39009F9578 /* ChannelUserList.m */,
 			);
 			path = ShadowChat;
 			sourceTree = "<group>";
@@ -282,6 +287,7 @@
 				507424751416F3FC0080EC23 /* SHRoomsTable.m in Sources */,
 				1AABE8FD1417FFEC00F9532E /* ChannelsTVController.m in Sources */,
 				EAC95DF614183882000256CE /* SHChatPanel.m in Sources */,
+				1A223129141CBC39009F9578 /* ChannelUserList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

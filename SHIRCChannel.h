@@ -44,4 +44,5 @@ typedef enum SHEventType
 - (void)parseAndEventuallySendMessage:(NSString *)command;
 - (void)didRecieveActionFrom:(NSString*)nick text:(NSString*)ircMessage;
 - (void)didRecieveEvent:(SHEventType)nick from:(NSString*)from to:(NSString*)to extra:(NSString*)extra;
+- (void)didRecieveNamesList:(NSArray*)array;
 @end

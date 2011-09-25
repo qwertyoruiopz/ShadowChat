@@ -115,6 +115,28 @@ static SHIRCManager* sharedSHManager;
         }
         NSLog(@"Nick is being used.");
     }
+    else if ([command isEqualToString:@"353"]) {
+        NSString *tmp;
+        NSString *chanstr;
+        NSString *names;
+        NSScanner *namesScan = [NSScanner scannerWithString:argument];
+        [namesScan scanUpToString:@"= " intoString:&tmp];
+        [namesScan setScanLocation:[tmp length]+1];
+        [namesScan scanUpToString:@" " intoString:&chanstr];
+        [namesScan setScanLocation:[chanstr length]+[tmp length]+4];
+        [namesScan scanUpToString:@"\r\n" intoString:&names];
+        
+        NSArray *namesArray = [names componentsSeparatedByString:@" "];
+        
+        //NSLog(@"%@", namesArray);
+        
+        id chan=[socket retainedChannelWithFormattedName:chanstr];
+        
+        [chan didRecieveNamesList:namesArray];
+        [chan release];
+        
+        //NSLog(@"Names from %@ received, names: %@", chanstr, names);
+    }
     else if ([command isEqualToString:@"001"])
     {
         socket.didRegister=YES;

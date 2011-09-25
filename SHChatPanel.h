@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SHIRCChannel.h"
-
+#import "ChannelUserList.h"
 
 @interface SHChatPanel : UIViewController <UITextFieldDelegate> {
     SHIRCChannel *chan;

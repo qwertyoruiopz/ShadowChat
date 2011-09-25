@@ -171,4 +171,10 @@
         objc_msgSend(delegate, _cmd, event, from, to, extra);
     }
 }
+- (void)didRecieveNamesList:(NSArray*)array {
+    if ([delegate respondsToSelector:_cmd])
+    {
+        [delegate performSelector:_cmd withObject:array];
+    }
+}
 @end
