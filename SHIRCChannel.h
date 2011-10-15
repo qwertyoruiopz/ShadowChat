@@ -7,6 +7,7 @@
 //
 
 #import "SHIRCSocket.h"
+#import "SHChatPanel.h"
 #import "SHIRCChannel.h"
 
 typedef enum SHMessageFlavor

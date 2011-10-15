@@ -300,7 +300,7 @@
                 break;
             case 2:
                 if (indexPath.row == 0) {                
-                    [cell.textLabel setText: @"Password"];
+                    [cell.textLabel setText: @"Nick Password"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
                     
                     UITextField *passField = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
@@ -314,7 +314,7 @@
                     [cell addSubview: passField];
                     [passField release];
                 } else if (indexPath.row == 1) {
-                    [cell.textLabel setText: @"Nick password"];
+                    [cell.textLabel setText: @"Server password"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
                     
                     UITextField *nserv = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];

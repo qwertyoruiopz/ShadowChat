@@ -30,6 +30,9 @@
     return ret;
 }
 - (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user {
+    return [self connectWithNick:nick andUser:user andPassword:nil];
+}
+- (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user andPassword:(NSString *)pass {
     self.nick_ = nick;
     NSInputStream *iStream = input;
     NSOutputStream *oStream = output;
@@ -44,9 +47,9 @@
     }
     if (usesSSL) {
 		[iStream setProperty:NSStreamSocketSecurityLevelNegotiatedSSL 
-                       forKey:NSStreamSocketSecurityLevelKey];
+                      forKey:NSStreamSocketSecurityLevelKey];
         [oStream setProperty:NSStreamSocketSecurityLevelNegotiatedSSL 
-                        forKey:NSStreamSocketSecurityLevelKey];  
+                      forKey:NSStreamSocketSecurityLevelKey];  
         
         NSDictionary *settings = [[NSDictionary alloc] initWithObjectsAndKeys:
                                   [NSNumber numberWithBool:YES], kCFStreamSSLAllowsExpiredCertificates,
@@ -61,8 +64,11 @@
     }
     didRegister = NO;
     status = SHSocketStausConnecting;
-    [self sendCommand:[NSString stringWithFormat:@"USER %@ %@ %@ %@\r\n", user, user, user, user] withArguments:nil];
-    [self sendCommand:[NSString stringWithFormat:@"NICK %@\r\n", nick] withArguments:nil];
+    if (pass) {
+        [self sendCommand:[NSString stringWithFormat:@"PASS %@:%@", user, pass] withArguments:nil];
+    }
+    [self sendCommand:[NSString stringWithFormat:@"USER %@ %@ %@ %@", user, user, user, user] withArguments:nil];
+    [self sendCommand:[NSString stringWithFormat:@"NICK %@", nick] withArguments:nil];
     return YES;
 }
 - (NSString*)nick_
@@ -150,9 +156,12 @@
     if (status == SHSocketStausClosed) {
         return;
     }
+    
     [self sendCommand:@"QUIT" withArguments:@"ShadowChat BETA"];
     [input close];
     [output close];
+    [input setDelegate:nil];
+    [output setDelegate:nil];
     [input release];
     [output release];
     input = nil;
@@ -160,9 +169,16 @@
 }
 - (void)addChannel:(SHIRCChannel*)chan
 {
-    [self sendCommand:@"JOIN" withArguments:[chan formattedName] waitUntilRegistered:YES];
+    NSLog(@"Joiny fun!");
     if(!channels) channels=[NSMutableArray new];
-    [channels addObject:chan];
+    if (channels && ![channels containsObject:chan]) {
+        if (![[chan formattedName] hasSuffix:@"JOIN"] || ![[chan formattedName] hasSuffix:@"PRIVMSG"]) {
+            NSLog(@"%@", channels);
+            [self sendCommand:@"JOIN" withArguments:[chan formattedName] waitUntilRegistered:YES];
+            [channels addObject:chan];
+        }
+    }
+    
 }
 - (void)removeChannel:(SHIRCChannel*)chan
 {

@@ -115,10 +115,18 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
         cell.selectionStyle=UITableViewCellSelectionStyleBlue;
     }
     cell.textLabel.text=[[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] descr] ? [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] descr] : [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] server];
+    BOOL online;
+    if ([[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isOpen]) {
+        online = YES;
+    } else {
+        online = NO;
+    }
+    cell.detailTextLabel.text = online ? @"Online" : @"Offline";
+    
     // Configure the cell...
     
     return cell;
@@ -171,12 +179,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
+    //if ([[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isOpen]) {
+    //    [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] disconnect];
+    //} else {
+        [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] connect];
+    //}
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    id sockz = [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] connect];
-    if ( sockz ) {
-        NSLog(@"Wee!!??!");
-        [[[SHIRCChannel alloc] initWithSocket:sockz andChanName:@"sc"] release];
-    }
+    
+    [self.tableView reloadData];
 }
 
 @end

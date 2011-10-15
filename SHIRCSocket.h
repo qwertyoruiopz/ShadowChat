@@ -45,6 +45,7 @@ typedef enum SHSocketStaus
 @property(assign, readwrite) SHSocketStaus status;
 + (SHIRCSocket*)socketWithServer:(NSString *)srv andPort:(int)prt usesSSL:(BOOL)ssl;
 - (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user;
+- (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user andPassword:(NSString *)pass;
 - (BOOL)sendCommand:(NSString *)command withArguments:(NSString *)args;
 - (BOOL)sendCommand:(NSString *)command withArguments:(NSString*)args waitUntilRegistered:(BOOL)wur;
 - (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent;

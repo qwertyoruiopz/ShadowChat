@@ -120,7 +120,11 @@ static NSMutableArray* networks=nil;
     [socket disconnect];
     if (!socket)
         socket=[SHIRCSocket socketWithServer:[self server] andPort:[self port] usesSSL:[self hasSSL]];
-    [socket connectWithNick:[self nickname] andUser:[self username]];
+    if (self.serverPassword) {
+        [socket connectWithNick:[self nickname] andUser:[self username] andPassword:[self serverPassword]];
+    } else {
+        [socket connectWithNick:[self nickname] andUser:[self username]];
+    }
     return socket;
 }
 @end

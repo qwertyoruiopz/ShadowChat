@@ -114,7 +114,7 @@ static SHIRCManager* sharedSHManager;
             [socket setNick_:[[socket nick_] stringByAppendingString:@"_"]];
         }
         NSLog(@"Nick is being used.");
-    }
+    }/*
     else if ([command isEqualToString:@"353"]) {
         NSString *tmp;
         NSString *chanstr;
@@ -136,7 +136,7 @@ static SHIRCManager* sharedSHManager;
         [chan release];
         
         //NSLog(@"Names from %@ received, names: %@", chanstr, names);
-    }
+    }*/
     else if ([command isEqualToString:@"001"])
     {
         socket.didRegister=YES;
@@ -182,6 +182,11 @@ static SHIRCManager* sharedSHManager;
         }
         NSString* nick=nil;
         [self parseUsermask:sender nick:&nick user:nil hostmask:nil];
+        NSLog(@"socket nick: %@", socket.nick_);
+        NSLog(@"nick: %@", nick);
+        if ([[NSString stringWithFormat:@"%@", nick] isEqualToString: [NSString stringWithFormat:@"%@", socket.nick_]]) {
+            [[SHIRCChannel alloc] initWithSocket:socket andChanName:argument];
+        }
         SHIRCChannel* chanC=[socket retainedChannelWithFormattedName:argument];
         [chanC didRecieveEvent:SHEventTypeJoin from:nick to:argument extra:nil];
         [chanC release];

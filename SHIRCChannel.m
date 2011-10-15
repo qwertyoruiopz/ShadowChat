@@ -27,7 +27,11 @@
         [self setName:chName];
         [self setNet:[sock server]];
     }
-    [sock addChannel:self];
+    if (![[sock channels] containsObject:self]) {
+        [sock addChannel:self];
+    } else {
+        [self release];
+    }
     return [self retain];
 }
 - (NSString*)formattedName
@@ -110,7 +114,7 @@
         [socket sendCommand:[NSString stringWithFormat:@"KILL %@\r\n", argument] withArguments:nil];
     } else if ([command_ isEqualToStringNoCase:@"join"]) {
         if ([[argument componentsSeparatedByString:@" "] count]<1) goto out;
-        [[SHIRCChannel alloc] initWithSocket:socket andChanName:[[argument componentsSeparatedByString:@" "] objectAtIndex:0]];
+        [socket sendCommand:@"JOIN" withArguments:argument];
     } else if ([command_ isEqualToStringNoCase:@"kick"]) {
         if ([[argument componentsSeparatedByString:@" "] count]<1) goto out;
         [scan setScanLocation:1];
