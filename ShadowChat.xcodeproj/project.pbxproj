@@ -1,0 +1,471 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1A223129141CBC39009F9578 /* ChannelUserList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A223128141CBC39009F9578 /* ChannelUserList.m */; };
+		1AABE8FD1417FFEC00F9532E /* ChannelsTVController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AABE8FC1417FFEC00F9532E /* ChannelsTVController.m */; };
+		1AD9BF96141683EB002E1C6A /* ConnectionsTVController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD9BF95141683EA002E1C6A /* ConnectionsTVController.m */; };
+		1AD9BF9A141684D2002E1C6A /* AddConnectionTVController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD9BF99141684D2002E1C6A /* AddConnectionTVController.m */; };
+		507424751416F3FC0080EC23 /* SHRoomsTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 507424741416F3FC0080EC23 /* SHRoomsTable.m */; };
+		EA00940D14143FE90059261C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA00940C14143FE90059261C /* UIKit.framework */; };
+		EA00940F14143FE90059261C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA00940E14143FE90059261C /* Foundation.framework */; };
+		EA00941114143FE90059261C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA00941014143FE90059261C /* CoreGraphics.framework */; };
+		EA00941714143FEA0059261C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EA00941514143FEA0059261C /* InfoPlist.strings */; };
+		EA00941914143FEA0059261C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EA00941814143FEA0059261C /* main.m */; };
+		EA00941D14143FEA0059261C /* ShadowChatAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA00941C14143FEA0059261C /* ShadowChatAppDelegate.m */; };
+		EA00942014143FEA0059261C /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA00941E14143FEA0059261C /* MainWindow.xib */; };
+		EA00942314143FEA0059261C /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA00942214143FEA0059261C /* FirstViewController.m */; };
+		EA00942614143FEB0059261C /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA00942514143FEB0059261C /* SecondViewController.m */; };
+		EA00942914143FEB0059261C /* FirstView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA00942714143FEB0059261C /* FirstView.xib */; };
+		EA00942C14143FEB0059261C /* SecondView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA00942A14143FEB0059261C /* SecondView.xib */; };
+		EA0094361415377D0059261C /* SCChanPart.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0094351415377D0059261C /* SCChanPart.m */; };
+		EA1D5D4A1415FE2000114BFF /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1D5D441415FE2000114BFF /* background.png */; };
+		EA1D5D4B1415FE2000114BFF /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1D5D451415FE2000114BFF /* background@2x.png */; };
+		EA1D5D4C1415FE2000114BFF /* minus.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1D5D461415FE2000114BFF /* minus.png */; };
+		EA1D5D4D1415FE2000114BFF /* minus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1D5D471415FE2000114BFF /* minus@2x.png */; };
+		EA1D5D4E1415FE2000114BFF /* ppl.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1D5D481415FE2000114BFF /* ppl.png */; };
+		EA1D5D4F1415FE2000114BFF /* ppl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1D5D491415FE2000114BFF /* ppl@2x.png */; };
+		EA68CA4F146ABE4D00AC1628 /* SHChanJoin.m in Sources */ = {isa = PBXBuildFile; fileRef = EA68CA4D146ABE4D00AC1628 /* SHChanJoin.m */; };
+		EA68CA50146ABE4D00AC1628 /* SHChanJoin.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA68CA4E146ABE4D00AC1628 /* SHChanJoin.xib */; };
+		EAAD2BA51416C8F700E1D951 /* SHIRCNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAD2BA41416C8F700E1D951 /* SHIRCNetwork.m */; };
+		EAC95DF614183882000256CE /* SHChatPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC95DF414183882000256CE /* SHChatPanel.m */; };
+		EAC95DF714183882000256CE /* SHChatPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAC95DF514183882000256CE /* SHChatPanel.xib */; };
+		EAE46C1514159CD8008BBA8D /* SHIRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE46C1414159CD8008BBA8D /* SHIRCChannel.m */; };
+		EAE46C1814159DE4008BBA8D /* SHIRCSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE46C1714159DE4008BBA8D /* SHIRCSocket.m */; };
+		EAE46C1C1415A110008BBA8D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE46C1B1415A110008BBA8D /* MobileCoreServices.framework */; };
+		EAE46C1E1415A146008BBA8D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE46C1D1415A146008BBA8D /* CFNetwork.framework */; };
+		EAE46C211415B228008BBA8D /* SHIRCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE46C201415B228008BBA8D /* SHIRCManager.m */; };
+		EAE46C281415D10B008BBA8D /* SHIRCPrivateChat.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE46C271415D10B008BBA8D /* SHIRCPrivateChat.m */; };
+		EAFA82391469C68000FD1A88 /* ShadowedTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFA82341469C68000FD1A88 /* ShadowedTableView.m */; };
+		EAFA823A1469C68000FD1A88 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFA82361469C68000FD1A88 /* GradientView.m */; };
+		EAFA823B1469C68000FD1A88 /* ClearLabelsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFA82381469C68000FD1A88 /* ClearLabelsCellView.m */; };
+		EAFA823D1469C6CB00FD1A88 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAFA823C1469C6CB00FD1A88 /* QuartzCore.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1A223127141CBC39009F9578 /* ChannelUserList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelUserList.h; sourceTree = "<group>"; };
+		1A223128141CBC39009F9578 /* ChannelUserList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelUserList.m; sourceTree = "<group>"; };
+		1AABE8FB1417FFEC00F9532E /* ChannelsTVController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelsTVController.h; sourceTree = "<group>"; };
+		1AABE8FC1417FFEC00F9532E /* ChannelsTVController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelsTVController.m; sourceTree = "<group>"; };
+		1AD9BF94141683EA002E1C6A /* ConnectionsTVController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionsTVController.h; sourceTree = "<group>"; };
+		1AD9BF95141683EA002E1C6A /* ConnectionsTVController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionsTVController.m; sourceTree = "<group>"; };
+		1AD9BF98141684D1002E1C6A /* AddConnectionTVController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddConnectionTVController.h; sourceTree = "<group>"; };
+		1AD9BF99141684D2002E1C6A /* AddConnectionTVController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddConnectionTVController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		507424731416F3FC0080EC23 /* SHRoomsTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHRoomsTable.h; sourceTree = "<group>"; };
+		507424741416F3FC0080EC23 /* SHRoomsTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHRoomsTable.m; sourceTree = "<group>"; };
+		EA00940814143FE90059261C /* ShadowChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShadowChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA00940C14143FE90059261C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		EA00940E14143FE90059261C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		EA00941014143FE90059261C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		EA00941414143FEA0059261C /* ShadowChat-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ShadowChat-Info.plist"; sourceTree = "<group>"; };
+		EA00941614143FEA0059261C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		EA00941814143FEA0059261C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		EA00941A14143FEA0059261C /* ShadowChat-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ShadowChat-Prefix.pch"; sourceTree = "<group>"; };
+		EA00941B14143FEA0059261C /* ShadowChatAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShadowChatAppDelegate.h; sourceTree = "<group>"; };
+		EA00941C14143FEA0059261C /* ShadowChatAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShadowChatAppDelegate.m; sourceTree = "<group>"; };
+		EA00941F14143FEA0059261C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		EA00942114143FEA0059261C /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
+		EA00942214143FEA0059261C /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		EA00942414143FEA0059261C /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
+		EA00942514143FEB0059261C /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		EA00942814143FEB0059261C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FirstView.xib; sourceTree = "<group>"; };
+		EA00942B14143FEB0059261C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SecondView.xib; sourceTree = "<group>"; };
+		EA0094341415377D0059261C /* SCChanPart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCChanPart.h; sourceTree = "<group>"; };
+		EA0094351415377D0059261C /* SCChanPart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCChanPart.m; sourceTree = "<group>"; };
+		EA1D5D441415FE2000114BFF /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		EA1D5D451415FE2000114BFF /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
+		EA1D5D461415FE2000114BFF /* minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = minus.png; sourceTree = "<group>"; };
+		EA1D5D471415FE2000114BFF /* minus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "minus@2x.png"; sourceTree = "<group>"; };
+		EA1D5D481415FE2000114BFF /* ppl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ppl.png; sourceTree = "<group>"; };
+		EA1D5D491415FE2000114BFF /* ppl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ppl@2x.png"; sourceTree = "<group>"; };
+		EA68CA4C146ABE4D00AC1628 /* SHChanJoin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHChanJoin.h; sourceTree = "<group>"; };
+		EA68CA4D146ABE4D00AC1628 /* SHChanJoin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHChanJoin.m; sourceTree = "<group>"; };
+		EA68CA4E146ABE4D00AC1628 /* SHChanJoin.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHChanJoin.xib; sourceTree = "<group>"; };
+		EAAD2BA31416C8F700E1D951 /* SHIRCNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHIRCNetwork.h; path = ../SHIRCNetwork.h; sourceTree = "<group>"; };
+		EAAD2BA41416C8F700E1D951 /* SHIRCNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHIRCNetwork.m; path = ../SHIRCNetwork.m; sourceTree = "<group>"; };
+		EAC95DF314183882000256CE /* SHChatPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHChatPanel.h; path = ../SHChatPanel.h; sourceTree = "<group>"; };
+		EAC95DF414183882000256CE /* SHChatPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHChatPanel.m; path = ../SHChatPanel.m; sourceTree = "<group>"; };
+		EAC95DF514183882000256CE /* SHChatPanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SHChatPanel.xib; path = ../SHChatPanel.xib; sourceTree = "<group>"; };
+		EAE46C1314159CD8008BBA8D /* SHIRCChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHIRCChannel.h; path = ../SHIRCChannel.h; sourceTree = "<group>"; };
+		EAE46C1414159CD8008BBA8D /* SHIRCChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHIRCChannel.m; path = ../SHIRCChannel.m; sourceTree = "<group>"; };
+		EAE46C1614159DE4008BBA8D /* SHIRCSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHIRCSocket.h; path = ../SHIRCSocket.h; sourceTree = "<group>"; };
+		EAE46C1714159DE4008BBA8D /* SHIRCSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHIRCSocket.m; path = ../SHIRCSocket.m; sourceTree = "<group>"; };
+		EAE46C191415A0C6008BBA8D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		EAE46C1B1415A110008BBA8D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		EAE46C1D1415A146008BBA8D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		EAE46C1F1415B228008BBA8D /* SHIRCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHIRCManager.h; path = ../SHIRCManager.h; sourceTree = "<group>"; };
+		EAE46C201415B228008BBA8D /* SHIRCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHIRCManager.m; path = ../SHIRCManager.m; sourceTree = "<group>"; };
+		EAE46C261415D10B008BBA8D /* SHIRCPrivateChat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHIRCPrivateChat.h; path = ../SHIRCPrivateChat.h; sourceTree = "<group>"; };
+		EAE46C271415D10B008BBA8D /* SHIRCPrivateChat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHIRCPrivateChat.m; path = ../SHIRCPrivateChat.m; sourceTree = "<group>"; };
+		EAFA82331469C68000FD1A88 /* ShadowedTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShadowedTableView.h; sourceTree = "<group>"; };
+		EAFA82341469C68000FD1A88 /* ShadowedTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShadowedTableView.m; sourceTree = "<group>"; };
+		EAFA82351469C68000FD1A88 /* GradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
+		EAFA82361469C68000FD1A88 /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
+		EAFA82371469C68000FD1A88 /* ClearLabelsCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClearLabelsCellView.h; sourceTree = "<group>"; };
+		EAFA82381469C68000FD1A88 /* ClearLabelsCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClearLabelsCellView.m; sourceTree = "<group>"; };
+		EAFA823C1469C6CB00FD1A88 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EA00940514143FE90059261C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAFA823D1469C6CB00FD1A88 /* QuartzCore.framework in Frameworks */,
+				EAE46C1E1415A146008BBA8D /* CFNetwork.framework in Frameworks */,
+				EAE46C1C1415A110008BBA8D /* MobileCoreServices.framework in Frameworks */,
+				EA00940D14143FE90059261C /* UIKit.framework in Frameworks */,
+				EA00940F14143FE90059261C /* Foundation.framework in Frameworks */,
+				EA00941114143FE90059261C /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EA0093FD14143FE90059261C = {
+			isa = PBXGroup;
+			children = (
+				EA00941214143FE90059261C /* ShadowChat */,
+				EA00940B14143FE90059261C /* Frameworks */,
+				EA00940914143FE90059261C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EA00940914143FE90059261C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EA00940814143FE90059261C /* ShadowChat.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EA00940B14143FE90059261C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EAFA823C1469C6CB00FD1A88 /* QuartzCore.framework */,
+				EAE46C1D1415A146008BBA8D /* CFNetwork.framework */,
+				EAE46C1B1415A110008BBA8D /* MobileCoreServices.framework */,
+				EAE46C191415A0C6008BBA8D /* CoreFoundation.framework */,
+				EA00940C14143FE90059261C /* UIKit.framework */,
+				EA00940E14143FE90059261C /* Foundation.framework */,
+				EA00941014143FE90059261C /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EA00941214143FE90059261C /* ShadowChat */ = {
+			isa = PBXGroup;
+			children = (
+				EAFA82331469C68000FD1A88 /* ShadowedTableView.h */,
+				EAFA82341469C68000FD1A88 /* ShadowedTableView.m */,
+				EAFA82351469C68000FD1A88 /* GradientView.h */,
+				EAFA82361469C68000FD1A88 /* GradientView.m */,
+				EAC95DF414183882000256CE /* SHChatPanel.m */,
+				EAFA82371469C68000FD1A88 /* ClearLabelsCellView.h */,
+				EAFA82381469C68000FD1A88 /* ClearLabelsCellView.m */,
+				EAC95DF314183882000256CE /* SHChatPanel.h */,
+				EAC95DF514183882000256CE /* SHChatPanel.xib */,
+				EAAD2BA31416C8F700E1D951 /* SHIRCNetwork.h */,
+				EAAD2BA41416C8F700E1D951 /* SHIRCNetwork.m */,
+				EA00941B14143FEA0059261C /* ShadowChatAppDelegate.h */,
+				EA00941C14143FEA0059261C /* ShadowChatAppDelegate.m */,
+				EA00941E14143FEA0059261C /* MainWindow.xib */,
+				EA68CA4C146ABE4D00AC1628 /* SHChanJoin.h */,
+				EA68CA4D146ABE4D00AC1628 /* SHChanJoin.m */,
+				EA68CA4E146ABE4D00AC1628 /* SHChanJoin.xib */,
+				EA00942114143FEA0059261C /* FirstViewController.h */,
+				EA00942214143FEA0059261C /* FirstViewController.m */,
+				EA0094341415377D0059261C /* SCChanPart.h */,
+				EA0094351415377D0059261C /* SCChanPart.m */,
+				EAE46C1314159CD8008BBA8D /* SHIRCChannel.h */,
+				EA00942414143FEA0059261C /* SecondViewController.h */,
+				EA00942514143FEB0059261C /* SecondViewController.m */,
+				EAE46C1414159CD8008BBA8D /* SHIRCChannel.m */,
+				EAE46C261415D10B008BBA8D /* SHIRCPrivateChat.h */,
+				EAE46C271415D10B008BBA8D /* SHIRCPrivateChat.m */,
+				EAE46C1614159DE4008BBA8D /* SHIRCSocket.h */,
+				EAE46C1714159DE4008BBA8D /* SHIRCSocket.m */,
+				EAE46C1F1415B228008BBA8D /* SHIRCManager.h */,
+				EAE46C201415B228008BBA8D /* SHIRCManager.m */,
+				EA00942714143FEB0059261C /* FirstView.xib */,
+				EA00942A14143FEB0059261C /* SecondView.xib */,
+				EA00941314143FEA0059261C /* Supporting Files */,
+				1AD9BF94141683EA002E1C6A /* ConnectionsTVController.h */,
+				1AD9BF95141683EA002E1C6A /* ConnectionsTVController.m */,
+				1AD9BF98141684D1002E1C6A /* AddConnectionTVController.h */,
+				1AD9BF99141684D2002E1C6A /* AddConnectionTVController.m */,
+				507424731416F3FC0080EC23 /* SHRoomsTable.h */,
+				507424741416F3FC0080EC23 /* SHRoomsTable.m */,
+				1AABE8FB1417FFEC00F9532E /* ChannelsTVController.h */,
+				1AABE8FC1417FFEC00F9532E /* ChannelsTVController.m */,
+				1A223127141CBC39009F9578 /* ChannelUserList.h */,
+				1A223128141CBC39009F9578 /* ChannelUserList.m */,
+			);
+			path = ShadowChat;
+			sourceTree = "<group>";
+		};
+		EA00941314143FEA0059261C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EA1D5D441415FE2000114BFF /* background.png */,
+				EA1D5D451415FE2000114BFF /* background@2x.png */,
+				EA1D5D461415FE2000114BFF /* minus.png */,
+				EA1D5D471415FE2000114BFF /* minus@2x.png */,
+				EA1D5D481415FE2000114BFF /* ppl.png */,
+				EA1D5D491415FE2000114BFF /* ppl@2x.png */,
+				EA00941414143FEA0059261C /* ShadowChat-Info.plist */,
+				EA00941514143FEA0059261C /* InfoPlist.strings */,
+				EA00941814143FEA0059261C /* main.m */,
+				EA00941A14143FEA0059261C /* ShadowChat-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EA00940714143FE90059261C /* ShadowChat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA00942F14143FEB0059261C /* Build configuration list for PBXNativeTarget "ShadowChat" */;
+			buildPhases = (
+				EA00940414143FE90059261C /* Sources */,
+				EA00940514143FE90059261C /* Frameworks */,
+				EA00940614143FE90059261C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShadowChat;
+			productName = ShadowChat;
+			productReference = EA00940814143FE90059261C /* ShadowChat.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EA0093FF14143FE90059261C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0410;
+				ORGANIZATIONNAME = uiop;
+			};
+			buildConfigurationList = EA00940214143FE90059261C /* Build configuration list for PBXProject "ShadowChat" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = EA0093FD14143FE90059261C;
+			productRefGroup = EA00940914143FE90059261C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EA00940714143FE90059261C /* ShadowChat */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EA00940614143FE90059261C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA00941714143FEA0059261C /* InfoPlist.strings in Resources */,
+				EA00942014143FEA0059261C /* MainWindow.xib in Resources */,
+				EA00942914143FEB0059261C /* FirstView.xib in Resources */,
+				EA00942C14143FEB0059261C /* SecondView.xib in Resources */,
+				EA1D5D4A1415FE2000114BFF /* background.png in Resources */,
+				EA1D5D4B1415FE2000114BFF /* background@2x.png in Resources */,
+				EA1D5D4C1415FE2000114BFF /* minus.png in Resources */,
+				EA1D5D4D1415FE2000114BFF /* minus@2x.png in Resources */,
+				EA1D5D4E1415FE2000114BFF /* ppl.png in Resources */,
+				EA1D5D4F1415FE2000114BFF /* ppl@2x.png in Resources */,
+				EAC95DF714183882000256CE /* SHChatPanel.xib in Resources */,
+				EA68CA50146ABE4D00AC1628 /* SHChanJoin.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EA00940414143FE90059261C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA00941914143FEA0059261C /* main.m in Sources */,
+				EA00941D14143FEA0059261C /* ShadowChatAppDelegate.m in Sources */,
+				EA00942314143FEA0059261C /* FirstViewController.m in Sources */,
+				EA00942614143FEB0059261C /* SecondViewController.m in Sources */,
+				EA0094361415377D0059261C /* SCChanPart.m in Sources */,
+				EAE46C1514159CD8008BBA8D /* SHIRCChannel.m in Sources */,
+				EAE46C1814159DE4008BBA8D /* SHIRCSocket.m in Sources */,
+				EAE46C211415B228008BBA8D /* SHIRCManager.m in Sources */,
+				EAE46C281415D10B008BBA8D /* SHIRCPrivateChat.m in Sources */,
+				1AD9BF96141683EB002E1C6A /* ConnectionsTVController.m in Sources */,
+				1AD9BF9A141684D2002E1C6A /* AddConnectionTVController.m in Sources */,
+				EAAD2BA51416C8F700E1D951 /* SHIRCNetwork.m in Sources */,
+				507424751416F3FC0080EC23 /* SHRoomsTable.m in Sources */,
+				1AABE8FD1417FFEC00F9532E /* ChannelsTVController.m in Sources */,
+				EAC95DF614183882000256CE /* SHChatPanel.m in Sources */,
+				1A223129141CBC39009F9578 /* ChannelUserList.m in Sources */,
+				EAFA82391469C68000FD1A88 /* ShadowedTableView.m in Sources */,
+				EAFA823A1469C68000FD1A88 /* GradientView.m in Sources */,
+				EAFA823B1469C68000FD1A88 /* ClearLabelsCellView.m in Sources */,
+				EA68CA4F146ABE4D00AC1628 /* SHChanJoin.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		EA00941514143FEA0059261C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EA00941614143FEA0059261C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		EA00941E14143FEA0059261C /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EA00941F14143FEA0059261C /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		EA00942714143FEB0059261C /* FirstView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EA00942814143FEB0059261C /* en */,
+			);
+			name = FirstView.xib;
+			sourceTree = "<group>";
+		};
+		EA00942A14143FEB0059261C /* SecondView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EA00942B14143FEB0059261C /* en */,
+			);
+			name = SecondView.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		EA00942D14143FEB0059261C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(BUILT_PRODUCTS_DIR)/../three20",
+					"$(BUILT_PRODUCTS_DIR)/../../three20",
+					"../facebook-three20-527051a/Build/Products/three20",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		EA00942E14143FEB0059261C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(BUILT_PRODUCTS_DIR)/../three20",
+					"$(BUILT_PRODUCTS_DIR)/../../three20",
+					"../facebook-three20-527051a/Build/Products/three20",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EA00943014143FEB0059261C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ShadowChat/ShadowChat-Prefix.pch";
+				INFOPLIST_FILE = "ShadowChat/ShadowChat-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1.3;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		EA00943114143FEB0059261C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ShadowChat/ShadowChat-Prefix.pch";
+				INFOPLIST_FILE = "ShadowChat/ShadowChat-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1.3;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EA00940214143FE90059261C /* Build configuration list for PBXProject "ShadowChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA00942D14143FEB0059261C /* Debug */,
+				EA00942E14143FEB0059261C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EA00942F14143FEB0059261C /* Build configuration list for PBXNativeTarget "ShadowChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA00943014143FEB0059261C /* Debug */,
+				EA00943114143FEB0059261C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EA0093FF14143FE90059261C /* Project object */;
+}
