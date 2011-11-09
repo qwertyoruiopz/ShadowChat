@@ -3,7 +3,12 @@
 //
 
 #import <Availability.h>
-
+#define __DEBUG__
+#ifndef __DEBUG__
+#define NSLog(x, ...) 
+#define CFLog(x, ...) 
+#define printf(x, ...) 
+#endif
 #ifndef __IPHONE_3_0
 #warning "This project uses features only available in iPhone SDK 3.0 and later."
 #endif

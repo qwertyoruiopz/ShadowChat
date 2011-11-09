@@ -7,7 +7,7 @@
 //
 
 #import "SHIRCChannel.h"
-
+#import <objc/runtime.h>
 @interface NSString (casecompare)
 - (BOOL)isEqualToStringNoCase:(NSString *)aString;
 @end
@@ -27,11 +27,15 @@
         [self setName:chName];
         [self setNet:[sock server]];
     }
-    if (![[sock channels] containsObject:self]) {
+    id omg=[sock retainedChannelWithFormattedName:chName];
+    if (!([[sock channels] containsObject:self]&&omg)) {
         [sock addChannel:self];
     } else {
         [self release];
+        [omg release]; // might be a bug.
+        return omg;
     }
+    [omg release];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadChans" object:nil];
     return [self retain];
 }

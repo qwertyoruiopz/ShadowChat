@@ -23,6 +23,7 @@
 @property(retain) IBOutlet UIWebView* output;
 @property(retain) IBOutlet UIBarButtonItem* sendbtn;
 @property(retain) IBOutlet UIToolbar* bar;
+- (SHChatPanel *)initWithChan:(SHIRCChannel *)chan_;
 - (BOOL)textFieldShouldReturn:(UITextField *)textField;
 - (IBAction)sendMessagePlz;
 - (void)didRecieveMessageFrom:(NSString*)nick text:(NSString*)ircMessage;

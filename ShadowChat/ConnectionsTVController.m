@@ -234,7 +234,6 @@
     {
         return path;
     }
-    NSLog(@"meh", path);
     return nil;
 }
 

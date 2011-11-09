@@ -16,6 +16,17 @@
     return chan;
 }
 
+- (SHChatPanel *)initWithChan:(SHIRCChannel *)chan_
+{
+    if ([chan_ delegate])
+    {
+        [self release];
+        return [chan_ delegate];        
+    }
+    [self setChan:chan_];
+    return self;
+}
+
 - (void)setChan:(SHIRCChannel *)chan_
 {
     chan=chan_;
@@ -51,7 +62,6 @@
 }
 
 - (BOOL)resignFirstResponder {
-	NSLog(@"meh %s", _cmd);
 	return NO;
 }
 
