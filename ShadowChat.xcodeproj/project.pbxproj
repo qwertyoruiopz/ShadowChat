@@ -33,10 +33,13 @@
 		EAAD2BA51416C8F700E1D951 /* SHIRCNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAD2BA41416C8F700E1D951 /* SHIRCNetwork.m */; };
 		EAC95DF614183882000256CE /* SHChatPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC95DF414183882000256CE /* SHChatPanel.m */; };
 		EAC95DF714183882000256CE /* SHChatPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAC95DF514183882000256CE /* SHChatPanel.xib */; };
+<<<<<<< HEAD
 		EAE280C11469C421000D0CAE /* ShadowedTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE280BC1469C421000D0CAE /* ShadowedTableView.m */; };
 		EAE280C21469C421000D0CAE /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE280BE1469C421000D0CAE /* GradientView.m */; };
 		EAE280C31469C421000D0CAE /* ClearLabelsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE280C01469C421000D0CAE /* ClearLabelsCellView.m */; };
 		EAE280C51469C517000D0CAE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE280C41469C517000D0CAE /* QuartzCore.framework */; };
+=======
+>>>>>>> a9cf0f370e2516ef5ac6ec513e4892a0fba70015
 		EAE46C1514159CD8008BBA8D /* SHIRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE46C1414159CD8008BBA8D /* SHIRCChannel.m */; };
 		EAE46C1814159DE4008BBA8D /* SHIRCSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE46C1714159DE4008BBA8D /* SHIRCSocket.m */; };
 		EAE46C1C1415A110008BBA8D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE46C1B1415A110008BBA8D /* MobileCoreServices.framework */; };
@@ -86,6 +89,7 @@
 		EAC95DF314183882000256CE /* SHChatPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHChatPanel.h; path = ../SHChatPanel.h; sourceTree = "<group>"; };
 		EAC95DF414183882000256CE /* SHChatPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHChatPanel.m; path = ../SHChatPanel.m; sourceTree = "<group>"; };
 		EAC95DF514183882000256CE /* SHChatPanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SHChatPanel.xib; path = ../SHChatPanel.xib; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		EAE280BB1469C421000D0CAE /* ShadowedTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShadowedTableView.h; sourceTree = "<group>"; };
 		EAE280BC1469C421000D0CAE /* ShadowedTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShadowedTableView.m; sourceTree = "<group>"; };
 		EAE280BD1469C421000D0CAE /* GradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
@@ -93,6 +97,8 @@
 		EAE280BF1469C421000D0CAE /* ClearLabelsCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClearLabelsCellView.h; sourceTree = "<group>"; };
 		EAE280C01469C421000D0CAE /* ClearLabelsCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClearLabelsCellView.m; sourceTree = "<group>"; };
 		EAE280C41469C517000D0CAE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+=======
+>>>>>>> a9cf0f370e2516ef5ac6ec513e4892a0fba70015
 		EAE46C1314159CD8008BBA8D /* SHIRCChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHIRCChannel.h; path = ../SHIRCChannel.h; sourceTree = "<group>"; };
 		EAE46C1414159CD8008BBA8D /* SHIRCChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHIRCChannel.m; path = ../SHIRCChannel.m; sourceTree = "<group>"; };
 		EAE46C1614159DE4008BBA8D /* SHIRCSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHIRCSocket.h; path = ../SHIRCSocket.h; sourceTree = "<group>"; };
@@ -111,7 +117,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
 				EAE280C51469C517000D0CAE /* QuartzCore.framework in Frameworks */,
+=======
+>>>>>>> a9cf0f370e2516ef5ac6ec513e4892a0fba70015
 				EAE46C1E1415A146008BBA8D /* CFNetwork.framework in Frameworks */,
 				EAE46C1C1415A110008BBA8D /* MobileCoreServices.framework in Frameworks */,
 				EA00940D14143FE90059261C /* UIKit.framework in Frameworks */,
@@ -126,7 +135,10 @@
 		EA0093FD14143FE90059261C = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				EAE280C41469C517000D0CAE /* QuartzCore.framework */,
+=======
+>>>>>>> a9cf0f370e2516ef5ac6ec513e4892a0fba70015
 				EAE46C1D1415A146008BBA8D /* CFNetwork.framework */,
 				EAE46C1B1415A110008BBA8D /* MobileCoreServices.framework */,
 				EAE46C191415A0C6008BBA8D /* CoreFoundation.framework */,
@@ -157,12 +169,15 @@
 		EA00941214143FE90059261C /* ShadowChat */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				EAE280BB1469C421000D0CAE /* ShadowedTableView.h */,
 				EAE280BC1469C421000D0CAE /* ShadowedTableView.m */,
 				EAE280BD1469C421000D0CAE /* GradientView.h */,
 				EAE280BE1469C421000D0CAE /* GradientView.m */,
 				EAE280BF1469C421000D0CAE /* ClearLabelsCellView.h */,
 				EAE280C01469C421000D0CAE /* ClearLabelsCellView.m */,
+=======
+>>>>>>> a9cf0f370e2516ef5ac6ec513e4892a0fba70015
 				EAC95DF314183882000256CE /* SHChatPanel.h */,
 				EAC95DF414183882000256CE /* SHChatPanel.m */,
 				EAC95DF514183882000256CE /* SHChatPanel.xib */,
@@ -307,9 +322,12 @@
 				1AABE8FD1417FFEC00F9532E /* ChannelsTVController.m in Sources */,
 				EAC95DF614183882000256CE /* SHChatPanel.m in Sources */,
 				1A223129141CBC39009F9578 /* ChannelUserList.m in Sources */,
+<<<<<<< HEAD
 				EAE280C11469C421000D0CAE /* ShadowedTableView.m in Sources */,
 				EAE280C21469C421000D0CAE /* GradientView.m in Sources */,
 				EAE280C31469C421000D0CAE /* ClearLabelsCellView.m in Sources */,
+=======
+>>>>>>> a9cf0f370e2516ef5ac6ec513e4892a0fba70015
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,7 +424,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ShadowChat/ShadowChat-Prefix.pch";
 				INFOPLIST_FILE = "ShadowChat/ShadowChat-Info.plist";
+<<<<<<< HEAD
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
+=======
+>>>>>>> a9cf0f370e2516ef5ac6ec513e4892a0fba70015
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -418,7 +439,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ShadowChat/ShadowChat-Prefix.pch";
 				INFOPLIST_FILE = "ShadowChat/ShadowChat-Info.plist";
+<<<<<<< HEAD
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
+=======
+>>>>>>> a9cf0f370e2516ef5ac6ec513e4892a0fba70015
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

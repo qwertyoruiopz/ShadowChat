@@ -10,8 +10,11 @@
 #import "AddConnectionTVController.h"
 #import "SHIRCNetwork.h"
 #import "SHIRCChannel.h"
+<<<<<<< HEAD
 #import "GradientView.h"
 #import "ClearLabelsCellView.h"
+=======
+>>>>>>> a9cf0f370e2516ef5ac6ec513e4892a0fba70015
 @implementation ConnectionsTVController
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -117,8 +120,13 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
+<<<<<<< HEAD
         cell = [[[ClearLabelsCellView alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
 		cell.backgroundView = [[[GradientView alloc] init] autorelease];
+=======
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        cell.selectionStyle=UITableViewCellSelectionStyleBlue;
+>>>>>>> a9cf0f370e2516ef5ac6ec513e4892a0fba70015
     }
     cell.textLabel.text=[[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] descr] ? [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] descr] : [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] server];
     BOOL online;
@@ -127,7 +135,11 @@
     } else {
         online = NO;
     }
+<<<<<<< HEAD
     cell.detailTextLabel.text = online ? @"Connected" : @"Offline";
+=======
+    cell.detailTextLabel.text = online ? @"Online" : @"Offline";
+>>>>>>> a9cf0f370e2516ef5ac6ec513e4892a0fba70015
     
     // Configure the cell...
     
