@@ -207,7 +207,7 @@
                     [cell.textLabel setText: @"Description"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
                     
-                    UITextField *adescr = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 185, 22)];
+                    UITextField *adescr = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 180, 22)];
                     adescr.adjustsFontSizeToFitWidth = YES;
                     adescr.placeholder = @"Enter a description";
                     adescr.returnKeyType = UIReturnKeyNext;
@@ -220,7 +220,7 @@
                     [cell.textLabel setText: @"Address"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
                     
-                    UITextField *aaddr = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 185, 22)];
+                    UITextField *aaddr = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 180, 22)];
                     aaddr.adjustsFontSizeToFitWidth = YES;
                     aaddr.placeholder = @"irc.network.tld";
                     aaddr.keyboardType = UIKeyboardTypeURL;
@@ -233,7 +233,7 @@
                 } else if (indexPath.row == 2) {
                     [cell.textLabel setText: @"Port"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
-                    UITextField *portField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 185, 22)];
+                    UITextField *portField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 180, 22)];
                     portField.adjustsFontSizeToFitWidth = YES;
                     portField.placeholder = @"6667";
                     portField.keyboardType = UIKeyboardTypeNumberPad;
@@ -257,7 +257,7 @@
                 if (indexPath.row == 0) {                
                     [cell.textLabel setText: @"Username"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
-                    UITextField *userField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 185, 22)];
+                    UITextField *userField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 180, 22)];
                     userField.adjustsFontSizeToFitWidth = YES;
                     userField.placeholder = @"shadowchat";
                     userField.returnKeyType = UIReturnKeyNext;
@@ -269,7 +269,7 @@
                 } else if (indexPath.row == 1) {
                     [cell.textLabel setText: @"Nickname"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
-                    UITextField *nickField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 185, 22)];
+                    UITextField *nickField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 180, 22)];
                     nickField.adjustsFontSizeToFitWidth = YES;
                     nickField.keyboardAppearance = UIKeyboardAppearanceAlert;
                     @try {
@@ -287,7 +287,7 @@
                     [cell.textLabel setText: @"Real Name"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
                     
-                    UITextField *rlname = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 185, 22)];
+                    UITextField *rlname = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 180, 22)];
                     rlname.adjustsFontSizeToFitWidth = YES;
                     rlname.keyboardAppearance = UIKeyboardAppearanceAlert;
                     rlname.placeholder = @"ShadowChat User";
