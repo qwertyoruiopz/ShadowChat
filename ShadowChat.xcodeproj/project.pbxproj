@@ -32,6 +32,7 @@
 		EA1D5D4F1415FE2000114BFF /* ppl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1D5D491415FE2000114BFF /* ppl@2x.png */; };
 		EA68CA4F146ABE4D00AC1628 /* SHChanJoin.m in Sources */ = {isa = PBXBuildFile; fileRef = EA68CA4D146ABE4D00AC1628 /* SHChanJoin.m */; };
 		EA68CA50146ABE4D00AC1628 /* SHChanJoin.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA68CA4E146ABE4D00AC1628 /* SHChanJoin.xib */; };
+		EA68CA53146B5A7100AC1628 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA68CA52146B5A7100AC1628 /* libTestFlight.a */; };
 		EAAD2BA51416C8F700E1D951 /* SHIRCNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAD2BA41416C8F700E1D951 /* SHIRCNetwork.m */; };
 		EAC95DF614183882000256CE /* SHChatPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC95DF414183882000256CE /* SHChatPanel.m */; };
 		EAC95DF714183882000256CE /* SHChatPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAC95DF514183882000256CE /* SHChatPanel.xib */; };
@@ -86,6 +87,8 @@
 		EA68CA4C146ABE4D00AC1628 /* SHChanJoin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHChanJoin.h; sourceTree = "<group>"; };
 		EA68CA4D146ABE4D00AC1628 /* SHChanJoin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHChanJoin.m; sourceTree = "<group>"; };
 		EA68CA4E146ABE4D00AC1628 /* SHChanJoin.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHChanJoin.xib; sourceTree = "<group>"; };
+		EA68CA52146B5A7100AC1628 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		EA68CA54146B5A7600AC1628 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		EAAD2BA31416C8F700E1D951 /* SHIRCNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHIRCNetwork.h; path = ../SHIRCNetwork.h; sourceTree = "<group>"; };
 		EAAD2BA41416C8F700E1D951 /* SHIRCNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHIRCNetwork.m; path = ../SHIRCNetwork.m; sourceTree = "<group>"; };
 		EAC95DF314183882000256CE /* SHChatPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHChatPanel.h; path = ../SHChatPanel.h; sourceTree = "<group>"; };
@@ -122,6 +125,7 @@
 				EA00940D14143FE90059261C /* UIKit.framework in Frameworks */,
 				EA00940F14143FE90059261C /* Foundation.framework in Frameworks */,
 				EA00941114143FE90059261C /* CoreGraphics.framework in Frameworks */,
+				EA68CA53146B5A7100AC1628 /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +135,8 @@
 		EA0093FD14143FE90059261C = {
 			isa = PBXGroup;
 			children = (
+				EA68CA54146B5A7600AC1628 /* TestFlight.h */,
+				EA68CA52146B5A7100AC1628 /* libTestFlight.a */,
 				EA00941214143FE90059261C /* ShadowChat */,
 				EA00940B14143FE90059261C /* Frameworks */,
 				EA00940914143FE90059261C /* Products */,
@@ -427,6 +433,10 @@
 				GCC_PREFIX_HEADER = "ShadowChat/ShadowChat-Prefix.pch";
 				INFOPLIST_FILE = "ShadowChat/ShadowChat-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -439,6 +449,10 @@
 				GCC_PREFIX_HEADER = "ShadowChat/ShadowChat-Prefix.pch";
 				INFOPLIST_FILE = "ShadowChat/ShadowChat-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

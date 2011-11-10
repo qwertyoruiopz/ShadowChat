@@ -16,12 +16,13 @@
     ret.server = srv;
     ret.port = prt;
     ret.usesSSL = ssl;
-    return ret;
+    return [ret autorelease];
 }
 - (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user {
     return [self connectWithNick:nick andUser:user andPassword:nil];
 }
 - (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user andPassword:(NSString *)pass {
+    [self retain];
     NSInputStream *iStream;
     NSOutputStream *oStream;
     CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)server, port ? port : 6667, (CFReadStreamRef*)&iStream, (CFWriteStreamRef *)&oStream);
@@ -67,9 +68,6 @@
     }
     [self sendCommand:[NSString stringWithFormat:@"USER %@ %@ %@ %@", user, user, user, user] withArguments:nil];
     [self sendCommand:[NSString stringWithFormat:@"NICK %@", nick] withArguments:nil];
-    for (id obj in channels) {
-        [self addChannel:obj];
-    }
     return YES;
 }
 - (NSString*)nick_
@@ -78,6 +76,8 @@
 }
 - (void)setNick_:(NSString *)nick
 {
+    if (nick==nick_) return;
+    if (nick==nil||[nick isEqualToString:@""]) return;
     [nick_ release];
     nick_ = [nick retain];
     [self sendCommand:@"NICK" withArguments:nick];
@@ -119,24 +119,45 @@
     if(streamEvent == NSStreamEventHasBytesAvailable)
     {
         if(!data) data=[NSMutableString new];
-            uint8_t buf;
-            NSUInteger bytesRead = [(NSInputStream*)theStream read:&buf maxLength:1];
-            if(bytesRead)
-                [data appendFormat:@"%c", buf];
-            if([data hasSuffix:@"\r\n"]) {
-                [[SHIRCManager sharedManager] parseMessage:data fromSocket:self];
-                [data release];
-                data=nil;
+        uint8_t buf;
+        NSUInteger bytesRead = [(NSInputStream*)theStream read:&buf maxLength:1];
+        if(bytesRead)
+            [data appendFormat:@"%c", buf];
+        if([data hasSuffix:@"\r\n"]) {
+            [[SHIRCManager sharedManager] parseMessage:data fromSocket:self];
+            [data release];
+            data=nil;
         }           
+    } else if (streamEvent == NSStreamEventErrorOccurred)
+    {
+        if (status != SHSocketStausError || status != SHSocketStausError) {
+            [input close];
+            [output close];
+            [input setDelegate:nil];
+            [output setDelegate:nil];
+            [input release];
+            [output release];
+            input = nil;
+            output = nil;
+            status = SHSocketStausError;
+            [self setDidRegister:NO];
+        }
     }
     else if (streamEvent == NSStreamEventEndEncountered)
     {
-        status = SHSocketStausClosed;
-        [data release];
-        data=nil;
-        [input release];
-        [output release];
-        [self setDidRegister:NO];
+        if (status != SHSocketStausError || status != SHSocketStausError) {
+            [input close];
+            [output close];
+            [input setDelegate:nil];
+            [output setDelegate:nil];
+            [input release];
+            [output release];
+            input = nil;
+            output = nil;
+            status = SHSocketStausClosed;
+            [self setDidRegister:NO];
+        }
+        [self release];
     } else if (streamEvent == NSStreamEventHasSpaceAvailable)
     {
         if (status == SHSocketStausConnecting)
@@ -155,29 +176,29 @@
 }
 -(void)disconnect
 {
-    if (status == SHSocketStausClosed) {
-        return;
+    if (status != SHSocketStausError || status != SHSocketStausError)
+    {
+        [self sendCommand:@"QUIT" withArguments:@"ShadowChat BETA"];
+        [input close];
+        [output close];
+        [input setDelegate:nil];
+        [output setDelegate:nil];
+        [input release];
+        [output release];
+        input = nil;
+        output = nil;
+        status = SHSocketStausClosed;
+        [self setDidRegister:NO];
     }
-    [self sendCommand:@"QUIT" withArguments:@"ShadowChat BETA"];
-    [input close];
-    [output close];
-    [input setDelegate:nil];
-    [output setDelegate:nil];
-    [input release];
-    [output release];
-    input = nil;
-    output = nil;
-    status = SHSocketStausClosed;
-    [self setDidRegister:NO];
 }
 - (void)addChannel:(SHIRCChannel*)chan
 {
     NSLog(@"Joiny fun!");
     if(!channels) channels=[NSMutableArray new];
-    if (channels && ![channels containsObject:chan]) {
-        if (![[chan formattedName] hasSuffix:@"JOIN"] || ![[chan formattedName] hasSuffix:@"PRIVMSG"]) {
-            NSLog(@"%@", channels);
-            [self sendCommand:@"JOIN" withArguments:[chan formattedName] waitUntilRegistered:YES];
+    if (channels) {
+        NSLog(@"%@", channels);
+        [self sendCommand:@"JOIN" withArguments:[chan formattedName] waitUntilRegistered:YES];
+        if (![channels containsObject:chan]) {
             [channels addObject:chan];
         }
     }
@@ -206,6 +227,9 @@
         }
         [commandsWaiting release];
         commandsWaiting=nil;
+        for (id obj in channels) {
+            [self addChannel:obj];
+        }
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadNetworks" object:nil];    
 }

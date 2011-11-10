@@ -77,7 +77,7 @@
     if ([command hasPrefix:@"/"])
         [scan setScanLocation:1];
     else
-        return; //lolwat
+        goto out; //lolwat
     NSString* command_=nil;
     NSString* argument=nil;
     [scan scanUpToString:@" " intoString:&command_];

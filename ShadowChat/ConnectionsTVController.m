@@ -67,6 +67,7 @@
 - (void)edit
 {
     isReallyEditing=!isReallyEditing;
+    [((UITableView*)self.view) setEditing:!isReallyEditing animated:NO];
     [((UITableView*)self.view) setEditing:isReallyEditing animated:YES];
     UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:([((UITableView*)self.view) isEditing] ? UIBarButtonSystemItemDone : UIBarButtonSystemItemEdit) target:self action:@selector(edit)];
     self.navigationItem.leftBarButtonItem = rightBarButtonItem;
@@ -166,7 +167,11 @@
     if ([[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isRegistered])
     {
         cell.detailTextLabel.text = @"Connected!";
-    } else {
+    } else if ([[[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] socket] status] == SHSocketStausError)
+    {
+        cell.detailTextLabel.text =@"Error connecting to the server";
+    } else 
+    {
         cell.detailTextLabel.text = [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isOpen] ? @"Connecting..." : @"Disconnected.";
     }
     return cell;
@@ -243,7 +248,7 @@
         goto addNetwork;
     }
     if([[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isOpen])
-        [((SHIRCSocket*)[[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] socket ])disconnect];
+         [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] disconnect];
     else [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] connect];
     goto end;
 addNetwork:

@@ -19,7 +19,7 @@
         [sock connectWithNick:@"woot" andUser:@"lolrly"];
         [callout setChan:[[[SHIRCChannel alloc] initWithSocket:sock andChanName:@"#sc"] autorelease]];
         //[callout addTarget:self action:@selector(closeCalloutView:)];
-        [self.view addSubview:callout];
+        [[self.view window] addSubview:callout];
         [callout setAnchorPoint:CGPointMake(80, 40) boundaryRect:[UIScreen mainScreen].applicationFrame animate:YES];
         [callout setOpacity:0.8f];
         [callout release];

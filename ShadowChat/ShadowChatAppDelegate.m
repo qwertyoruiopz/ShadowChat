@@ -7,6 +7,7 @@
 //
 
 #import "ShadowChatAppDelegate.h"
+#import "TestFlight.h"
 
 @implementation ShadowChatAppDelegate
 
@@ -17,6 +18,9 @@
 {
     // Override point for customization after application launch.
     // Add the tab bar controller's current view as a subview of the window
+#ifdef __DEBUG__
+    [TestFlight takeOff:@"35b8aa0d259ae0c61c57bc770aeafe63_Mzk5NDYyMDExLTExLTA5IDE4OjQ0OjEwLjc4MTM3MQ"];
+#endif
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
     return YES;

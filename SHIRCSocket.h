@@ -16,6 +16,7 @@ typedef enum SHSocketStaus
     SHSocketStausNotOpen,
     SHSocketStausConnecting,
     SHSocketStausOpen,
+    SHSocketStausError,
     SHSocketStausClosed
 } SHSocketStaus;
 @interface SHIRCSocket : NSObject <NSStreamDelegate>

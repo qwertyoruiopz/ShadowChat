@@ -84,12 +84,12 @@
 - (void)doneConnection {
     NSLog(@"Done :D");
     [[self tableView] findAndResignFirstResponder];
-	[[SHIRCNetwork createNetworkWithServer:server andPort:port isSSLEnabled:hasSSL description:description
-                              withUsername:user ? user : @"shadowchat"
-                               andNickname:nick ? nick : [[[[UIDevice currentDevice] name] componentsSeparatedByString:@" "] objectAtIndex:0]
-                               andRealname:name ? name : @"ShadowChat User"
-                            serverPassword:spass
-                          nickServPassword:npass]
+	[[SHIRCNetwork createNetworkWithServer:[server text] andPort:[[port text] intValue] isSSLEnabled:hasSSL description:[description text]
+                              withUsername:user ? [user text] : @"shadowchat"
+                               andNickname:nick ? [nick text] : [[[[UIDevice currentDevice] name] componentsSeparatedByString:@" "] objectAtIndex:0]
+                               andRealname:name ? [name text] : @"ShadowChat User"
+                            serverPassword:[spass text]
+                          nickServPassword:[npass text]]
      connect];
     [self dismissModalViewControllerAnimated:YES];
 }
@@ -207,20 +207,20 @@
                     [cell.textLabel setText: @"Description"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
                     
-                    UITextField *adescr = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
+                    UITextField *adescr = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 185, 22)];
                     adescr.adjustsFontSizeToFitWidth = YES;
                     adescr.placeholder = @"Enter a description";
                     adescr.returnKeyType = UIReturnKeyNext;
                     adescr.tag = 12340;
                     adescr.keyboardAppearance = UIKeyboardAppearanceAlert;
                     [adescr setDelegate:self];
-                    [cell addSubview: adescr];
+                    [cell setAccessoryView: adescr];
                     [adescr release];
                 } else if (indexPath.row == 1) {
                     [cell.textLabel setText: @"Address"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
                     
-                    UITextField *aaddr = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
+                    UITextField *aaddr = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 185, 22)];
                     aaddr.adjustsFontSizeToFitWidth = YES;
                     aaddr.placeholder = @"irc.network.tld";
                     aaddr.keyboardType = UIKeyboardTypeURL;
@@ -228,12 +228,12 @@
                     aaddr.tag = 12341;
                     aaddr.keyboardAppearance = UIKeyboardAppearanceAlert;
                     [aaddr setDelegate:self];
-                    [cell addSubview: aaddr];
+                    [cell setAccessoryView: aaddr];
                     [aaddr release];
                 } else if (indexPath.row == 2) {
                     [cell.textLabel setText: @"Port"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
-                    UITextField *portField = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
+                    UITextField *portField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 185, 22)];
                     portField.adjustsFontSizeToFitWidth = YES;
                     portField.placeholder = @"6667";
                     portField.keyboardType = UIKeyboardTypeNumberPad;
@@ -241,7 +241,7 @@
                     portField.tag = 12342;
                     portField.keyboardAppearance = UIKeyboardAppearanceAlert;
                     [portField setDelegate:self];
-                    [cell addSubview: portField];
+                    [cell setAccessoryView: portField];
                     [portField release];
                 } else if (indexPath.row == 3) {
                     [cell.textLabel setText: @"Connect via SSL"];
@@ -257,19 +257,19 @@
                 if (indexPath.row == 0) {                
                     [cell.textLabel setText: @"Username"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
-                    UITextField *userField = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
+                    UITextField *userField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 185, 22)];
                     userField.adjustsFontSizeToFitWidth = YES;
                     userField.placeholder = @"shadowchat";
                     userField.returnKeyType = UIReturnKeyNext;
                     userField.keyboardAppearance = UIKeyboardAppearanceAlert;
                    userField.tag = 12343;
                     [userField setDelegate:self];
-                    [cell addSubview: userField];
+                    [cell setAccessoryView: userField];
                     [userField release];
                 } else if (indexPath.row == 1) {
                     [cell.textLabel setText: @"Nickname"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
-                    UITextField *nickField = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
+                    UITextField *nickField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 185, 22)];
                     nickField.adjustsFontSizeToFitWidth = YES;
                     nickField.keyboardAppearance = UIKeyboardAppearanceAlert;
                     @try {
@@ -281,20 +281,20 @@
                     nickField.returnKeyType = UIReturnKeyNext;
                     nickField.tag = 12344;
                     [nickField setDelegate:self];
-                    [cell addSubview: nickField];
+                    [cell setAccessoryView: nickField];
                     [nickField release];
                 } else if (indexPath.row == 2) {
                     [cell.textLabel setText: @"Real Name"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
                     
-                    UITextField *rlname = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
+                    UITextField *rlname = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 185, 22)];
                     rlname.adjustsFontSizeToFitWidth = YES;
                     rlname.keyboardAppearance = UIKeyboardAppearanceAlert;
                     rlname.placeholder = @"ShadowChat User";
                     rlname.returnKeyType = UIReturnKeyNext;
                     rlname.tag = 12345;
                     [rlname setDelegate:self];
-                    [cell addSubview: rlname];
+                    [cell setAccessoryView: rlname];
                     [rlname release];
                 }
                 break;
@@ -303,7 +303,7 @@
                     [cell.textLabel setText: @"Nick Password"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
                     
-                    UITextField *passField = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
+                    UITextField *passField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 155, 22)];
                     passField.adjustsFontSizeToFitWidth = YES;
                     passField.placeholder = @"";
                     passField.returnKeyType = UIReturnKeyNext;
@@ -311,20 +311,20 @@
                     passField.secureTextEntry = YES;
                     passField.tag = 12346;
                     [passField setDelegate:self];
-                    [cell addSubview: passField];
+                    [cell setAccessoryView: passField];
                     [passField release];
                 } else if (indexPath.row == 1) {
                     [cell.textLabel setText: @"Server password"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
                     
-                    UITextField *nserv = [[UITextField alloc] initWithFrame:CGRectMake(125, 11, 185, 30)];
+                    UITextField *nserv = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 155, 22)];
                     nserv.keyboardAppearance = UIKeyboardAppearanceAlert;
                     nserv.adjustsFontSizeToFitWidth = YES;
                     nserv.placeholder = @"";
                     nserv.returnKeyType = UIReturnKeyDone;
                     nserv.tag = 12347;
                     [nserv setDelegate:self];
-                    [cell addSubview: nserv];
+                    [cell setAccessoryView: nserv];
                     [nserv release];
                 } 
                 break;
@@ -369,35 +369,28 @@
     NSLog(@"Saving!");
     switch ([textField tag]) {
         case 12340:
-            [description release];
-            description=[textField text];
+            description=textField;
             break;
         case 12341:
-            [server release];
-            server=[textField text];
+            server=textField;
             break;
         case 12342:
-            port=[[textField text] intValue];
+            port=textField;
             break;
         case 12343:
-            [user release];
-            user=(![[textField text] isEqualToString:@""]) ? [textField text] : nil;
+            user=(![[textField text] isEqualToString:@""]) ? textField : nil;
             break;
         case 12344:
-            [nick release];
-            nick=(![[textField text] isEqualToString:@""]) ? [textField text] : nil;
+            nick=(![[textField text] isEqualToString:@""]) ? textField : nil;
             break;
         case 12345:
-            [name release];
-            name=(![[textField text] isEqualToString:@""]) ? [textField text] : nil;
+            name=(![[textField text] isEqualToString:@""]) ? textField : nil;
             break;
         case 12346:
-            [npass release];
-            npass=[textField text];
+            npass=textField;
             break;
         case 12347:
-            [spass release];
-            spass=[textField text];
+            spass=textField;
             break;
         default:
             break;

@@ -29,6 +29,7 @@
 
 - (void)setChan:(SHIRCChannel *)chan_
 {
+    [chan release];
     chan=chan_;
     [chan setDelegate:self];
 }

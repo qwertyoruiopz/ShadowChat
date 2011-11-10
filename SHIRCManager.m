@@ -34,6 +34,7 @@ static SHIRCManager* sharedSHManager;
         return;
     }
     [self parseMessage:[args objectAtIndex:0] fromSocket:[args objectAtIndex:1]];
+    [pool release];
 }
 
 #define NO_THREADING 1

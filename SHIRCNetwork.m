@@ -57,7 +57,7 @@ static NSMutableArray* networks=nil;
         if ([coder containsValueForKey:@"hasSSL"])
             self.hasSSL = [[coder decodeObjectForKey:@"hasSSL"] boolValue];
         if ([coder containsValueForKey:@"nickname"])
-            self.nickname = [[coder decodeObjectForKey:@"nickname"] retain];
+            self.nickname = [coder decodeObjectForKey:@"nickname"];
         if ([coder containsValueForKey:@"realname"])
             self.realname = [coder decodeObjectForKey:@"realname"];
         if ([coder containsValueForKey:@"username"])
@@ -104,6 +104,7 @@ static NSMutableArray* networks=nil;
 }
 -(void)disconnect
 {
+    [socket retain];
     [socket disconnect];
 }
 -(BOOL)isOpen
@@ -121,14 +122,16 @@ static NSMutableArray* networks=nil;
         NSLog(@"ShIRCCore: Already connected");
         return nil;
     }
-    [socket disconnect];
-    if (!socket)
-        socket=[SHIRCSocket socketWithServer:[self server] andPort:[self port] usesSSL:[self hasSSL]];
+    [self disconnect];
+    if (!socket){
+        socket=[[SHIRCSocket socketWithServer:[self server] andPort:[self port] usesSSL:[self hasSSL]] retain];
+    } 
     if (self.serverPassword) {
         [socket connectWithNick:[self nickname] andUser:[self username] andPassword:[self serverPassword]];
     } else {
         [socket connectWithNick:[self nickname] andUser:[self username]];
     }
+    [socket release];
     return socket;
 }
 @end
