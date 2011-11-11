@@ -27,13 +27,13 @@
         [self setName:chName];
         [self setNet:[sock server]];
     }
-    id omg=[sock retainedChannelWithFormattedName:chName];
-    if (!([[sock channels] containsObject:self]&&omg)) {
-        [sock addChannel:self];
-    } else {
+    id omg=[sock retainedChannelWithFormattedName:[self formattedName]];
+    if ([[sock channels] containsObject:self]||omg) {
         [self release];
         [omg release]; // might be a bug.
         return omg;
+  } else {
+        [sock addChannel:self];
     }
     [omg release];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadChans" object:nil];

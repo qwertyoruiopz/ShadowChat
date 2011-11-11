@@ -10,5 +10,7 @@
 #import "SHIRCChannel.h"
 
 @interface ChannelsTVController : UITableViewController
-
+{
+    BOOL isReallyEditing;
+}
 @end

@@ -40,6 +40,8 @@
 - (void)saveDefaults;
 - (void)dealloc;
 + (NSMutableArray*)allNetworks;
++ (NSMutableArray*)allConnectedNetworks;
+- (void)hasBeenRegisteredCallback:(SHIRCSocket*)sock;
 - (void)disconnect;
 - (BOOL)isOpen;
 - (SHIRCSocket*)connect;

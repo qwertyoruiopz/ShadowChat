@@ -10,7 +10,7 @@
 #import "SHIRCManager.h"
 #import "SHIRCChannel.h"
 @implementation SHIRCSocket
-@synthesize input, output, port, server, usesSSL, channels, status;
+@synthesize input, output, port, server, usesSSL, channels, status, delegate;
 + (SHIRCSocket*)socketWithServer:(NSString *)srv andPort:(int)prt usesSSL:(BOOL)ssl {
     SHIRCSocket* ret = [[(Class)self alloc]init];
     ret.server = srv;
@@ -90,7 +90,9 @@
     else
         cmd = [command stringByAppendingString:@"\r\n"];
     if (canWrite) {
-        return [output write:(uint8_t*)[cmd UTF8String] maxLength:[cmd length]];
+        [output write:(uint8_t*)[cmd UTF8String] maxLength:[cmd length]];
+        [output write:(uint8_t*)"\r\n" maxLength:2];
+        return;
     }
     if (!queuedCommands) queuedCommands = [NSMutableString new];
     [queuedCommands appendFormat:@"%@\r\n", cmd];
@@ -104,8 +106,11 @@
     else
         cmd = command;
     if(!wur){
-        if (canWrite) 
-            return [output write:(uint8_t*)[cmd UTF8String] maxLength:[cmd length]];
+        if (canWrite) {
+            [output write:(uint8_t*)[cmd UTF8String] maxLength:[cmd length]];
+            [output write:(uint8_t*)"\r\n" maxLength:2];
+            return;
+        }
         if (!queuedCommands) queuedCommands = [NSMutableString new];
         [queuedCommands appendFormat:@"%@\r\n", cmd];
         return YES;
@@ -168,6 +173,7 @@
         if (queuedCommands) {
             canWrite=NO;
             [(NSOutputStream*)theStream write:(uint8_t*)[queuedCommands UTF8String] maxLength:[queuedCommands length]];
+            [output write:(uint8_t*)"\r\n" maxLength:2];
             [queuedCommands release];
             queuedCommands=nil;
         }
@@ -215,6 +221,9 @@
 }
 - (void)setDidRegister:(BOOL)didReg
 {
+    if (didReg==didRegister) {
+        return;
+    }
     didRegister=didReg;
     if (didReg)
     {
@@ -223,6 +232,7 @@
             if([cmd isKindOfClass:[NSString class]])
             {
                 [output write:(uint8_t*)[cmd UTF8String] maxLength:[cmd length]];
+                [output write:(uint8_t*)"\r\n" maxLength:2];
             }
         }
         [commandsWaiting release];
@@ -230,8 +240,11 @@
         for (id obj in channels) {
             [self addChannel:obj];
         }
+        if ([delegate respondsToSelector:@selector(hasBeenRegisteredCallback:)]) {
+            [delegate performSelector:@selector(hasBeenRegisteredCallback:) withObject:self];
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadNetworks" object:nil];
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadNetworks" object:nil];    
 }
 - (void)dealloc
 {

@@ -54,29 +54,37 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    if (![textField inputAccessoryView]) {
-        [tfield setInputAccessoryView:bar];
-        [tfield becomeFirstResponder];
-        return YES;
-    }
+    [UIView beginAnimations:nil context:NULL]; // Begin animation
+    [UIView setAnimationDuration:0.3f];
+    CGRect pnt=bar.frame;
+    pnt.origin.y=156;
+    bar.frame=pnt;
+    pnt=output.frame;
+    pnt.size.height=157;
+    output.frame=pnt;
+    [UIView commitAnimations];
+    [output stringByEvaluatingJavaScriptFromString:@"window.scrollTo(0, document.body.scrollHeight);"];
     return YES;
 }
 
-- (BOOL)resignFirstResponder {
-	return NO;
-}
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
-    if (isViewHidden) {
-        return YES;
-    }
-    return NO;
+    [UIView beginAnimations:nil context:NULL]; // Begin animation
+    [UIView setAnimationDuration:0.3f];
+    CGRect pnt=bar.frame;
+    pnt.origin.y=323;
+    bar.frame=pnt;
+    pnt=output.frame;
+    pnt.size.height=324;
+    output.frame=pnt;
+    [UIView commitAnimations];
+    [output stringByEvaluatingJavaScriptFromString:@"window.scrollTo(0, document.body.scrollHeight);"];
+    return YES;
 }
 
 - (void) viewWillDisappear:(BOOL)animated
 {
-    [tfield setInputAccessoryView:nil];
     isViewHidden=YES;
     /*[tfield setInputAccessoryView:nil];
 	 if ([tfield isFirstResponder]) {
@@ -238,8 +246,6 @@
     NSLog(@"%@", [tfield superview]);
     [[self view] addSubview:[tfield superview]];
     [tfield becomeFirstResponder];
-    
-    [tfield setInputAccessoryView:[tfield superview]];
 }
 
 - (void)didRecieveEvent:(SHEventType)evt from:(NSString*)from to:(NSString*)to extra:(NSString *)extra

@@ -7,6 +7,8 @@
 //
 
 #import "ChannelsTVController.h"
+#import "ClearLabelsCellView.h"
+#import "GradientView.h"
 #import "SHIRCNetwork.h"
 #import "SHChatPanel.h"
 
@@ -54,6 +56,31 @@
                                              selector:@selector(reloadData) 
                                                  name:@"ReloadNetworks"
                                                object:nil];
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    UIBarButtonItem *leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(edit)];
+    self.navigationItem.leftBarButtonItem = leftBarButtonItem;
+    [leftBarButtonItem release];
+    self.tableView.allowsSelectionDuringEditing = YES;
+}
+
+- (void)edit
+{
+    isReallyEditing=!isReallyEditing;
+    [((UITableView*)self.view) setEditing:!isReallyEditing animated:NO];
+    [((UITableView*)self.view) setEditing:isReallyEditing animated:YES];
+    UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:([((UITableView*)self.view) isEditing] ? UIBarButtonSystemItemDone : UIBarButtonSystemItemEdit) target:self action:@selector(edit)];
+    self.navigationItem.leftBarButtonItem = rightBarButtonItem;
+    [rightBarButtonItem release];
+    [((UITableView*)self.view) beginUpdates]; 
+    int net=[self numberOfSectionsInTableView:nil];
+    while (net--) {
+    (
+     isReallyEditing ?
+     [((UITableView*)self.view) insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self tableView:nil numberOfRowsInSection:net]-1 inSection:net]] withRowAnimation:UITableViewRowAnimationTop] :
+     [((UITableView*)self.view) deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self tableView:nil numberOfRowsInSection:net] inSection:net]] withRowAnimation:UITableViewRowAnimationTop]
+     );
+    }
+    [((UITableView*)self.view) endUpdates];
 }
 
 - (void)viewDidUnload
@@ -95,23 +122,23 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return [[SHIRCNetwork allNetworks] count];
+    return [[SHIRCNetwork allConnectedNetworks] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [[[(SHIRCNetwork*)[[SHIRCNetwork allNetworks] objectAtIndex:section] socket] channels] count];
+    return [[[(SHIRCNetwork*)[[SHIRCNetwork allConnectedNetworks] objectAtIndex:section] socket] channels] count] + isReallyEditing;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     /*
-    for (SHIRCNetwork* networks in [SHIRCNetwork allNetworks]) {
+    for (SHIRCNetwork* networks in [SHIRCNetwork allConnectedNetworks]) {
         if () {
             <#statements#>
         }
     }*/
-    return [[[SHIRCNetwork allNetworks] objectAtIndex:section] descr] ? [[[SHIRCNetwork allNetworks] objectAtIndex:section] descr] : [[[SHIRCNetwork allNetworks] objectAtIndex:section] server];
+    return [[[SHIRCNetwork allConnectedNetworks] objectAtIndex:section] descr] ? [[[SHIRCNetwork allConnectedNetworks] objectAtIndex:section] descr] : [[[SHIRCNetwork allConnectedNetworks] objectAtIndex:section] server];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -120,37 +147,47 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[ClearLabelsCellView alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+		cell.backgroundView = [[[GradientView alloc] initWithFrame:CGRectZero  reversed: NO] autorelease];
     }
-
-    cell.textLabel.text=[((SHIRCChannel *)[[[(SHIRCNetwork*)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.section] socket] channels] objectAtIndex:indexPath.row]) formattedName];
+    if ([[[(SHIRCNetwork*)[[SHIRCNetwork allConnectedNetworks] objectAtIndex:indexPath.section] socket] channels] count] == indexPath.row) {
+        cell.textLabel.text = @"Join a channel";
+    } else
+    cell.textLabel.text=[((SHIRCChannel *)[[[(SHIRCNetwork*)[[SHIRCNetwork allConnectedNetworks] objectAtIndex:indexPath.section] socket] channels] objectAtIndex:indexPath.row]) formattedName];
     // Confgure the cell...
     
     return cell;
 }
 
-/*
+
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
     return YES;
 }
-*/
 
-/*
+
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        //[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([self tableView:nil numberOfRowsInSection:indexPath.section]-1==indexPath.row) {
+        return UITableViewCellEditingStyleInsert;
+    }
+    return UITableViewCellEditingStyleDelete;
+}
 
 /*
 // Override to support rearranging the table view.
@@ -169,12 +206,31 @@
 */
 
 #pragma mark - Table view delegate
+- (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path
+{
+    // Determine if row is selectable based on the NSIndexPath.
+    NSLog(@"OMFG, %@", path);
+    if (![tv isEditing]) {
+        return path;
+    } else
+        if ([self tableView:nil numberOfRowsInSection:path.section]-1==path.row)
+        {
+            return path;
+        }
+    return nil;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if ([self tableView:nil numberOfRowsInSection:indexPath.section]-1==indexPath.row&&[tableView isEditing])
+    {
+        NSLog(@"Add a bloody chan.");
+        goto end;
+    }
     id vc=nil;
-    vc=[[SHChatPanel alloc] initWithChan:[[[(SHIRCNetwork*)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.section] socket] channels] objectAtIndex:indexPath.row]];
+    vc=[[SHChatPanel alloc] initWithChan:[[[(SHIRCNetwork*)[[SHIRCNetwork allConnectedNetworks] objectAtIndex:indexPath.section] socket] channels] objectAtIndex:indexPath.row]];
     [[self navigationController] pushViewController:vc animated:YES];
+    end:
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

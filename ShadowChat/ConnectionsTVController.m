@@ -167,7 +167,7 @@
     if ([[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isRegistered])
     {
         cell.detailTextLabel.text = @"Connected!";
-    } else if ([[[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] socket] status] == SHSocketStausError)
+    } else if ([((SHIRCSocket*)[[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] socket]) status] == SHSocketStausError)
     {
         cell.detailTextLabel.text =@"Error connecting to the server";
     } else 

@@ -9,6 +9,7 @@
 #import "SHIRCNetwork.h"
 #import "SHIRCChannel.h"
 static NSMutableArray* networks=nil;
+static NSMutableArray* connectedNetworks=nil;
 @implementation SHIRCNetwork
 @synthesize server, port, descr, hasSSL, username, nickname, realname, serverPassword, nickServPassword, socket;
 +(SHIRCNetwork*)createNetworkWithServer:(NSString*)server andPort:(int)port isSSLEnabled:(BOOL)ssl
@@ -102,9 +103,20 @@ static NSMutableArray* networks=nil;
     }
     return networks;
 }
++ (NSMutableArray*)allConnectedNetworks
+{
+    if(!connectedNetworks)
+    {
+        NSAutoreleasePool* pawl=[NSAutoreleasePool new];
+        connectedNetworks = [[NSMutableArray alloc] init];
+        [pawl release];
+    }
+    return connectedNetworks;
+}
 -(void)disconnect
 {
     [socket retain];
+    [[[self class] allConnectedNetworks] removeObject:self];
     [socket disconnect];
 }
 -(BOOL)isOpen
@@ -114,6 +126,11 @@ static NSMutableArray* networks=nil;
 -(BOOL)isRegistered
 {
     return ([socket didRegister]);
+}
+-(void)hasBeenRegisteredCallback:(SHIRCSocket*)sock
+{
+    NSLog(@"%@ - Callback", self);
+    [[[self class] allConnectedNetworks] addObject:self];
 }
 -(SHIRCSocket*)connect
 {
@@ -126,11 +143,16 @@ static NSMutableArray* networks=nil;
     if (!socket){
         socket=[[SHIRCSocket socketWithServer:[self server] andPort:[self port] usesSSL:[self hasSSL]] retain];
     } 
+    [socket setDelegate:self];
     if (self.serverPassword) {
         [socket connectWithNick:[self nickname] andUser:[self username] andPassword:[self serverPassword]];
     } else {
         [socket connectWithNick:[self nickname] andUser:[self username]];
     }
+    if ([self nickServPassword]) {
+        [socket sendCommand:@"PRIVMSG NickServ" withArguments:[@"IDENTIFY " stringByAppendingString:[self nickServPassword]] waitUntilRegistered:YES];
+    }
+    [socket setDelegate:self];
     [socket release];
     return socket;
 }

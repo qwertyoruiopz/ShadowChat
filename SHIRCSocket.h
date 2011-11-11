@@ -34,6 +34,7 @@ typedef enum SHSocketStaus
     NSMutableArray* channels;
     NSString* nick_;
     BOOL canWrite;
+    id delegate;
 }
 @property(retain, readwrite) NSInputStream* input;
 @property(retain, readwrite) NSOutputStream* output;
@@ -44,6 +45,7 @@ typedef enum SHSocketStaus
 @property(assign, readwrite) BOOL usesSSL;
 @property(assign, readwrite) BOOL didRegister;
 @property(assign, readwrite) SHSocketStaus status;
+@property(assign, readwrite) id delegate;
 + (SHIRCSocket*)socketWithServer:(NSString *)srv andPort:(int)prt usesSSL:(BOOL)ssl;
 - (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user;
 - (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user andPassword:(NSString *)pass;
