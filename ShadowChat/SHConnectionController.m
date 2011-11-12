@@ -6,39 +6,34 @@
 //  Copyright 2011 uiop. All rights reserved.
 //
 
-#import "ConnectionsTVController.h"
-#import "AddConnectionTVController.h"
-#import "SHIRCNetwork.h"
-#import "SHIRCChannel.h"
-#import "GradientView.h"
-#import "ClearLabelsCellView.h"
-@implementation ConnectionsTVController
+#import "SHConnectionController.h"
+
+
+@implementation SHConnectionController
 @synthesize nothingView;
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath 
-{
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath  {
     return 60;
 }
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
+- (id)initWithStyle:(UITableViewStyle)style {
+	if ((self = [super initWithStyle:style])) {
+		isCellSwiped = NO;
+		
     }
     return self;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
+}
+
+- (void)clearCellSwiped:(SHClearLabelCellView *)c swipe:(UISwipeGestureRecognizer *)g {
+	
 }
 
 #pragma mark - View lifecycle
-- (void)dealloc
-{
+- (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:[self tableView]];
     [super dealloc];
 }
@@ -64,8 +59,7 @@
     self.tableView.allowsSelectionDuringEditing = YES;
 }
 
-- (void)edit
-{
+- (void)edit {
     isReallyEditing=!isReallyEditing;
     [((UITableView*)self.view) setEditing:!isReallyEditing animated:NO];
     [((UITableView*)self.view) setEditing:isReallyEditing animated:YES];
@@ -148,32 +142,33 @@
     return 0;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[ClearLabelsCellView alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
-		cell.backgroundView = [[[GradientView alloc] initWithFrame:CGRectZero  reversed: NO] autorelease];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	static NSString *CellIdentifier = @"Cell";
+
+	SHClearLabelCellView *cell = (SHClearLabelCellView *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	if (cell == nil) {
+		cell = [[[SHClearLabelCellView alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+		cell.backgroundView = [[[SHGradientView alloc] initWithFrame:CGRectZero reversed:NO] autorelease];
+		cell.delegate = self;
+	}
+	if ([[SHIRCNetwork allNetworks] count] == indexPath.row) {
+		cell.textLabel.text = @"Add an IRC Network";
+		cell.detailTextLabel.text = @"Click here to configure a new network";
+		cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+		return cell;
+	}
+    cell.textLabel.text = [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] descr] ? [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] descr] : [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] server];
+	if ([[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isRegistered]) {
+		cell.detailTextLabel.text = @"Connected!";
     }
-    if ([[SHIRCNetwork allNetworks] count]==indexPath.row) {
-        cell.textLabel.text = @"Add an IRC Network";
-        cell.detailTextLabel.text = @"Click here to configure a new network";
-        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-        return cell;
+	else if ([((SHIRCSocket *)[((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]) socket]) status] == SHSocketStausError) {
+			NSLog(@"fdsfsdfsd %@", [[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]);
+		cell.detailTextLabel.text = @"Error connecting to the server";
     }
-    cell.textLabel.text=[[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] descr] ? [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] descr] : [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] server];
-    if ([[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isRegistered])
-    {
-        cell.detailTextLabel.text = @"Connected!";
-    } else if ([((SHIRCSocket*)[[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] socket]) status] == SHSocketStausError)
-    {
-        cell.detailTextLabel.text =@"Error connecting to the server";
-    } else 
-    {
-        cell.detailTextLabel.text = [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isOpen] ? @"Connecting..." : @"Disconnected.";
+	else {
+		cell.detailTextLabel.text = [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isOpen] ? @"Connecting..." : @"Disconnected.";
     }
+	cell.thirdLabel.text = ((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]).server;
     return cell;
 }
 
@@ -187,7 +182,7 @@
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([[SHIRCNetwork allNetworks] count]==indexPath.row) {
+    if ([[SHIRCNetwork allNetworks] count] == indexPath.row) {
         return UITableViewCellEditingStyleInsert;
     }
     return UITableViewCellEditingStyleDelete;
@@ -228,35 +223,24 @@
  */
 
 #pragma mark - Table view delegate
-- (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path
-{
+- (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path {
     // Determine if row is selectable based on the NSIndexPath.
-    NSLog(@"OMFG, %@", path);
-    if (![tv isEditing]) {
+    if (![tv isEditing] || [[SHIRCNetwork allNetworks] count] == path.row) {
         return path;
-    } else
-    if ([[SHIRCNetwork allNetworks] count]==path.row)
-    {
-        return path;
-    }
+	}
     return nil;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if ([[SHIRCNetwork allNetworks] count]==indexPath.row) {
-        goto addNetwork;
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([[SHIRCNetwork allNetworks] count] == indexPath.row) {
+        [self addConnection];
+		[self performSelector:@selector(edit)];
     }
-    if([[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isOpen])
+    if ([[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isOpen])
          [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] disconnect];
     else [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] connect];
-    goto end;
-addNetwork:
-    [self addConnection];
-    [self performSelector:@selector(edit)];
-end:
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [tableView reloadData];
+		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+		[tableView reloadData];
 }
 
 @end

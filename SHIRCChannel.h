@@ -10,40 +10,37 @@
 #import "SHChatPanel.h"
 #import "SHIRCChannel.h"
 
-typedef enum SHMessageFlavor
-{
+typedef enum SHMessageFlavor {
     SHMessageFlavorNormal,
     SHMessageFlavorAction,
     SHMessageFlavorNotice
 } SHMessageFlavor;
 
-typedef enum SHEventType
-{
+typedef enum SHEventType {
     SHEventTypePart,
     SHEventTypeMode,
     SHEventTypeJoin,
     SHEventTypeKick
 } SHEventType;
 
-@interface SHIRCChannel : NSObject
-{
+@interface SHIRCChannel : NSObject {
     NSString* net;
     NSString* name;
     SHIRCSocket* socket;
     id delegate;
 }
-@property(retain) NSString* net;
-@property(retain) NSString* name;
-@property(assign) SHIRCSocket* socket;
+@property(retain) NSString *net;
+@property(retain) NSString *name;
+@property(assign) SHIRCSocket *socket;
 @property(retain) id delegate;
-- (id)initWithSocket:(SHIRCSocket *)sock andChanName:(NSString*)chName;
-- (BOOL)sendMessage:(NSString*)message flavor:(SHMessageFlavor)flavor;
+- (id)initWithSocket:(SHIRCSocket *)sock andChanName:(NSString *)chName;
+- (BOOL)sendMessage:(NSString *)message flavor:(SHMessageFlavor)flavor;
 - (NSString *)formattedName;
 - (void)part;
-- (void)didRecieveMessageFrom:(NSString*)nick text:(NSString*)ircMessage;
-- (void)parseCommand:(NSString*)command;
+- (void)didRecieveMessageFrom:(NSString *)nick text:(NSString *)ircMessage;
+- (void)parseCommand:(NSString *)command;
 - (void)parseAndEventuallySendMessage:(NSString *)command;
-- (void)didRecieveActionFrom:(NSString*)nick text:(NSString*)ircMessage;
-- (void)didRecieveEvent:(SHEventType)nick from:(NSString*)from to:(NSString*)to extra:(NSString*)extra;
-- (void)didRecieveNamesList:(NSArray*)array;
+- (void)didRecieveActionFrom:(NSString*)nick text:(NSString *)ircMessage;
+- (void)didRecieveEvent:(SHEventType)nick from:(NSString *)from to:(NSString *)to extra:(NSString *)extra;
+- (void)didRecieveNamesList:(NSArray *)array;
 @end

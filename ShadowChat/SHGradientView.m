@@ -6,10 +6,10 @@
 //  Copyright 2009 Matt Gallagher. All rights reserved.
 //
 
-#import "GradientView.h"
+#import "SHGradientView.h"
 #import <QuartzCore/QuartzCore.h>
 
-@implementation GradientView
+@implementation SHGradientView
 
 //
 // layerClass

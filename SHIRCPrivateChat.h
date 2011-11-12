@@ -10,6 +10,6 @@
 
 @interface SHIRCPrivateChat : SHIRCChannel
 
-- (NSString*)formattedName;
+- (NSString *)formattedName;
 
 @end

@@ -11,65 +11,53 @@
 @implementation SHChatPanel
 @synthesize tfield, output, sendbtn, bar;
 
-- (SHIRCChannel *)chan
-{
+- (SHIRCChannel *)chan {
     return chan;
 }
 
-- (SHChatPanel *)initWithChan:(SHIRCChannel *)chan_
-{
-    if ([chan_ delegate])
-    {
-        [self release];
-        return [chan_ delegate];        
-    }
-    [self setChan:chan_];
-    return self;
+- (SHChatPanel *)initWithChan:(SHIRCChannel *)chan_ {
+    if ([chan_ delegate]) {
+		[self release];
+		return [chan_ delegate];        
+	}
+	[self setChan:chan_];
+	return self;
 }
 
-- (void)setChan:(SHIRCChannel *)chan_
-{
-    [chan release];
-    chan=chan_;
-    [chan setDelegate:self];
+- (void)setChan:(SHIRCChannel *)chan_ {
+	[chan release];
+	chan = chan_;
+	[chan setDelegate:self];
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+	if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
         NSLog(@"no u");
         // Custom initialization
     }
     return self;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
 }
 
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    [UIView beginAnimations:nil context:NULL]; // Begin animation
-    [UIView setAnimationDuration:0.3f];
-    CGRect pnt=bar.frame;
-    pnt.origin.y=156;
-    bar.frame=pnt;
-    pnt=output.frame;
-    pnt.size.height=157;
-    output.frame=pnt;
-    [UIView commitAnimations];
-    [output stringByEvaluatingJavaScriptFromString:@"window.scrollTo(0, document.body.scrollHeight);"];
-    return YES;
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+	[UIView beginAnimations:nil context:NULL]; // Begin animation
+	[UIView setAnimationDuration:0.3f];
+	CGRect pnt = bar.frame;
+	pnt.origin.y = 156;
+	bar.frame = pnt;
+	pnt = output.frame;
+	pnt.size.height = 157;
+	output.frame = pnt;
+	[UIView commitAnimations];
+	[output stringByEvaluatingJavaScriptFromString:@"window.scrollTo(0, document.body.scrollHeight);"];
+	return YES;
 }
 
 
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
-{
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
     [UIView beginAnimations:nil context:NULL]; // Begin animation
     [UIView setAnimationDuration:0.3f];
     CGRect pnt=bar.frame;
@@ -83,31 +71,24 @@
     return YES;
 }
 
-- (void) viewWillDisappear:(BOOL)animated
-{
-    isViewHidden=YES;
-    /*[tfield setInputAccessoryView:nil];
-	 if ([tfield isFirstResponder]) {
-	 [tfield resignFirstResponder];
-	 }*/
+- (void)viewWillDisappear:(BOOL)animated {
+    isViewHidden = YES;
     [tfield resignFirstResponder];
     [super viewDidDisappear:animated];
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    if (range.length==1&&[[textField text]length]==1) {
-        sendbtn.enabled=NO;
-    } else if (range.length==0&&range.location==0)
-    {
-        sendbtn.enabled=YES;
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (range.length == 1 && [[textField text]length] == 1) {
+		sendbtn.enabled = NO;
+	}
+	else if (range.length == 0 && range.location == 0) {
+		sendbtn.enabled = YES;
     }
     return YES;
 }
 
 
-- (IBAction)sendMessagePlz
-{
+- (IBAction)sendMessageAndResign {
     [self textFieldShouldReturn:nil];
 }
 
@@ -135,36 +116,36 @@
     [cul release];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if ([[tfield text] isEqualToString:@""]) {
         return YES;
     }
     [chan parseAndEventuallySendMessage:[tfield text]];
     [tfield setText:@""];
-		NSLog(@"source code: %@", [output stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML"]);
-    sendbtn.enabled=NO;
+	NSLog(@"source code: %@", [output stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML"]);
+    sendbtn.enabled = NO;
 
-// Line colors.... needed help picking subtle colours... >< CSS? yes... will work on formatting asap, thinking about providing the js
-// the css so that we can load it more dynamically with the themes or whatever shit... >:D
-// font picking.... Not going so well... may need to include some :) 
-// http://d.pr/kTce , http://d.pr/rPuW , http://d.pr/xREJ , http://d.pr/qi2p , http://d.pr/6YCa
+//	Line colors.... needed help picking subtle colours... >< CSS? yes... will work on formatting asap, thinking about providing the js \
+	the css so that we can load it more dynamically with the themes or whatever shit... >:D \
+	font picking.... Not going so well... may need to include some :) \
+	http://d.pr/kTce , http://d.pr/rPuW , http://d.pr/xREJ , http://d.pr/qi2p , http://d.pr/6YCa
 	
-	NSMutableArray *colors = [[NSMutableArray alloc] init];
-	for (unsigned int i = 0; i < 26; i++) {
-		[colors addObject:[NSString stringWithFormat:@"%06X", arc4random() % 16777216]];
-	}
-	NSLog(@"meh %@", colors);
-	[output stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setColors(%@)", colors]];
+//	NSMutableArray *colors = [[NSMutableArray alloc] init];
+//	for (unsigned int i = 0; i < 26; i++) {
+//		[colors addObject:[NSString stringWithFormat:@"%06X", arc4random() % 16777216]];
+//	}
+//	NSLog(@"meh %@", colors);
+//	[output stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setColors(%@)", colors]];
+//	This probably won't be used. Reason being we have no control over neon, eye-hurting colors. We'd have to use CSS and write a small parser.
+//	Reason being, colloquy and another clients have names attached to a certain colour based ona hash(?) This makes it easier for our eyes to tell what is actually happening.
+//	Maybe something we want to look into?
 	
-	// don't mock me! >:D needs work.. :)
     return YES;
 }
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 	[[self navigationItem] setTitle:[chan formattedName]];
 	[output loadHTMLString:@"\
@@ -210,46 +191,35 @@
      <center>ShadowChat beta</center>\
      </body>\
      </html>\
-    " baseURL:[NSURL URLWithString:@"http://zomg.com"]];  //dae0ec
-    NSLog(@"lolwat, %@", [output stringByEvaluatingJavaScriptFromString:@"background_color();"]);
-
-    //[[self view] setBackgroundColor:];
-    // Do any additional setup after loading the view from its nib.
-    
+	 " baseURL:[NSURL URLWithString:@"http://zomg.com"]];
+    NSLog(@"lolwat, %@", [output stringByEvaluatingJavaScriptFromString:@"background_color();"]);//dae0ec    
 }
 
-- (void)viewDidUnload
-{
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+- (void)viewDidUnload {
     [super viewDidUnload];
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     NSLog(@"cyah");
     [chan setDelegate:nil];
     [super dealloc];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return YES;
     // (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    isViewHidden=NO;
+- (void)viewDidAppear:(BOOL)animated {
+    isViewHidden = NO;
     NSLog(@"%@", tfield);
     NSLog(@"%@", [tfield superview]);
     [[self view] addSubview:[tfield superview]];
     [tfield becomeFirstResponder];
 }
 
-- (void)didRecieveEvent:(SHEventType)evt from:(NSString*)from to:(NSString*)to extra:(NSString *)extra
-{
+- (void)didRecieveEvent:(SHEventType)evt from:(NSString *)from to:(NSString *)to extra:(NSString *)extra {
     NSLog(@"%d %@ %@", evt, from, to);
     NSString *java = [NSString stringWithFormat:@"addEvent('%@','%@', '%@', '%@');",
                       [[from stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"],

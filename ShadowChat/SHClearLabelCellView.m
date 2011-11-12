@@ -6,30 +6,64 @@
 //  Copyright 2009 Matt Gallagher. All rights reserved.
 //
 
-#import "ClearLabelsCellView.h"
+#import "SHClearLabelCellView.h"
 
+@implementation SHClearLabelCellView
+@synthesize thirdLabel;
+@synthesize delegate;
+- (id)initWithStyle:(UITableViewCellStyle)s reuseIdentifier:(NSString *)identifier {
+	if ((self = [super initWithStyle:s reuseIdentifier:identifier])) {
+		thirdLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width-160, self.frame.size.height-15, 150, 20)];
+		thirdLabel.text = @"fdsfds";
+		thirdLabel.backgroundColor = [UIColor clearColor];
+		thirdLabel.textColor = [UIColor grayColor];
+		thirdLabel.font = [UIFont systemFontOfSize:15];
+		thirdLabel.textAlignment = UITextAlignmentRight;
+//		UISwipeGestureRecognizer *recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(cellWasSwpied:)];
+//		[recognizer setDirection:(UISwipeGestureRecognizerDirectionLeft | UISwipeGestureRecognizerDirectionRight)];
+//		[self addSubview:recognizer];
+		[recognizer release];
+		[self addSubview:thirdLabel];
+	}
+	return self;
+}
 
-@implementation ClearLabelsCellView
-
-//
-// setSelected:animated:
-//
-// The default setSelected:animated: method sets the textLabel and
-// detailTextLabel background to white when invoked (which is
-// on every construction). This override undoes that and sets their background
-// to clearColor.
-//
-// Parameters:
-//    selected - is the cell being selected
-//    animated - should the selection be animated
-//
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
 	[super setSelected:selected animated:animated];
 
 	self.textLabel.backgroundColor = [UIColor clearColor];
 	self.detailTextLabel.backgroundColor = [UIColor clearColor];
 }
 
+- (void)dealloc {
+	[thirdLabel release];
+}
+
+- (void)cellWasSwpied:(UISwipeGestureRecognizer *)recog {
+	
+}
+
+- (void)drawOptionsView:(SHSwipeDirection)direction {
+	currentDirection = direction;
+	switch (direction) {
+		case SHSwipeDirectionRight: 
+			break;
+		case SHSwipeDirectionLeft:
+			break;
+		default:
+			break;
+	}
+}
+- (void)undrawOptionsView {
+	switch (currentDirection) {
+		case SHSwipeDirectionRight: 
+			break;
+		case SHSwipeDirectionLeft:
+			break;
+		default:
+			break;
+	}
+	
+}
 
 @end

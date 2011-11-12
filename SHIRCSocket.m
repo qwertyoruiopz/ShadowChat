@@ -10,6 +10,16 @@
 #import "SHIRCManager.h"
 #import "SHIRCChannel.h"
 @implementation SHIRCSocket
+
+#define clean() [input close]; \
+					[output close]; \
+					[input setDelegate:nil]; \
+					[output setDelegate:nil]; \
+					[input release]; \
+					[output release]; \
+					input = nil; \
+					output = nil; 
+
 @synthesize input, output, port, server, usesSSL, channels, status, delegate;
 + (SHIRCSocket*)socketWithServer:(NSString *)srv andPort:(int)prt usesSSL:(BOOL)ssl {
     SHIRCSocket* ret = [[(Class)self alloc]init];
@@ -90,22 +100,22 @@
     else
         cmd = [command stringByAppendingString:@"\r\n"];
     if (canWrite) {
-        [output write:(uint8_t*)[cmd UTF8String] maxLength:[cmd length]];
-        [output write:(uint8_t*)"\r\n" maxLength:2];
+        [output write:(uint8_t *)[cmd UTF8String] maxLength:[cmd length]];
+        [output write:(uint8_t *)"\r\n" maxLength:2];
         return;
     }
     if (!queuedCommands) queuedCommands = [NSMutableString new];
     [queuedCommands appendFormat:@"%@\r\n", cmd];
     return YES;
 }
-- (BOOL)sendCommand:(NSString *)command withArguments:(NSString*)args waitUntilRegistered:(BOOL)wur {
-    if(didRegister) wur = NO;
+- (BOOL)sendCommand:(NSString *)command withArguments:(NSString *)args waitUntilRegistered:(BOOL)wur {
+    if (didRegister) wur = NO;
     NSString *cmd;
-    if(args)
+    if (args)
 		cmd = [command stringByAppendingFormat:@" :%@\r\n", args];
     else
         cmd = command;
-    if(!wur){
+    if (!wur){
         if (canWrite) {
             [output write:(uint8_t*)[cmd UTF8String] maxLength:[cmd length]];
             [output write:(uint8_t*)"\r\n" maxLength:2];
@@ -115,87 +125,60 @@
         [queuedCommands appendFormat:@"%@\r\n", cmd];
         return YES;
     }
-    if(!commandsWaiting) commandsWaiting=[NSMutableArray new];
+    if (!commandsWaiting) commandsWaiting = [NSMutableArray new];
     [commandsWaiting addObject:cmd];
     return YES;
 }
-- (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent
-{
-    if(streamEvent == NSStreamEventHasBytesAvailable)
-    {
-        if(!data) data=[NSMutableString new];
+- (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent {
+    if(streamEvent == NSStreamEventHasBytesAvailable) {
+        if (!data) data = [NSMutableString new];
         uint8_t buf;
-        NSUInteger bytesRead = [(NSInputStream*)theStream read:&buf maxLength:1];
-        if(bytesRead)
-            [data appendFormat:@"%c", buf];
-        if([data hasSuffix:@"\r\n"]) {
-            [[SHIRCManager sharedManager] parseMessage:data fromSocket:self];
-            [data release];
-            data=nil;
-        }           
-    } else if (streamEvent == NSStreamEventErrorOccurred)
-    {
-        if (status != SHSocketStausError || status != SHSocketStausError) {
-            [input close];
-            [output close];
-            [input setDelegate:nil];
-            [output setDelegate:nil];
-            [input release];
-            [output release];
-            input = nil;
-            output = nil;
-            status = SHSocketStausError;
-            [self setDidRegister:NO];
-        }
+        NSUInteger bytesRead = [(NSInputStream *)theStream read:&buf maxLength:1];
+		if (bytesRead)
+			[data appendFormat:@"%c", buf];
+		if ([data hasSuffix:@"\r\n"]) {
+			[[SHIRCManager sharedManager] parseMessage:data fromSocket:self];
+			[data release];
+			data = nil;
+		}
     }
-    else if (streamEvent == NSStreamEventEndEncountered)
-    {
-        if (status != SHSocketStausError || status != SHSocketStausError) {
-            [input close];
-            [output close];
-            [input setDelegate:nil];
-            [output setDelegate:nil];
-            [input release];
-            [output release];
-            input = nil;
-            output = nil;
-            status = SHSocketStausClosed;
-            [self setDidRegister:NO];
-        }
-        [self release];
-    } else if (streamEvent == NSStreamEventHasSpaceAvailable)
-    {
-        if (status == SHSocketStausConnecting)
-        {
-            status = SHSocketStausOpen;
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadNetworks" object:nil];
-        }
-        if (queuedCommands) {
-            canWrite=NO;
-            [(NSOutputStream*)theStream write:(uint8_t*)[queuedCommands UTF8String] maxLength:[queuedCommands length]];
-            [output write:(uint8_t*)"\r\n" maxLength:2];
-            [queuedCommands release];
-            queuedCommands=nil;
-        }
-        canWrite=YES;
-    }
+	else if (streamEvent == NSStreamEventErrorOccurred) {
+		if (status != SHSocketStausError || status != SHSocketStausError) {
+			clean()
+			status = SHSocketStausError;
+			[self setDidRegister:NO];
+		}
+	}
+	else if (streamEvent == NSStreamEventEndEncountered) {
+		if (status != SHSocketStausError || status != SHSocketStausError) {
+			clean()
+			status = SHSocketStausClosed;
+			[self setDidRegister:NO];
+		}
+		[self release];
+	} 
+	else if (streamEvent == NSStreamEventHasSpaceAvailable) {
+		if (status == SHSocketStausConnecting) {
+			status = SHSocketStausOpen;
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadNetworks" object:nil];
+		}
+		if (queuedCommands) {
+			canWrite = NO;
+			[(NSOutputStream *)theStream write:(uint8_t *)[queuedCommands UTF8String] maxLength:[queuedCommands length]];
+			[output write:(uint8_t *)"\r\n" maxLength:2];
+			[queuedCommands release];
+			queuedCommands = nil;
+		}
+		canWrite = YES;
+	}
 }
--(void)disconnect
-{
-    if (status != SHSocketStausError || status != SHSocketStausError)
-    {
-        [self sendCommand:@"QUIT" withArguments:@"ShadowChat BETA"];
-        [input close];
-        [output close];
-        [input setDelegate:nil];
-        [output setDelegate:nil];
-        [input release];
-        [output release];
-        input = nil;
-        output = nil;
-        status = SHSocketStausClosed;
-        [self setDidRegister:NO];
-    }
+- (void)disconnect {
+	if (status != SHSocketStausError || status != SHSocketStausError) {
+		[self sendCommand:@"QUIT" withArguments:@"ShadowChat BETA"];
+
+		status = SHSocketStausClosed;
+		[self setDidRegister:NO];
+		}
 }
 - (void)addChannel:(SHIRCChannel*)chan
 {

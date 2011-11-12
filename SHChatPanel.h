@@ -25,6 +25,6 @@
 @property(retain) IBOutlet UIToolbar* bar;
 - (SHChatPanel *)initWithChan:(SHIRCChannel *)chan_;
 - (BOOL)textFieldShouldReturn:(UITextField *)textField;
-- (IBAction)sendMessagePlz;
-- (void)didRecieveMessageFrom:(NSString*)nick text:(NSString*)ircMessage;
+- (IBAction)sendMessageAndResign;
+- (void)didRecieveMessageFrom:(NSString *)nick text:(NSString *)ircMessage;
 @end

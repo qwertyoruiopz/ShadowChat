@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AddConnectionTVController.h"
+#import "SHIRCNetwork.h"
+#import "SHIRCChannel.h"
+#import "SHGradientView.h"
+#import "SHClearLabelCellView.h"
 
-
-@interface ConnectionsTVController : UITableViewController
-{
+@interface SHConnectionController : UITableViewController <SHSwipeCellDelegate> {
+	BOOL isCellSwiped;
+	SHClearLabelCellView *swipedCell;
     UIView* nothingView;
     BOOL isReallyEditing;
 }

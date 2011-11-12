@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		1A223129141CBC39009F9578 /* ChannelUserList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A223128141CBC39009F9578 /* ChannelUserList.m */; };
 		1AABE8FD1417FFEC00F9532E /* ChannelsTVController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AABE8FC1417FFEC00F9532E /* ChannelsTVController.m */; };
-		1AD9BF96141683EB002E1C6A /* ConnectionsTVController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD9BF95141683EA002E1C6A /* ConnectionsTVController.m */; };
+		1AD9BF96141683EB002E1C6A /* SHConnectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD9BF95141683EA002E1C6A /* SHConnectionController.m */; };
 		1AD9BF9A141684D2002E1C6A /* AddConnectionTVController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD9BF99141684D2002E1C6A /* AddConnectionTVController.m */; };
 		507424751416F3FC0080EC23 /* SHRoomsTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 507424741416F3FC0080EC23 /* SHRoomsTable.m */; };
 		EA00940D14143FE90059261C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA00940C14143FE90059261C /* UIKit.framework */; };
@@ -37,9 +37,9 @@
 		EAE46C1E1415A146008BBA8D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE46C1D1415A146008BBA8D /* CFNetwork.framework */; };
 		EAE46C211415B228008BBA8D /* SHIRCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE46C201415B228008BBA8D /* SHIRCManager.m */; };
 		EAE46C281415D10B008BBA8D /* SHIRCPrivateChat.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE46C271415D10B008BBA8D /* SHIRCPrivateChat.m */; };
-		EAFA82391469C68000FD1A88 /* ShadowedTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFA82341469C68000FD1A88 /* ShadowedTableView.m */; };
-		EAFA823A1469C68000FD1A88 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFA82361469C68000FD1A88 /* GradientView.m */; };
-		EAFA823B1469C68000FD1A88 /* ClearLabelsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFA82381469C68000FD1A88 /* ClearLabelsCellView.m */; };
+		EAFA82391469C68000FD1A88 /* SHShadowedTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFA82341469C68000FD1A88 /* SHShadowedTableView.m */; };
+		EAFA823A1469C68000FD1A88 /* SHGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFA82361469C68000FD1A88 /* SHGradientView.m */; };
+		EAFA823B1469C68000FD1A88 /* SHClearLabelCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFA82381469C68000FD1A88 /* SHClearLabelCellView.m */; };
 		EAFA823D1469C6CB00FD1A88 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAFA823C1469C6CB00FD1A88 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -48,8 +48,8 @@
 		1A223128141CBC39009F9578 /* ChannelUserList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelUserList.m; sourceTree = "<group>"; };
 		1AABE8FB1417FFEC00F9532E /* ChannelsTVController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelsTVController.h; sourceTree = "<group>"; };
 		1AABE8FC1417FFEC00F9532E /* ChannelsTVController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelsTVController.m; sourceTree = "<group>"; };
-		1AD9BF94141683EA002E1C6A /* ConnectionsTVController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionsTVController.h; sourceTree = "<group>"; };
-		1AD9BF95141683EA002E1C6A /* ConnectionsTVController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionsTVController.m; sourceTree = "<group>"; };
+		1AD9BF94141683EA002E1C6A /* SHConnectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = SHConnectionController.h; sourceTree = "<group>"; };
+		1AD9BF95141683EA002E1C6A /* SHConnectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHConnectionController.m; sourceTree = "<group>"; };
 		1AD9BF98141684D1002E1C6A /* AddConnectionTVController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddConnectionTVController.h; sourceTree = "<group>"; };
 		1AD9BF99141684D2002E1C6A /* AddConnectionTVController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddConnectionTVController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		507424731416F3FC0080EC23 /* SHRoomsTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHRoomsTable.h; sourceTree = "<group>"; };
@@ -92,12 +92,12 @@
 		EAE46C201415B228008BBA8D /* SHIRCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHIRCManager.m; path = ../SHIRCManager.m; sourceTree = "<group>"; };
 		EAE46C261415D10B008BBA8D /* SHIRCPrivateChat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHIRCPrivateChat.h; path = ../SHIRCPrivateChat.h; sourceTree = "<group>"; };
 		EAE46C271415D10B008BBA8D /* SHIRCPrivateChat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHIRCPrivateChat.m; path = ../SHIRCPrivateChat.m; sourceTree = "<group>"; };
-		EAFA82331469C68000FD1A88 /* ShadowedTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShadowedTableView.h; sourceTree = "<group>"; };
-		EAFA82341469C68000FD1A88 /* ShadowedTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShadowedTableView.m; sourceTree = "<group>"; };
-		EAFA82351469C68000FD1A88 /* GradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
-		EAFA82361469C68000FD1A88 /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
-		EAFA82371469C68000FD1A88 /* ClearLabelsCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClearLabelsCellView.h; sourceTree = "<group>"; };
-		EAFA82381469C68000FD1A88 /* ClearLabelsCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClearLabelsCellView.m; sourceTree = "<group>"; };
+		EAFA82331469C68000FD1A88 /* SHShadowedTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHShadowedTableView.h; sourceTree = "<group>"; };
+		EAFA82341469C68000FD1A88 /* SHShadowedTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHShadowedTableView.m; sourceTree = "<group>"; };
+		EAFA82351469C68000FD1A88 /* SHGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGradientView.h; sourceTree = "<group>"; };
+		EAFA82361469C68000FD1A88 /* SHGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGradientView.m; sourceTree = "<group>"; };
+		EAFA82371469C68000FD1A88 /* SHClearLabelCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHClearLabelCellView.h; sourceTree = "<group>"; };
+		EAFA82381469C68000FD1A88 /* SHClearLabelCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHClearLabelCellView.m; sourceTree = "<group>"; };
 		EAFA823C1469C6CB00FD1A88 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -155,34 +155,34 @@
 		EA00941214143FE90059261C /* ShadowChat */ = {
 			isa = PBXGroup;
 			children = (
-				EAFA82331469C68000FD1A88 /* ShadowedTableView.h */,
-				EAFA82341469C68000FD1A88 /* ShadowedTableView.m */,
-				EAFA82351469C68000FD1A88 /* GradientView.h */,
-				EAFA82361469C68000FD1A88 /* GradientView.m */,
-				EAC95DF414183882000256CE /* SHChatPanel.m */,
-				EAFA82371469C68000FD1A88 /* ClearLabelsCellView.h */,
-				EAFA82381469C68000FD1A88 /* ClearLabelsCellView.m */,
+				EA68CA4C146ABE4D00AC1628 /* SHChanJoin.h */,
+				EA68CA4D146ABE4D00AC1628 /* SHChanJoin.m */,
+				EAE46C1314159CD8008BBA8D /* SHIRCChannel.h */,
+				EAE46C1414159CD8008BBA8D /* SHIRCChannel.m */,
+				EAE46C261415D10B008BBA8D /* SHIRCPrivateChat.h */,
+				EAE46C271415D10B008BBA8D /* SHIRCPrivateChat.m */,
+				EAFA82331469C68000FD1A88 /* SHShadowedTableView.h */,
+				EAFA82341469C68000FD1A88 /* SHShadowedTableView.m */,
+				EAFA82351469C68000FD1A88 /* SHGradientView.h */,
+				EAFA82361469C68000FD1A88 /* SHGradientView.m */,
+				EAFA82371469C68000FD1A88 /* SHClearLabelCellView.h */,
+				EAFA82381469C68000FD1A88 /* SHClearLabelCellView.m */,
 				EAC95DF314183882000256CE /* SHChatPanel.h */,
+				EAC95DF414183882000256CE /* SHChatPanel.m */,
 				EAC95DF514183882000256CE /* SHChatPanel.xib */,
 				EAAD2BA31416C8F700E1D951 /* SHIRCNetwork.h */,
 				EAAD2BA41416C8F700E1D951 /* SHIRCNetwork.m */,
 				EA00941B14143FEA0059261C /* ShadowChatAppDelegate.h */,
 				EA00941C14143FEA0059261C /* ShadowChatAppDelegate.m */,
 				EA00941E14143FEA0059261C /* MainWindow.xib */,
-				EA68CA4C146ABE4D00AC1628 /* SHChanJoin.h */,
-				EA68CA4D146ABE4D00AC1628 /* SHChanJoin.m */,
 				EA68CA4E146ABE4D00AC1628 /* SHChanJoin.xib */,
-				EAE46C1314159CD8008BBA8D /* SHIRCChannel.h */,
-				EAE46C1414159CD8008BBA8D /* SHIRCChannel.m */,
-				EAE46C261415D10B008BBA8D /* SHIRCPrivateChat.h */,
-				EAE46C271415D10B008BBA8D /* SHIRCPrivateChat.m */,
 				EAE46C1614159DE4008BBA8D /* SHIRCSocket.h */,
 				EAE46C1714159DE4008BBA8D /* SHIRCSocket.m */,
 				EAE46C1F1415B228008BBA8D /* SHIRCManager.h */,
 				EAE46C201415B228008BBA8D /* SHIRCManager.m */,
 				EA00941314143FEA0059261C /* Supporting Files */,
-				1AD9BF94141683EA002E1C6A /* ConnectionsTVController.h */,
-				1AD9BF95141683EA002E1C6A /* ConnectionsTVController.m */,
+				1AD9BF94141683EA002E1C6A /* SHConnectionController.h */,
+				1AD9BF95141683EA002E1C6A /* SHConnectionController.m */,
 				1AD9BF98141684D1002E1C6A /* AddConnectionTVController.h */,
 				1AD9BF99141684D2002E1C6A /* AddConnectionTVController.m */,
 				507424731416F3FC0080EC23 /* SHRoomsTable.h */,
@@ -238,7 +238,7 @@
 		EA0093FF14143FE90059261C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0410;
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = uiop;
 			};
 			buildConfigurationList = EA00940214143FE90059261C /* Build configuration list for PBXProject "ShadowChat" */;
@@ -289,16 +289,16 @@
 				EAE46C1814159DE4008BBA8D /* SHIRCSocket.m in Sources */,
 				EAE46C211415B228008BBA8D /* SHIRCManager.m in Sources */,
 				EAE46C281415D10B008BBA8D /* SHIRCPrivateChat.m in Sources */,
-				1AD9BF96141683EB002E1C6A /* ConnectionsTVController.m in Sources */,
+				1AD9BF96141683EB002E1C6A /* SHConnectionController.m in Sources */,
 				1AD9BF9A141684D2002E1C6A /* AddConnectionTVController.m in Sources */,
 				EAAD2BA51416C8F700E1D951 /* SHIRCNetwork.m in Sources */,
 				507424751416F3FC0080EC23 /* SHRoomsTable.m in Sources */,
 				1AABE8FD1417FFEC00F9532E /* ChannelsTVController.m in Sources */,
 				EAC95DF614183882000256CE /* SHChatPanel.m in Sources */,
 				1A223129141CBC39009F9578 /* ChannelUserList.m in Sources */,
-				EAFA82391469C68000FD1A88 /* ShadowedTableView.m in Sources */,
-				EAFA823A1469C68000FD1A88 /* GradientView.m in Sources */,
-				EAFA823B1469C68000FD1A88 /* ClearLabelsCellView.m in Sources */,
+				EAFA82391469C68000FD1A88 /* SHShadowedTableView.m in Sources */,
+				EAFA823A1469C68000FD1A88 /* SHGradientView.m in Sources */,
+				EAFA823B1469C68000FD1A88 /* SHClearLabelCellView.m in Sources */,
 				EA68CA4F146ABE4D00AC1628 /* SHChanJoin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -389,6 +389,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ShadowChat/ShadowChat-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "ShadowChat/ShadowChat-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1.3;
 				LIBRARY_SEARCH_PATHS = (
@@ -405,6 +406,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ShadowChat/ShadowChat-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "ShadowChat/ShadowChat-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1.3;
 				LIBRARY_SEARCH_PATHS = (

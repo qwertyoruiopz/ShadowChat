@@ -7,8 +7,8 @@
 //
 
 #import "ChannelsTVController.h"
-#import "ClearLabelsCellView.h"
-#import "GradientView.h"
+#import "SHClearLabelCellView.h"
+#import "SHGradientView.h"
 #import "SHIRCNetwork.h"
 #import "SHChatPanel.h"
 
@@ -147,8 +147,8 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[ClearLabelsCellView alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
-		cell.backgroundView = [[[GradientView alloc] initWithFrame:CGRectZero  reversed: NO] autorelease];
+        cell = [[[SHClearLabelCellView alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+		cell.backgroundView = [[[SHGradientView alloc] initWithFrame:CGRectZero  reversed: NO] autorelease];
     }
     if ([[[(SHIRCNetwork*)[[SHIRCNetwork allConnectedNetworks] objectAtIndex:indexPath.section] socket] channels] count] == indexPath.row) {
         cell.textLabel.text = @"Join a channel";

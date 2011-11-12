@@ -10,7 +10,7 @@
 
 @implementation SHIRCPrivateChat
 
-- (NSString*)formattedName
+- (NSString *)formattedName
 {
     return name;
 }
