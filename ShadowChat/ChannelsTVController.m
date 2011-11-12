@@ -10,6 +10,7 @@
 #import "SHClearLabelCellView.h"
 #import "SHGradientView.h"
 #import "SHIRCNetwork.h"
+#import <QuartzCore/QuartzCore.h>
 #import "SHChatPanel.h"
 
 @implementation ChannelsTVController
@@ -149,6 +150,8 @@
     if (cell == nil) {
         cell = [[[SHClearLabelCellView alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
 		cell.backgroundView = [[[SHGradientView alloc] initWithFrame:CGRectZero  reversed: NO] autorelease];
+		cell.accessoryView = [[[SHGradientView alloc] initWithFrame:CGRectMake(0, 0, 70, 30)  reversed: YES] autorelease];
+        cell.accessoryView.layer.cornerRadius=8;
     }
     if ([[[(SHIRCNetwork*)[[SHIRCNetwork allConnectedNetworks] objectAtIndex:indexPath.section] socket] channels] count] == indexPath.row) {
         cell.textLabel.text = @"Join a channel";

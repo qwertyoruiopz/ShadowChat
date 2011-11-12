@@ -102,7 +102,7 @@
     if (canWrite) {
         [output write:(uint8_t *)[cmd UTF8String] maxLength:[cmd length]];
         [output write:(uint8_t *)"\r\n" maxLength:2];
-        return;
+        return YES;
     }
     if (!queuedCommands) queuedCommands = [NSMutableString new];
     [queuedCommands appendFormat:@"%@\r\n", cmd];
@@ -119,7 +119,7 @@
         if (canWrite) {
             [output write:(uint8_t*)[cmd UTF8String] maxLength:[cmd length]];
             [output write:(uint8_t*)"\r\n" maxLength:2];
-            return;
+            return YES;
         }
         if (!queuedCommands) queuedCommands = [NSMutableString new];
         [queuedCommands appendFormat:@"%@\r\n", cmd];

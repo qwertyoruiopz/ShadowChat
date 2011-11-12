@@ -191,6 +191,20 @@ static SHIRCManager* sharedSHManager;
         SHIRCChannel* chanC=[socket retainedChannelWithFormattedName:argument];
         [chanC didRecieveEvent:SHEventTypeJoin from:nick to:argument extra:nil];
         [chanC release];
+    }else if ([command isEqualToString:@"NICK"])
+    {
+        if ([argument hasPrefix:@":"]) {
+            NSScanner* scnr=[NSScanner scannerWithString:argument];
+            [scnr setScanLocation:1];
+            [scnr scanUpToString:@"" intoString:&argument];
+        }
+        NSString* nick=nil;
+        [self parseUsermask:sender nick:&nick user:nil hostmask:nil];
+        NSLog(@"socket nick: %@", socket.nick_);
+        NSLog(@"nick: %@", nick);
+        if ([[NSString stringWithFormat:@"%@", nick] isEqualToString: [NSString stringWithFormat:@"%@", socket.nick_]]) {
+            [socket setNick_:argument];
+        }
     }    else if ([command isEqualToString:@"PART"])
     {
         NSScanner* scnr=[NSScanner scannerWithString:argument];
@@ -216,9 +230,11 @@ static SHIRCManager* sharedSHManager;
             }
             [scnr scanUpToString:@"" intoString:&msg];
         }
-        
         [self parseUsermask:sender nick:&nick user:nil hostmask:nil];
         NSLog(@"%@ parted from %@ with message %@", nick, chan, msg);
+        if ([nick isEqualToString:[socket nick_]]) {
+            // k, remove dug chan.
+        }
         SHIRCChannel* chanC=[socket retainedChannelWithFormattedName:chan];
         [chanC didRecieveEvent:SHEventTypePart from:nick to:argument extra:msg];
         [chanC release];

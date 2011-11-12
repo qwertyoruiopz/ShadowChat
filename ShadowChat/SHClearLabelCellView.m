@@ -9,21 +9,9 @@
 #import "SHClearLabelCellView.h"
 
 @implementation SHClearLabelCellView
-@synthesize thirdLabel;
 @synthesize delegate;
 - (id)initWithStyle:(UITableViewCellStyle)s reuseIdentifier:(NSString *)identifier {
 	if ((self = [super initWithStyle:s reuseIdentifier:identifier])) {
-		thirdLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width-160, self.frame.size.height-15, 150, 20)];
-		thirdLabel.text = @"fdsfds";
-		thirdLabel.backgroundColor = [UIColor clearColor];
-		thirdLabel.textColor = [UIColor grayColor];
-		thirdLabel.font = [UIFont systemFontOfSize:15];
-		thirdLabel.textAlignment = UITextAlignmentRight;
-//		UISwipeGestureRecognizer *recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(cellWasSwpied:)];
-//		[recognizer setDirection:(UISwipeGestureRecognizerDirectionLeft | UISwipeGestureRecognizerDirectionRight)];
-//		[self addSubview:recognizer];
-		[recognizer release];
-		[self addSubview:thirdLabel];
 	}
 	return self;
 }
@@ -36,7 +24,6 @@
 }
 
 - (void)dealloc {
-	[thirdLabel release];
 }
 
 - (void)cellWasSwpied:(UISwipeGestureRecognizer *)recog {
