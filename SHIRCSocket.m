@@ -12,14 +12,13 @@
 @implementation SHIRCSocket
 
 #define clean() [input close]; \
-					[output close]; \
-					[input setDelegate:nil]; \
-					[output setDelegate:nil]; \
-					[input release]; \
-					[output release]; \
-					input = nil; \
-					output = nil; 
-
+[output close]; \
+[input setDelegate:nil]; \
+[output setDelegate:nil]; \
+[input release]; \
+[output release]; \
+input = nil; \
+output = nil; 
 @synthesize input, output, port, server, usesSSL, channels, status, delegate;
 + (SHIRCSocket*)socketWithServer:(NSString *)srv andPort:(int)prt usesSSL:(BOOL)ssl {
     SHIRCSocket* ret = [[(Class)self alloc]init];
@@ -33,6 +32,13 @@
 }
 - (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user andPassword:(NSString *)pass {
     [self retain];
+    IF_IOS4_OR_GREATER
+    (
+     bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{ 
+        [[UIApplication sharedApplication] endBackgroundTask:bgTask]; 
+        bgTask = UIBackgroundTaskInvalid;
+    }];
+    );
     NSInputStream *iStream;
     NSOutputStream *oStream;
     CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)server, port ? port : 6667, (CFReadStreamRef*)&iStream, (CFWriteStreamRef *)&oStream);
@@ -147,6 +153,9 @@
 			clean()
 			status = SHSocketStausError;
 			[self setDidRegister:NO];
+            [[UIApplication sharedApplication] endBackgroundTask:bgTask]; 
+            bgTask = UIBackgroundTaskInvalid;
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadNetworks" object:nil];
 		}
 	}
 	else if (streamEvent == NSStreamEventEndEncountered) {
@@ -154,6 +163,9 @@
 			clean()
 			status = SHSocketStausClosed;
 			[self setDidRegister:NO];
+            [[UIApplication sharedApplication] endBackgroundTask:bgTask]; 
+            bgTask = UIBackgroundTaskInvalid;
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadNetworks" object:nil];
 		}
 		[self release];
 	} 
@@ -175,10 +187,11 @@
 - (void)disconnect {
 	if (status != SHSocketStausError || status != SHSocketStausError) {
 		[self sendCommand:@"QUIT" withArguments:@"ShadowChat BETA"];
-
 		status = SHSocketStausClosed;
 		[self setDidRegister:NO];
-		}
+        [[UIApplication sharedApplication] endBackgroundTask:bgTask]; 
+        bgTask = UIBackgroundTaskInvalid;
+    }
 }
 - (void)addChannel:(SHIRCChannel*)chan
 {

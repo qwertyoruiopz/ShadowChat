@@ -25,6 +25,10 @@
 //
 // Initialise the view.
 //
+- (id)initWithFrame:(CGRect)frame 
+{
+    return [self initWithFrame:frame reversed:NO];
+}
 - (id)initWithFrame:(CGRect)frame reversed:(BOOL)rev
 {
     self = [super initWithFrame:frame];
@@ -46,6 +50,7 @@
              nil];
             self.backgroundColor = [UIColor grayColor];
         }
+        gradientLayer.shouldRasterize = YES;
     }
     return self;
 }

@@ -7,8 +7,7 @@
 //
 
 #import "SHIRCChannel.h"
-#import <objc/runtime.h>
-
+extern id objc_msgSend(id target, SEL msg, ...);
 @interface NSString (casecompare)
 - (BOOL)isEqualToStringNoCase:(NSString *)aString;
 @end
@@ -38,6 +37,7 @@
 		[sock addChannel:self];
     }
     [channel release];
+    [[SHChatPanel alloc] initWithChan:self];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadChans" object:nil];
     return [self retain];
 }
@@ -186,7 +186,7 @@
 
 - (void)didRecieveEvent:(SHEventType)event from:(NSString*)from to:(NSString*)to extra:(NSString *)extra {
 	if ([delegate respondsToSelector:_cmd]) {
-		objc_msgSend(delegate, _cmd, event, from, to, extra); // NOT A FUCKING WARNING LLVM...
+		objc_msgSend(delegate, _cmd, event, from, to, extra);
 	}
 }
 

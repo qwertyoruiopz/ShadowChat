@@ -35,6 +35,7 @@ typedef enum SHSocketStaus
     NSString* nick_;
     BOOL canWrite;
     id delegate;
+    int bgTask;
 }
 @property(retain, readwrite) NSInputStream* input;
 @property(retain, readwrite) NSOutputStream* output;

@@ -83,7 +83,7 @@
      isReallyEditing ?
      [((UITableView*)self.view) insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[[SHIRCNetwork allNetworks] count] inSection:0]] withRowAnimation:UITableViewRowAnimationTop] :
      [((UITableView*)self.view) deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[[SHIRCNetwork allNetworks] count] inSection:0]] withRowAnimation:UITableViewRowAnimationTop]
-    );
+     );
     [((UITableView*)self.view) endUpdates];
 }
 
@@ -126,7 +126,7 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES; // (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - Table view data source
@@ -156,7 +156,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *CellIdentifier = @"Cell";
-
+    
 	SHClearLabelCellView *cell = (SHClearLabelCellView *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if (cell == nil) {
 		cell = [[[SHClearLabelCellView alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
@@ -174,7 +174,7 @@
 		((UILabel *)cell.accessoryView).text = @"Connected!";
     }
 	else if ([((SHIRCSocket *)[((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]) socket]) status] == SHSocketStausError) {
-			NSLog(@"fdsfsdfsd %@", [[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]);
+        NSLog(@"fdsfsdfsd %@", [[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]);
 		((UILabel *)cell.accessoryView).text = @"Error connecting to the server";
     }
 	else {
@@ -251,10 +251,14 @@
         return;
     }
     if ([[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isOpen])
-         [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] disconnect];
-    else [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] connect];
-		[tableView deselectRowAtIndexPath:indexPath animated:YES];
-		[tableView reloadData];
+        [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] disconnect];
+    else if ([((SHIRCSocket *)[((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]) socket]) status] == SHSocketStausError) 
+        goto nothing;
+    else
+        [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] connect];
+nothing:
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [tableView reloadData];
 }
 
 @end

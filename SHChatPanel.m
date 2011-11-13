@@ -157,9 +157,14 @@
 	 body {font-family:'Tahoma';}\
 	 </style>\
      <script>\
+     function emojify(str)  \
+     {  \
+     return str;\
+     }  \
+     \
      function htmlEntities(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;'); }\
-     function addMessage(nick, msg) { document.body.innerHTML += '<div><strong>' + htmlEntities(nick) + ':</strong> ' + htmlEntities(msg) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
-     function addAction(nick, msg) { document.body.innerHTML += '<div><strong><span style=\"font-size: 24; vertical-align: middle; position:relative;\">•</span> ' + htmlEntities(nick) + '</strong> ' + htmlEntities(msg) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
+     function addMessage(nick, msg) { document.body.innerHTML += '<div><strong>' + htmlEntities(nick) + ':</strong> ' + htmlEntities(emojify(msg)) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
+     function addAction(nick, msg) { document.body.innerHTML += '<div><strong>• ' + htmlEntities(nick) + '</strong> ' + htmlEntities(msg) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
      function background_color() {\
          document.body.style.background=\"#dae0ec\";\
          return \"#dae0ec\";\
@@ -191,8 +196,7 @@
      <center>ShadowChat beta</center>\
      </body>\
      </html>\
-	 " baseURL:[NSURL URLWithString:@"http://zomg.com"]];
-    NSLog(@"lolwat, %@", [output stringByEvaluatingJavaScriptFromString:@"background_color();"]);//dae0ec    
+	 " baseURL:[NSURL URLWithString:@"about:blank"]];
 }
 
 - (void)viewDidUnload {

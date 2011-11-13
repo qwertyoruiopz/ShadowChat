@@ -27,7 +27,7 @@ The client is in beta stage at the moment.
 	[ ]: SASL
 	[ ]: Blowfish
 [ ]: User End
-	[ ]: Full multitasking support
+	[X]: Full multitasking support
 	[ ]: Notification Service
 	[ ]: Color Coat (CSS/Formatting)
 	[ ]: Full rotation support
@@ -36,7 +36,6 @@ The client is in beta stage at the moment.
 	[ ]: Innovative UI
 	[ ]: In App (Decent) Browser
 	[ ]: Read Later (Instapaper(?)) Support
-	
 	[ ]: Website
 	[x]: Scripting...(?)
 	[x]: Better than colloquy/rooms/*

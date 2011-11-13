@@ -12,6 +12,7 @@
 		1AD9BF96141683EB002E1C6A /* SHConnectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD9BF95141683EA002E1C6A /* SHConnectionController.m */; };
 		1AD9BF9A141684D2002E1C6A /* SHAddCTController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD9BF99141684D2002E1C6A /* SHAddCTController.m */; };
 		507424751416F3FC0080EC23 /* SHRoomsTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 507424741416F3FC0080EC23 /* SHRoomsTable.m */; };
+		EA00819D147058DE00AF13B3 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA00819B147058DE00AF13B3 /* MainWindow-iPad.xib */; };
 		EA00940D14143FE90059261C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA00940C14143FE90059261C /* UIKit.framework */; };
 		EA00940F14143FE90059261C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA00940E14143FE90059261C /* Foundation.framework */; };
 		EA00941114143FE90059261C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA00941014143FE90059261C /* CoreGraphics.framework */; };
@@ -54,6 +55,7 @@
 		1AD9BF99141684D2002E1C6A /* SHAddCTController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHAddCTController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		507424731416F3FC0080EC23 /* SHRoomsTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHRoomsTable.h; sourceTree = "<group>"; };
 		507424741416F3FC0080EC23 /* SHRoomsTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHRoomsTable.m; sourceTree = "<group>"; };
+		EA00819C147058DE00AF13B3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "iPad/en.lproj/MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		EA00940814143FE90059261C /* ShadowChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShadowChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA00940C14143FE90059261C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		EA00940E14143FE90059261C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -119,6 +121,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EA00819A147058DB00AF13B3 /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+				EA00819B147058DE00AF13B3 /* MainWindow-iPad.xib */,
+			);
+			name = iPad;
+			sourceTree = "<group>";
+		};
 		EA0093FD14143FE90059261C = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +165,7 @@
 		EA00941214143FE90059261C /* ShadowChat */ = {
 			isa = PBXGroup;
 			children = (
+				EA00819A147058DB00AF13B3 /* iPad */,
 				EA68CA4C146ABE4D00AC1628 /* SHChanJoin.h */,
 				EA68CA4D146ABE4D00AC1628 /* SHChanJoin.m */,
 				EA68CA4E146ABE4D00AC1628 /* SHChanJoin.xib */,
@@ -273,6 +284,7 @@
 				EA1D5D4F1415FE2000114BFF /* ppl@2x.png in Resources */,
 				EAC95DF714183882000256CE /* SHChatPanel.xib in Resources */,
 				EA68CA50146ABE4D00AC1628 /* SHChanJoin.xib in Resources */,
+				EA00819D147058DE00AF13B3 /* MainWindow-iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +318,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		EA00819B147058DE00AF13B3 /* MainWindow-iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EA00819C147058DE00AF13B3 /* en */,
+			);
+			name = "MainWindow-iPad.xib";
+			sourceTree = "<group>";
+		};
 		EA00941514143FEA0059261C /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -391,12 +411,13 @@
 				GCC_PREFIX_HEADER = "ShadowChat/ShadowChat-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "ShadowChat/ShadowChat-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.1.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -408,12 +429,13 @@
 				GCC_PREFIX_HEADER = "ShadowChat/ShadowChat-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "ShadowChat/ShadowChat-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.1.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
