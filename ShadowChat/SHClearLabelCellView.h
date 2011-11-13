@@ -8,25 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
-typedef enum SHSwipeDirection {
-	SHSwipeDirectionLeft,
-	SHSwipeDirectionRight
-} SHSwipeDirection;
 @protocol SHSwipeCellDelegate <NSObject>
 @required
-- (void)clearCellSwiped:(id)c swipe:(UISwipeGestureRecognizer *)g;
+- (void)clearCellSwiped:(id)c;
+- (void)cellReturned;
 @end
 
 @interface SHClearLabelCellView : UITableViewCell {
 	BOOL wasSwiped;
 	UILabel *thirdLabel;
-	SHSwipeDirection currentDirection;
 	id <SHSwipeCellDelegate> delegate;
 }
 @property (nonatomic, retain) id <SHSwipeCellDelegate> delegate;
 @property (nonatomic, retain) UILabel *thirdLabel;
 - (id)initWithStyle:(UITableViewCellStyle)s reuseIdentifier:(NSString *)identifier;
-- (void)cellWasSwpied:(UISwipeGestureRecognizer *)recog;
-- (void)drawOptionsView:(SHSwipeDirection)direction;
+- (void)cellWasSwiped:(UISwipeGestureRecognizer *)recog;
+- (void)drawOptionsView;
 - (void)undrawOptionsView;
 @end

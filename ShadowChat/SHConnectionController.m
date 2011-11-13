@@ -19,7 +19,7 @@
 - (id)initWithStyle:(UITableViewStyle)style {
 	if ((self = [super initWithStyle:style])) {
 		isCellSwiped = NO;
-		
+		self.tableView.delegate = self;
     }
     return self;
 }
@@ -28,8 +28,21 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)clearCellSwiped:(SHClearLabelCellView *)c swipe:(UISwipeGestureRecognizer *)g {
-	
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+	if (isCellSwiped) {
+		[swipedCell undrawOptionsView];
+		isCellSwiped = NO;
+	}
+}
+
+- (void)clearCellSwiped:(id)c {
+	isCellSwiped = YES;
+	swipedCell = (SHClearLabelCellView *)c;
+	NSLog(@"fdsfdsfsd %@", swipedCell);
+}
+- (void)cellReturned {
+	swipedCell = nil;
+	isCellSwiped = NO;
 }
 
 #pragma mark - View lifecycle
@@ -37,8 +50,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:[self tableView]];
     [super dealloc];
 }
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [[NSNotificationCenter defaultCenter] addObserver:[self tableView]
                                              selector:@selector(reloadData) 
                                                  name:@"ReloadNetworks"

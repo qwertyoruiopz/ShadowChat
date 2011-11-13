@@ -32,20 +32,19 @@
 
 - (id)initWithStyle:(UITableViewStyle)style {
 	if ((self = [super initWithStyle:style])) {
-        description=nil;
-        server=nil;
-        user=nil;
-        nick=nil;
-        name=nil;
-        spass=nil;
-        npass=nil;
-        hasSSL=NO;
+        description = nil;
+        server = nil;
+        user = nil;
+        nick = nil;
+        name = nil;
+        spass = nil;
+        npass = nil;
+        hasSSL = NO;
     }
     return self;
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
     
@@ -54,27 +53,19 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     self.title = @"Add Connection";
 
     UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneConnection)];
-    rightBarButtonItem.enabled=NO;
+    rightBarButtonItem.enabled = NO;
     self.navigationItem.rightBarButtonItem = rightBarButtonItem;
     [rightBarButtonItem release];
     UIBarButtonItem *leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelConnection)];
     self.navigationItem.leftBarButtonItem = leftBarButtonItem;
     [leftBarButtonItem release];
-    //[self.tableView setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background.png"] ] ];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)doneConnection {
@@ -95,8 +86,7 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -169,6 +159,7 @@
             return nil;
             break;
     }
+	return @"Whaaa?! :'(";
 }
 /*
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section 
@@ -189,20 +180,18 @@
     return 30;
 }
  */
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *CellIdentifier = [[NSString alloc] initWithFormat:@"serverconnection-%d-%d", indexPath.section, indexPath.row];
-    
+
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-        cell.selectionStyle=UITableViewCellSelectionStyleNone;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 switch (indexPath.section) {
             case 0:
                 if (indexPath.row == 0) {                
                     [cell.textLabel setText: @"Description"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
-                    
                     UITextField *adescr = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 180, 22)];
                     adescr.adjustsFontSizeToFitWidth = YES;
                     adescr.placeholder = @"Enter a description";

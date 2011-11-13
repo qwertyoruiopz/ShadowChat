@@ -21,6 +21,13 @@
         thirdLabel.textAlignment = UITextAlignmentRight;
 		[self setAccessoryView:thirdLabel];
 		[thirdLabel release];
+		for (id gesture in self.gestureRecognizers) {
+			[self removeGestureRecognizer:gesture];
+		}
+		UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(cellWasSwiped:)];
+		[swipe setDirection:(UISwipeGestureRecognizerDirectionLeft | UISwipeGestureRecognizerDirectionRight)];
+		[self addGestureRecognizer:swipe];
+		[swipe release];
 	}
 	return self;
 }
@@ -36,23 +43,20 @@
 
 }
 
-- (void)cellWasSwpied:(UISwipeGestureRecognizer *)recog {
-	
+- (void)cellWasSwiped:(UISwipeGestureRecognizer *)recog {
+	[self drawOptionsView];
 }
 
-- (void)drawOptionsView:(SHSwipeDirection)direction {
-	currentDirection = direction;
-	switch (direction) {
-		case SHSwipeDirectionRight: 
-			break;
-		case SHSwipeDirectionLeft:
-			break;
-		default:
-			break;
+- (void)drawOptionsView {
+	NSLog(@"fdsfdsfds dfsyay ");
+	if ([delegate respondsToSelector:@selector(clearCellSwiped:)]) {
+		[delegate clearCellSwiped:self];
 	}
+
 }
 - (void)undrawOptionsView {
-	switch (currentDirection) {
+	NSLog(@"undrawing...");
+/*	switch (currentDirection) {
 		case SHSwipeDirectionRight: 
 			break;
 		case SHSwipeDirectionLeft:
@@ -60,7 +64,7 @@
 		default:
 			break;
 	}
-	
+*/	
 }
 
 @end
