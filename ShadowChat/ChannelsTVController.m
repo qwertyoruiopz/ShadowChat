@@ -148,6 +148,7 @@
 		cell.accessoryView = [[[SHGradientView alloc] initWithFrame:CGRectMake(0, 0, 70, 30)  reversed: YES] autorelease];
         cell.accessoryView.layer.cornerRadius = 8;
 		cell.thirdLabel.hidden = YES;
+		cell.delegate = self;
 	}
     if ([[[(SHIRCNetwork*)[[SHIRCNetwork allConnectedNetworks] objectAtIndex:indexPath.section] socket] channels] count] == indexPath.row) {
         cell.textLabel.text = @"Join a channel";
