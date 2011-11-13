@@ -248,6 +248,7 @@
     if ([[SHIRCNetwork allNetworks] count] == indexPath.row) {
         [self addConnection];
 		[self performSelector:@selector(edit)];
+        return;
     }
     if ([[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isOpen])
          [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] disconnect];
