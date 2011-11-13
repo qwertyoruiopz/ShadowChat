@@ -7,7 +7,7 @@
 //  Copyright 2011 uiop. All rights reserved.
 //
 
-#import "AddConnectionTVController.h"
+#import "SHAddCTController.h"
 #import "SHIRCNetwork.h"
 #import "SHIRCChannel.h"
 @interface UIView (FindAndResignFirstResponder)
@@ -15,8 +15,7 @@
 @end
 @implementation UIView (FindAndResignFirstResponder)
 
-- (BOOL)findAndResignFirstResponder
-{
+- (BOOL)findAndResignFirstResponder {
     if (self.isFirstResponder) {
         [self resignFirstResponder];
         return YES;     
@@ -29,13 +28,10 @@
 }
 @end
 
-@implementation AddConnectionTVController
+@implementation SHAddCTController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
+- (id)initWithStyle:(UITableViewStyle)style {
+	if ((self = [super initWithStyle:style])) {
         description=nil;
         server=nil;
         user=nil;

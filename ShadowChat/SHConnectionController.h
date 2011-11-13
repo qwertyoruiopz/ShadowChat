@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AddConnectionTVController.h"
+#import "SHAddCTController.h"
 #import "SHIRCNetwork.h"
 #import "SHIRCChannel.h"
 #import "SHGradientView.h"

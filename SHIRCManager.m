@@ -12,7 +12,7 @@
 static SHIRCManager* sharedSHManager;
 @implementation SHIRCManager
 
-+ (SHIRCManager*)sharedManager
++ (SHIRCManager *)sharedManager
 {
     if(!sharedSHManager)
         sharedSHManager=[[(Class)self alloc] init];
@@ -40,7 +40,7 @@ static SHIRCManager* sharedSHManager;
 #define NO_THREADING 1
 - (void)parseMessage:(NSMutableString*)msg fromSocket:(SHIRCSocket*)socket {
 	NSLog(@"fun %@", msg);
-	id pool = [NSAutoreleasePool new];
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	#ifndef NO_THREADING
 	if ([NSThread isMainThread]) {
 		[self performSelectorInBackground:@selector(parseMessageWithArray:) withObject:[[NSArray alloc] initWithObjects:msg, socket, nil]];
@@ -103,7 +103,7 @@ static SHIRCManager* sharedSHManager;
             }
         } else {
             NSLog(@"zomg a message %@ to %@ from %@", message, toChannel, nick);
-            id chan=[socket retainedChannelWithFormattedName:toChannel];
+            id chan = [socket retainedChannelWithFormattedName:toChannel];
             [chan didRecieveMessageFrom:nick text:message];
             [chan release];
         }

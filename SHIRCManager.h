@@ -12,7 +12,7 @@
 
 
 @interface SHIRCManager : NSObject
-+ (SHIRCManager*)sharedManager;
++ (SHIRCManager *)sharedManager;
 - (void)parseMessage:(NSString*)msg fromSocket:(SHIRCSocket*)socket;
 - (void)parseUsermask:(NSString*)mask nick:(NSString**)nick user:(NSString**)user hostmask:(NSString**)hostmask;
 - (void)dealloc;

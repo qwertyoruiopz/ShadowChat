@@ -10,8 +10,17 @@
 
 @implementation SHClearLabelCellView
 @synthesize delegate;
+@synthesize thirdLabel;
+
 - (id)initWithStyle:(UITableViewCellStyle)s reuseIdentifier:(NSString *)identifier {
 	if ((self = [super initWithStyle:s reuseIdentifier:identifier])) {
+		thirdLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width-155, self.frame.size.height-25, 150, 20)];
+        thirdLabel.backgroundColor = [UIColor clearColor];
+        thirdLabel.textColor = [UIColor grayColor];
+        thirdLabel.font = [UIFont systemFontOfSize:15];
+        thirdLabel.textAlignment = UITextAlignmentRight;
+		[self setAccessoryView:thirdLabel];
+		[thirdLabel release];
 	}
 	return self;
 }
@@ -24,6 +33,7 @@
 }
 
 - (void)dealloc {
+
 }
 
 - (void)cellWasSwpied:(UISwipeGestureRecognizer *)recog {

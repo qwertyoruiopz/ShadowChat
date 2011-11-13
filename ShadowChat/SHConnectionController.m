@@ -77,7 +77,7 @@
 
 - (void)addConnection {
     NSLog(@"MUDKIPZ CONNECT! :D");
-    AddConnectionTVController *addConnectionVC = [[AddConnectionTVController alloc] initWithStyle:UITableViewStyleGrouped];
+    SHAddCTController *addConnectionVC = [[SHAddCTController alloc] initWithStyle:UITableViewStyleGrouped];
     UINavigationController *addConnectionNavController = [[UINavigationController alloc] initWithRootViewController:addConnectionVC];
     [self presentModalViewController:addConnectionNavController animated:YES];
     [addConnectionVC release];
@@ -150,13 +150,6 @@
 		cell = [[[SHClearLabelCellView alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
 		cell.backgroundView = [[[SHGradientView alloc] initWithFrame:CGRectZero reversed:NO] autorelease];
 		cell.delegate = self;
-        UILabel* thirdLabel = [[UILabel alloc] initWithFrame:CGRectMake(cell.frame.size.width-80, cell.frame.size.height, 0, 0)];
-        thirdLabel.backgroundColor = [UIColor clearColor];
-        thirdLabel.textColor = [UIColor grayColor];
-        thirdLabel.font = [UIFont systemFontOfSize:15];
-        thirdLabel.textAlignment = UITextAlignmentLeft;
-        [cell setAccessoryView:thirdLabel];
-        [thirdLabel release];
 	}
 	if ([[SHIRCNetwork allNetworks] count] == indexPath.row) {
 		cell.textLabel.text = @"Add an IRC Network";
@@ -166,16 +159,16 @@
 	}
     cell.textLabel.text = [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] descr] ? [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] descr] : [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] server];
 	if ([[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isRegistered]) {
-		cell.detailTextLabel.text = @"Connected!";
+		((UILabel *)cell.accessoryView).text = @"Connected!";
     }
 	else if ([((SHIRCSocket *)[((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]) socket]) status] == SHSocketStausError) {
 			NSLog(@"fdsfsdfsd %@", [[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]);
-		cell.detailTextLabel.text = @"Error connecting to the server";
+		((UILabel *)cell.accessoryView).text = @"Error connecting to the server";
     }
 	else {
-		cell.detailTextLabel.text = [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isOpen] ? @"Connecting..." : @"Disconnected.";
+		((UILabel *)cell.accessoryView).text = [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isOpen] ? @"Connecting..." : @"Disconnected.";
     }
-	((UILabel*)[cell accessoryView]).text = [((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]).server ? ((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]).server : @"" lowercaseString];
+	cell.detailTextLabel.text = [((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]).server ? ((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]).server : @"" lowercaseString];
     [((UILabel*)[cell accessoryView]) sizeToFit];
     return cell;
 }

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddConnectionTVController : UITableViewController <UITextFieldDelegate>
+@interface SHAddCTController : UITableViewController <UITextFieldDelegate>
 {
     UITextField* user;
     UITextField* nick;
