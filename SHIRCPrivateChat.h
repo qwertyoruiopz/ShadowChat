@@ -10,6 +10,7 @@
 
 @interface SHIRCPrivateChat : SHIRCChannel
 
+- (id)initWithSocket:(SHIRCSocket *)sock withNick:(NSString *)nick;
 - (NSString *)formattedName;
 
 @end

@@ -9,7 +9,9 @@
 #import "SHIRCPrivateChat.h"
 
 @implementation SHIRCPrivateChat
-
+- (id)initWithSocket:(SHIRCSocket *)sock withNick:(NSString *)nick {
+    return [self initWithSocket:sock andChanName:nick];
+}
 - (NSString *)formattedName
 {
     return name;

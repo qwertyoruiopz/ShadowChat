@@ -8,6 +8,7 @@
 
 #import <Foundation/NSScanner.h>
 #import "SHIRCManager.h"
+#import "SHIRCPrivateChat.h"
 
 static SHIRCManager* sharedSHManager;
 @implementation SHIRCManager
@@ -106,6 +107,10 @@ static SHIRCManager* sharedSHManager;
         } else {
             NSLog(@"zomg a message %@ to %@ from %@", message, toChannel, nick);
             id chan = [socket retainedChannelWithFormattedName:toChannel];
+            if ([toChannel isEqualToString:socket.nick_]&&!chan) {
+                chan = [[SHIRCPrivateChat alloc] initWithSocket:socket withNick:nick];
+                [chan retain];
+            }
             [chan didRecieveMessageFrom:nick text:message];
             [chan release];
         }
