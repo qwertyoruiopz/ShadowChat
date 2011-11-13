@@ -186,7 +186,7 @@
 
 - (void)didRecieveEvent:(SHEventType)event from:(NSString*)from to:(NSString*)to extra:(NSString *)extra {
 	if ([delegate respondsToSelector:_cmd]) {
-		objc_msgSend(delegate, _cmd, event, from, to, extra);
+		objc_msgSend(delegate, _cmd, event, from, to, extra); // NOT A FUCKING WARNING LLVM...
 	}
 }
 

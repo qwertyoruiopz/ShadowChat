@@ -244,7 +244,7 @@
 - (SHIRCChannel*)retainedChannelWithFormattedName:(NSString*)fName;
 {
     for (SHIRCChannel* rtn in [self channels]) {
-        if ([[rtn formattedName] isEqualToString:fName]) {
+        if ([[[rtn formattedName] lowercaseString] isEqualToString:[fName lowercaseString]]) {
             return [rtn retain];
         }
     }

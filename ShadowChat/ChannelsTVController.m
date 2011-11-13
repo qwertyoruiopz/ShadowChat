@@ -12,6 +12,7 @@
 #import "SHIRCNetwork.h"
 #import <QuartzCore/QuartzCore.h>
 #import "SHChatPanel.h"
+#import "SHChanJoin.h"
 
 @implementation ChannelsTVController
 
@@ -133,12 +134,6 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    /*
-    for (SHIRCNetwork* networks in [SHIRCNetwork allConnectedNetworks]) {
-        if () {
-            <#statements#>
-        }
-    }*/
     return [[[SHIRCNetwork allConnectedNetworks] objectAtIndex:section] descr] ? [[[SHIRCNetwork allConnectedNetworks] objectAtIndex:section] descr] : [[[SHIRCNetwork allConnectedNetworks] objectAtIndex:section] server];
 }
 
@@ -228,7 +223,13 @@
 {
     if ([self tableView:nil numberOfRowsInSection:indexPath.section]-1==indexPath.row&&[tableView isEditing])
     {
-        NSLog(@"Add a bloody chan.");
+        SHChanJoin *addChanVC = [[SHChanJoin alloc] initWithStyle:UITableViewStyleGrouped];
+        [addChanVC setNetwork:[[SHIRCNetwork allConnectedNetworks] objectAtIndex:indexPath.section]];
+        UINavigationController *addChanNavController = [[UINavigationController alloc] initWithRootViewController:addChanVC];
+        [self presentModalViewController:addChanNavController animated:YES];
+        [addChanVC release];
+        [addChanNavController release];
+        [self performSelector:@selector(edit)];
         goto end;
     }
     id vc=nil;

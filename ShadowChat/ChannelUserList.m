@@ -53,8 +53,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    names = [[names sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)] mutableCopy];
-    
+    id pool=[NSAutoreleasePool new];
+    names = [[[names autorelease] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)] mutableCopy];
+    [pool drain];
 }
 
 - (void)viewDidAppear:(BOOL)animated

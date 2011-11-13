@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "SHIRCNetwork.h"
 @interface SHChanJoin : UITableViewController {
-	
+	SHIRCNetwork* network;
 }
-
+@property(nonatomic, assign) SHIRCNetwork* network;
+- (void)done;
+- (void)doneWithJoin;
 @end

@@ -61,7 +61,9 @@ static SHIRCManager* sharedSHManager;
         NSLog(@"Pingie!");
         return;
     }
-    if ([command isEqualToString:@"PRIVMSG"]) {
+    if ([command isEqualToString:@"372"]) {
+        // MOTD, do not want
+    } else if ([command isEqualToString:@"PRIVMSG"]) {
         NSScanner* scan_=[NSScanner scannerWithString:argument];
         NSString* nick=nil;
         NSString* user=nil;
@@ -257,11 +259,6 @@ static SHIRCManager* sharedSHManager;
     [scan setScanLocation:((int)[scan scanLocation])+1];
     if([scan isAtEnd]) return;
     [scan scanUpToString:@"" intoString:hostmask];
-}
-
-- (void)parseCommand:(NSString*)command fromChannel:(SHIRCChannel*)chat
-{
-    
 }
 
 @end
