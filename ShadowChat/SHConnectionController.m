@@ -36,6 +36,9 @@
 }
 
 - (void)clearCellSwiped:(id)c {
+	if (isCellSwiped) {
+		[swipedCell undrawOptionsView];
+	}
 	isCellSwiped = YES;
 	swipedCell = (SHClearLabelCellView *)c;
 	NSLog(@"fdsfdsfsd %@", swipedCell);

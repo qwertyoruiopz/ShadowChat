@@ -16,6 +16,7 @@
 
 @interface SHClearLabelCellView : UITableViewCell {
 	BOOL wasSwiped;
+	CGRect oldFrame;
 	UILabel *thirdLabel;
 	id <SHSwipeCellDelegate> delegate;
 }

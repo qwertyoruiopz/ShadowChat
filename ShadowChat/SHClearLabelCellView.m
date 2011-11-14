@@ -52,7 +52,11 @@
 	if ([delegate respondsToSelector:@selector(clearCellSwiped:)]) {
 		[delegate clearCellSwiped:self];
 	}
-
+	oldFrame = self.frame;
+	[UIView beginAnimations:nil context:nil];
+	[UIView setAnimationDuration:0.15];
+	self.frame = CGRectMake(self.frame.size.width*-1, self.frame.origin.y, self.frame.size.width, self.frame.size.height);
+	[UIView commitAnimations];
 }
 - (void)undrawOptionsView {
 	NSLog(@"undrawing...");
@@ -65,6 +69,10 @@
 			break;
 	}
 */	
+	[UIView beginAnimations:nil context:nil];
+	[UIView setAnimationDuration:0.15];
+	self.frame = CGRectMake(0, oldFrame.origin.y, self.frame.size.width, self.frame.size.height);
+	[UIView commitAnimations];
 }
 
 @end
