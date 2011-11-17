@@ -52,27 +52,49 @@
 	if ([delegate respondsToSelector:@selector(clearCellSwiped:)]) {
 		[delegate clearCellSwiped:self];
 	}
+	drawer = [[UIView alloc] initWithFrame:self.frame];
+	
 	oldFrame = self.frame;
-	[UIView beginAnimations:nil context:nil];
-	[UIView setAnimationDuration:0.15];
-	self.frame = CGRectMake(self.frame.size.width*-1, self.frame.origin.y, self.frame.size.width, self.frame.size.height);
-	[UIView commitAnimations];
+
+	[UIView animateWithDuration:0.15 delay:0.0 options:(UIViewAnimationOptionCurveEaseIn) animations:^ {
+		self.frame = CGRectMake(self.frame.size.width*-1, self.frame.origin.y, self.frame.size.width, self.frame.size.height);
+	} completion:^(BOOL finished) {
+		if (finished) 
+		[self.superview addSubview:drawer];
+	}];
+	[drawer setBackgroundColor:[UIColor viewFlipsideBackgroundColor]];
+
 }
+
+- (void)buttonPressed:(SHCellOption)option {
+	// here let's notify the table view controller that something has happened..
+	// so that class can send a UIActionSheet confirming a delete, or push the edit view controller..
+	// yay?
+}
+
 - (void)undrawOptionsView {
 	NSLog(@"undrawing...");
-/*	switch (currentDirection) {
-		case SHSwipeDirectionRight: 
-			break;
-		case SHSwipeDirectionLeft:
-			break;
-		default:
-			break;
-	}
-*/	
-	[UIView beginAnimations:nil context:nil];
-	[UIView setAnimationDuration:0.15];
-	self.frame = CGRectMake(0, oldFrame.origin.y, self.frame.size.width, self.frame.size.height);
-	[UIView commitAnimations];
+	[drawer removeFromSuperview];
+	[drawer release];
+	[UIView animateWithDuration:0.15
+						  delay:0.0
+						options:(UIViewAnimationOptionCurveEaseIn)
+					 animations: ^{ self.frame = CGRectMake(oldFrame.origin.x, oldFrame.origin.y, self.frame.size.width, self.frame.size.height); }
+					 completion: ^(BOOL finished) {
+						 [UIView animateWithDuration:0.15 delay:0.0 options:(UIViewAnimationOptionCurveEaseOut) animations:^{
+							 self.frame = CGRectMake(-10, oldFrame.origin.y, self.frame.size.width, self.frame.size.height);
+						 }
+										  completion: ^(BOOL fin) {
+											  if (fin) {
+												  self.frame = CGRectMake(oldFrame.origin.x, oldFrame.origin.y, self.frame.size.width, self.frame.size.height);
+											  }
+										  }];}];
+	
+	
+//	[UIView beginAnimations:nil context:nil];
+//	[UIView setAnimationDuration:0.15];
+//	self.frame = CGRectMake(0, oldFrame.origin.y, self.frame.size.width, self.frame.size.height);
+//	[UIView commitAnimations];
 }
 
 @end

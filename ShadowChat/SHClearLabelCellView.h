@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SHCellDrawer.h"
 
 @protocol SHSwipeCellDelegate <NSObject>
 @required
@@ -14,8 +15,9 @@
 - (void)cellReturned;
 @end
 
-@interface SHClearLabelCellView : UITableViewCell {
+@interface SHClearLabelCellView : UITableViewCell <SHCellDrawerDelegate> {
 	BOOL wasSwiped;
+	UIView *drawer;
 	CGRect oldFrame;
 	UILabel *thirdLabel;
 	id <SHSwipeCellDelegate> delegate;
@@ -26,4 +28,5 @@
 - (void)cellWasSwiped:(UISwipeGestureRecognizer *)recog;
 - (void)drawOptionsView;
 - (void)undrawOptionsView;
+- (void)buttonPressed:(SHCellOption)option;
 @end

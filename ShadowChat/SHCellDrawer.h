@@ -8,6 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SHCellDrawer : UIView
+typedef enum SHCellOption {
+	SHCellOptionDelete, 
+	SHCellOptionEdit,
+	SHCellOptionFav
+} SHCellOption;
+
+@protocol SHCellDrawerDelegate
+@required
+- (void)buttonPressed:(SHCellOption)option;
+@end
+
+@interface SHCellDrawer : UIView {
+	id delegate;
+}
+- (id)initWithFrame:(CGRect)frame andDelegate:(id)del;
+- (void)drawButtons;
 
 @end

@@ -43,6 +43,11 @@
 	swipedCell = (SHClearLabelCellView *)c;
 	NSLog(@"fdsfdsfsd %@", swipedCell);
 }
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+	return YES;
+}
+
 - (void)cellReturned {
 	swipedCell = nil;
 	isCellSwiped = NO;
@@ -190,11 +195,6 @@
 
 
 // Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {

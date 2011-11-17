@@ -10,13 +10,28 @@
 
 @implementation SHCellDrawer
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
+- (id)initWithFrame:(CGRect)frame andDelegate:(id)del {
+	if ((self = [super initWithFrame:frame])) {
+		del = delegate;
     }
     return self;
+}
+
+
+- (void)drawButtons {
+	for (int i = 0; i < 2; i++) {
+		// Allocate UIbutton.. or subclass? idk yet.
+		// set each buttons tag to one SHCellOption
+		// so it can be passed directly. 
+		// set up their frames here, release them all after adding them to be efficient with memory.. :[
+		// this will be fun! 
+	}
+}
+
+- (void)aButtonPressed:(UIButton *)button {
+	if ([delegate respondsToSelector:@selector(buttonPressed:)]) {
+		[delegate buttonPressed:((UIButton *)button).tag];
+	}
 }
 
 /*
