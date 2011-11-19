@@ -14,8 +14,8 @@
 	if ((self = [super initWithFrame:frame])) {
 		del = delegate;
 		UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ctbg"]];
-		[bg setFrame:self.frame];
-		[self addSubview:bg];
+        [self addSubview:bg];
+		[bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 		[bg release];
     }
     return self;
