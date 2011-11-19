@@ -28,7 +28,7 @@ static SHIRCManager* sharedSHManager;
 
 - (void)parseMessageWithArray:(NSArray*)args
 {
-    id pool=[NSAutoreleasePool new];
+    id pool = [NSAutoreleasePool new];
     if ([args count]!=2) {
         [args release];
         [pool release];
@@ -40,7 +40,9 @@ static SHIRCManager* sharedSHManager;
 
 #define NO_THREADING 1
 - (void)parseMessage:(NSMutableString*)msg fromSocket:(SHIRCSocket*)socket {
-	NSLog(@"fun %@", msg);
+#ifdef __DEBUG__
+	NSLog(@"[%@ parseMessage:%@ fromSocket:%@] : %x", self, msg, socket, __LINE__);
+#endif
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	#ifndef NO_THREADING
 	if ([NSThread isMainThread]) {
