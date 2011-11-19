@@ -13,10 +13,6 @@
 		1AD9BF9A141684D2002E1C6A /* SHAddCTController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD9BF99141684D2002E1C6A /* SHAddCTController.m */; };
 		507424751416F3FC0080EC23 /* SHRoomsTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 507424741416F3FC0080EC23 /* SHRoomsTable.m */; };
 		509346D114748A1B007C57C5 /* SHCellDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 509346D014748A1B007C57C5 /* SHCellDrawer.m */; };
-		50ACAA281477389700E1756E /* shadow_u.png in Resources */ = {isa = PBXBuildFile; fileRef = 50ACAA241477389700E1756E /* shadow_u.png */; };
-		50ACAA291477389700E1756E /* shadow_u@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50ACAA251477389700E1756E /* shadow_u@2x.png */; };
-		50ACAA2A1477389700E1756E /* shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 50ACAA261477389700E1756E /* shadow.png */; };
-		50ACAA2B1477389700E1756E /* shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50ACAA271477389700E1756E /* shadow@2x.png */; };
 		50ACAA3314774BAF00E1756E /* ctbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 50ACAA3114774BAF00E1756E /* ctbg.png */; };
 		50ACAA3414774BAF00E1756E /* ctbg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50ACAA3214774BAF00E1756E /* ctbg@2x.png */; };
 		50C4CB2E1474A71D00B8EA1C /* SHDrawerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C4CB2D1474A71D00B8EA1C /* SHDrawerButton.m */; };
@@ -65,10 +61,6 @@
 		507424741416F3FC0080EC23 /* SHRoomsTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHRoomsTable.m; sourceTree = "<group>"; };
 		509346CF14748A1B007C57C5 /* SHCellDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHCellDrawer.h; sourceTree = "<group>"; };
 		509346D014748A1B007C57C5 /* SHCellDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHCellDrawer.m; sourceTree = "<group>"; };
-		50ACAA241477389700E1756E /* shadow_u.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shadow_u.png; sourceTree = "<group>"; };
-		50ACAA251477389700E1756E /* shadow_u@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shadow_u@2x.png"; sourceTree = "<group>"; };
-		50ACAA261477389700E1756E /* shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shadow.png; sourceTree = "<group>"; };
-		50ACAA271477389700E1756E /* shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shadow@2x.png"; sourceTree = "<group>"; };
 		50ACAA3114774BAF00E1756E /* ctbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ctbg.png; sourceTree = "<group>"; };
 		50ACAA3214774BAF00E1756E /* ctbg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ctbg@2x.png"; sourceTree = "<group>"; };
 		50C4CB2C1474A71D00B8EA1C /* SHDrawerButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHDrawerButton.h; sourceTree = "<group>"; };
@@ -233,10 +225,6 @@
 			children = (
 				50ACAA3114774BAF00E1756E /* ctbg.png */,
 				50ACAA3214774BAF00E1756E /* ctbg@2x.png */,
-				50ACAA241477389700E1756E /* shadow_u.png */,
-				50ACAA251477389700E1756E /* shadow_u@2x.png */,
-				50ACAA261477389700E1756E /* shadow.png */,
-				50ACAA271477389700E1756E /* shadow@2x.png */,
 				EA1D5D441415FE2000114BFF /* background.png */,
 				EA1D5D451415FE2000114BFF /* background@2x.png */,
 				EA1D5D461415FE2000114BFF /* minus.png */,
@@ -313,10 +301,6 @@
 				EAC95DF714183882000256CE /* SHChatPanel.xib in Resources */,
 				EA68CA50146ABE4D00AC1628 /* SHChanJoin.xib in Resources */,
 				EA00819D147058DE00AF13B3 /* MainWindow-iPad.xib in Resources */,
-				50ACAA281477389700E1756E /* shadow_u.png in Resources */,
-				50ACAA291477389700E1756E /* shadow_u@2x.png in Resources */,
-				50ACAA2A1477389700E1756E /* shadow.png in Resources */,
-				50ACAA2B1477389700E1756E /* shadow@2x.png in Resources */,
 				50ACAA3314774BAF00E1756E /* ctbg.png in Resources */,
 				50ACAA3414774BAF00E1756E /* ctbg@2x.png in Resources */,
 			);

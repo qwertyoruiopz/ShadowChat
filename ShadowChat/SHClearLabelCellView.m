@@ -74,16 +74,32 @@
 	}
 }
 
+
+
 - (void)willTransitionToState:(UITableViewCellStateMask)state {
 	if (!self.editing) {
 		if (state == 2)
 				return;
 	}
-	else if (state == 3) {
-		[UIView animateWithDuration:0.25 animations:^{self.thirdLabel.alpha = 0; }];
-	}
-	else if (state == 1) {
+	switch (state) {
+		case 0: 
+			[UIView animateWithDuration:0.25 delay:0.75 options:(UIViewAnimationCurveEaseOut) animations:^{self.thirdLabel.alpha = 1; } completion:^(BOOL finished) { }];
+			// this doesn't seem like it's being called at all..
+			// i modify the duration/delay and there's no change..
+			// but if you log something here.. it's called..
+			// btw this is the case, when you Edit>Red Button "-" (When Edit button shows up) and then Hitting edit again
+			// Erm.. :[
+			break;
+		case 1:
 			[UIView animateWithDuration:0.25 animations:^{self.thirdLabel.alpha = 1; }];
+			break;
+		case 3:
+			[UIView animateWithDuration:0.25 animations:^{self.thirdLabel.alpha = 0; }];
+			break;
+	}
+	NSString *str = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	for (int i = 0; i < str.length; i++) {
+		NSLog(@"%@ : %d", [@"" stringByAppendingFormat:@"%C", [str characterAtIndex:i]], (int)[@"" stringByAppendingFormat:@"%C", [str characterAtIndex:i]]);
 	}
 	[super willTransitionToState:state];
 }
