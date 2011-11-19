@@ -80,6 +80,8 @@
 }
 
 - (void)edit {
+	[self scrollViewDidScroll:nil];
+	// fix... So the cell wasn't hidden for some odd reason when set editing..
     isReallyEditing=!isReallyEditing;
     [((UITableView*)self.view) setEditing:!isReallyEditing animated:NO];
     [((UITableView*)self.view) setEditing:isReallyEditing animated:YES];
@@ -179,17 +181,17 @@
 	}
     cell.textLabel.text = [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] descr] ? [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] descr] : [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] server];
 	if ([[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isRegistered]) {
-		((UILabel *)cell.accessoryView).text = @"Connected!";
+		cell.thirdLabel.text = @"Connected!";
     }
 	else if ([((SHIRCSocket *)[((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]) socket]) status] == SHSocketStausError) {
         NSLog(@"fdsfsdfsd %@", [[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]);
-		((UILabel *)cell.accessoryView).text = @"Error connecting to the server";
+		cell.thirdLabel.text = @"Error connecting to the server";
     }
 	else {
-		((UILabel *)cell.accessoryView).text = [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isOpen] ? @"Connecting..." : @"Disconnected.";
+		cell.thirdLabel.text = [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isOpen] ? @"Connecting..." : @"Disconnected.";
     }
 	cell.detailTextLabel.text = [((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]).server ? ((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]).server : @"" lowercaseString];
-    [((UILabel*)[cell accessoryView]) sizeToFit];
+
     return cell;
 }
 
@@ -201,12 +203,11 @@
     if ([[SHIRCNetwork allNetworks] count] == indexPath.row) {
         return UITableViewCellEditingStyleInsert;
     }
-    return UITableViewCellEditingStyleDelete;
+	return UITableViewCellEditingStyleDelete;
 }
 
 // Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] disconnect];

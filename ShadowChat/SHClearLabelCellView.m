@@ -19,11 +19,8 @@
         thirdLabel.textColor = [UIColor grayColor];
         thirdLabel.font = [UIFont systemFontOfSize:15];
         thirdLabel.textAlignment = UITextAlignmentRight;
-		[self setAccessoryView:thirdLabel];
-		[thirdLabel release];
-		for (id gesture in self.gestureRecognizers) {
-			[self removeGestureRecognizer:gesture];
-		}
+		[self addSubview:thirdLabel];
+		[self removeAllGestureRecognizers];
 		UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(cellWasSwiped:)];
 		[swipe setDirection:(UISwipeGestureRecognizerDirectionLeft | UISwipeGestureRecognizerDirectionRight)];
 		[self addGestureRecognizer:swipe];
@@ -31,6 +28,13 @@
 	}
 	return self;
 }
+
+- (void)removeAllGestureRecognizers {
+	for (id gesture in self.gestureRecognizers) {
+		[self removeGestureRecognizer:gesture];
+	}
+}
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
 	[super setSelected:selected animated:animated];
@@ -40,31 +44,60 @@
 }
 
 - (void)dealloc {
-
+	[super dealloc];
+	[thirdLabel release];
 }
 
 - (void)cellWasSwiped:(UISwipeGestureRecognizer *)recog {
 	[self drawOptionsView];
 }
 
+
 - (void)drawOptionsView {
-	NSLog(@"fdsfdsfds dfsyay ");
-	if ([delegate respondsToSelector:@selector(clearCellSwiped:)]) {
-		[delegate clearCellSwiped:self];
-	}
-	drawer = [[UIView alloc] initWithFrame:self.frame];
-	
-	oldFrame = self.frame;
-
-	[UIView animateWithDuration:0.15 delay:0.0 options:(UIViewAnimationOptionCurveEaseIn) animations:^ {
-		self.frame = CGRectMake(self.frame.size.width*-1, self.frame.origin.y, self.frame.size.width, self.frame.size.height);
-	} completion:^(BOOL finished) {
-		if (finished) 
+	if (!self.editing) {
+		if ([delegate respondsToSelector:@selector(clearCellSwiped:)]) {
+			[delegate clearCellSwiped:self];
+		}
+		drawer = [[SHCellDrawer alloc] initWithFrame:self.frame andDelegate:self];
+		oldFrame = self.frame;
 		[self.superview addSubview:drawer];
-	}];
-	[drawer setBackgroundColor:[UIColor viewFlipsideBackgroundColor]];
+		[self.superview bringSubviewToFront:self];
+		[UIView animateWithDuration:0.15 delay:0.0 options:(UIViewAnimationCurveEaseIn) animations:^ {
+			self.frame = CGRectMake(self.frame.size.width*-1, self.frame.origin.y, self.frame.size.width, self.frame.size.height);
+		} completion:^(BOOL finished) {
+			if (finished) {
+	
+			}
 
+		}];
+		[drawer setBackgroundColor:[UIColor whiteColor]];
+	}
 }
+
+- (void)willTransitionToState:(UITableViewCellStateMask)state {
+	if (!self.editing) {
+		if (state == 2)
+				return;
+	}
+	else if (state == 3) {
+		[UIView animateWithDuration:0.25 animations:^{self.thirdLabel.alpha = 0; }];
+	}
+	else if (state == 1) {
+			[UIView animateWithDuration:0.25 animations:^{self.thirdLabel.alpha = 1; }];
+	}
+	[super willTransitionToState:state];
+}
+
+/*
+- (void)addSubview:(UIView *)view {
+	NSString *hax = NSStringFromClass([view class]);
+	if ([hax hasSuffix:@"ConfirmationControl"]) {
+		
+		return;
+	}
+	[super addSubview:view];
+}
+*/
 
 - (void)buttonPressed:(SHCellOption)option {
 	// here let's notify the table view controller that something has happened..
@@ -72,29 +105,43 @@
 	// yay?
 }
 
+
+//- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+	// overridden to prevent the swipe-to-show-delete button :[[ 
+	// I'm sorry... 
+	// Just to clarify, ac3xx.. nothing goes here... 
+	// except maybe some stupid comments..
+	// potatoe. 
+	// <3
+	// actually.. i later realized this doesn't affect it all
+	// but in fact is probably screwing up somethign else.
+	
+	// :'( \
+}
+
 - (void)undrawOptionsView {
 	NSLog(@"undrawing...");
-	[drawer removeFromSuperview];
-	[drawer release];
+
 	[UIView animateWithDuration:0.15
 						  delay:0.0
-						options:(UIViewAnimationOptionCurveEaseIn)
+						options:(UIViewAnimationCurveEaseIn)
 					 animations: ^{ self.frame = CGRectMake(oldFrame.origin.x, oldFrame.origin.y, self.frame.size.width, self.frame.size.height); }
 					 completion: ^(BOOL finished) {
-						 [UIView animateWithDuration:0.15 delay:0.0 options:(UIViewAnimationOptionCurveEaseOut) animations:^{
+						 [UIView animateWithDuration:0.15 delay:0.0 options:(UIViewAnimationCurveEaseOut) animations:^{
 							 self.frame = CGRectMake(-10, oldFrame.origin.y, self.frame.size.width, self.frame.size.height);
 						 }
 										  completion: ^(BOOL fin) {
 											  if (fin) {
-												  self.frame = CGRectMake(oldFrame.origin.x, oldFrame.origin.y, self.frame.size.width, self.frame.size.height);
+												  self.frame = CGRectMake(0, oldFrame.origin.y, self.frame.size.width, self.frame.size.height);
+												  [drawer removeFromSuperview];
+												  [drawer release];
 											  }
-										  }];}];
-	
-	
-//	[UIView beginAnimations:nil context:nil];
-//	[UIView setAnimationDuration:0.15];
-//	self.frame = CGRectMake(0, oldFrame.origin.y, self.frame.size.width, self.frame.size.height);
-//	[UIView commitAnimations];
+										  }];
+					 }];
+	if ([delegate respondsToSelector:@selector(cellReturned)]) 
+		[delegate cellReturned];
+
+
 }
 
 @end

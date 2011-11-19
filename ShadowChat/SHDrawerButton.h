@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SHCellDrawer.h"
 
-@interface SHDrawerButton : UIButton
-
+@interface SHDrawerButton : UIButton {
+	
+}
 @end

@@ -155,7 +155,7 @@
     } else
     cell.textLabel.text=[((SHIRCChannel *)[[[(SHIRCNetwork*)[[SHIRCNetwork allConnectedNetworks] objectAtIndex:indexPath.section] socket] channels] objectAtIndex:indexPath.row]) formattedName];
     // Confgure the cell...
-    
+    [cell removeAllGestureRecognizers];
     return cell;
 }
 

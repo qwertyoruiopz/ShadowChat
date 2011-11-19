@@ -15,6 +15,7 @@
 - (void)cellReturned;
 @end
 
+
 @interface SHClearLabelCellView : UITableViewCell <SHCellDrawerDelegate> {
 	BOOL wasSwiped;
 	UIView *drawer;
@@ -25,6 +26,7 @@
 @property (nonatomic, retain) id <SHSwipeCellDelegate> delegate;
 @property (nonatomic, retain) UILabel *thirdLabel;
 - (id)initWithStyle:(UITableViewCellStyle)s reuseIdentifier:(NSString *)identifier;
+- (void)removeAllGestureRecognizers;
 - (void)cellWasSwiped:(UISwipeGestureRecognizer *)recog;
 - (void)drawOptionsView;
 - (void)undrawOptionsView;

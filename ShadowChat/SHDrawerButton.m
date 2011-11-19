@@ -10,4 +10,13 @@
 
 @implementation SHDrawerButton
 
+
+- (id)initWithFrame:(CGRect)frame andOption:(int)opt {
+	if ((self = [super initWithFrame:frame])) {
+
+	}
+	return self;
+}
+
+
 @end

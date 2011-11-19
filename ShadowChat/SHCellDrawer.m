@@ -13,6 +13,10 @@
 - (id)initWithFrame:(CGRect)frame andDelegate:(id)del {
 	if ((self = [super initWithFrame:frame])) {
 		del = delegate;
+		UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ctbg"]];
+		[bg setFrame:self.frame];
+		[self addSubview:bg];
+		[bg release];
     }
     return self;
 }

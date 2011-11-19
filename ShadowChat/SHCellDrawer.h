@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "SHDrawerButton.h"
 typedef enum SHCellOption {
-	SHCellOptionDelete, 
-	SHCellOptionEdit,
-	SHCellOptionFav
+	SHCellOptionDelete = 0, 
+	SHCellOptionEdit = 1,
+	SHCellOptionFav = 2
 } SHCellOption;
 
 @protocol SHCellDrawerDelegate
