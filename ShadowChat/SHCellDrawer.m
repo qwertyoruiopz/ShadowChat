@@ -23,13 +23,23 @@
 
 
 - (void)drawButtons {
-	for (int i = 0; i < 2; i++) {
+	NSAutoreleasePool *p = [[NSAutoreleasePool alloc] init];
+	for (int i = 0; i <= 2; i++) {
+		// this is only temporary. I'm sorry.
+		int pos[ ] = {75, 155, 250};
+		UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(pos[i], self.frame.size.height/3, 20, 20)];
+		[btn setTag:(SHCellOption)i];
+		[btn setBackgroundColor:[UIColor whiteColor]];
+		[btn addTarget:self action:@selector(aButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+		[self addSubview:btn];
+		[btn release];
 		// Allocate UIbutton.. or subclass? idk yet.
 		// set each buttons tag to one SHCellOption
 		// so it can be passed directly. 
 		// set up their frames here, release them all after adding them to be efficient with memory.. :[
 		// this will be fun! 
 	}
+	[p drain];
 }
 
 - (void)aButtonPressed:(UIButton *)button {

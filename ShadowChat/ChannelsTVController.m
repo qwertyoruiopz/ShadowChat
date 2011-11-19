@@ -220,6 +220,15 @@
     return nil;
 }
 
+- (void)cellReturned {
+	
+}
+
+
+- (void)clearCellSwiped:(id)c {
+	
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([self tableView:nil numberOfRowsInSection:indexPath.section]-1==indexPath.row&&[tableView isEditing])
