@@ -59,11 +59,11 @@
         return;
     }
 	if (!self.editing) {
+        oldFrame = self.frame;
 		if ([delegate respondsToSelector:@selector(clearCellSwiped:)]) {
 			[delegate clearCellSwiped:self];
 		}
 		drawer = [[SHCellDrawer alloc] initWithFrame:CGRectMake(self.frame.size.width, 0, self.frame.size.width, self.frame.size.height) andDelegate:self];
-		oldFrame = self.frame;
 		[self addSubview:drawer];
         [drawer release];
 		[UIView animateWithDuration:0.15 delay:0.0 options:(UIViewAnimationCurveEaseIn) animations:^ {
@@ -73,6 +73,8 @@
                 
 			}
             self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width*2, self.frame.size.height);
+            [[self accessoryView] setAlpha:0];
+            self.selectionStyle=UITableViewCellSelectionStyleNone;
 		}];
 		[drawer setBackgroundColor:[UIColor blackColor]];
 	}
@@ -136,8 +138,11 @@
 }
 
 - (void)undrawOptionsView {
+    if (CGRectIsEmpty(oldFrame)) {
+        return;
+    }
 	NSLog(@"undrawing...");
-    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width/2, self.frame.size.height);
+    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, oldFrame.size.width, self.frame.size.height);
 	[UIView animateWithDuration:0.15
 						  delay:0.0
 						options:(UIViewAnimationCurveEaseIn)
@@ -170,6 +175,9 @@
                              oldFrame=CGRectZero;
                          }
 					 }];
+    [[self accessoryView] setAlpha:1];
+    self.selectionStyle=UITableViewCellSelectionStyleBlue;
+    [self setSelected:NO];
 	if ([delegate respondsToSelector:@selector(cellReturned)]) 
 		[delegate cellReturned];
     

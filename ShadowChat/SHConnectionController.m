@@ -238,6 +238,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([[tableView cellForRowAtIndexPath:indexPath] selectionStyle] == UITableViewCellSelectionStyleNone) return;
     if ([[SHIRCNetwork allNetworks] count] == indexPath.row) {
         [self addConnection];
 		[self performSelector:@selector(edit)];
