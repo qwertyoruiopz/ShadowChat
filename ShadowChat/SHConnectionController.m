@@ -181,6 +181,7 @@
 		cell.textLabel.text = @"Add an IRC Network";
 		cell.detailTextLabel.text = @"Click here to configure a new network";
 		cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+        [cell undrawOptionsView];
 		return cell;
 	}
     cell.textLabel.text = [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] descr] ? [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] descr] : [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] server];
@@ -196,6 +197,7 @@
     }
 	cell.detailTextLabel.text = [((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]).server ? ((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]).server : @"" lowercaseString];
     [cell.thirdLabel sizeToFit];
+    [cell undrawOptionsView];
     return cell;
 }
 

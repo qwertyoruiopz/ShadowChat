@@ -55,9 +55,10 @@
 
 
 - (void)drawOptionsView {
-    if (!CGRectIsEmpty(oldFrame)) {
+    if (_isSwiped) {
         return;
     }
+    _isSwiped=YES;
 	if (!self.editing) {
         oldFrame = self.frame;
 		if ([delegate respondsToSelector:@selector(clearCellSwiped:)]) {
@@ -138,9 +139,10 @@
 }
 
 - (void)undrawOptionsView {
-    if (CGRectIsEmpty(oldFrame)) {
+    if (!_isSwiped) {
         return;
     }
+    _isSwiped=NO;
 	NSLog(@"undrawing...");
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, oldFrame.size.width, self.frame.size.height);
 	[UIView animateWithDuration:0.15

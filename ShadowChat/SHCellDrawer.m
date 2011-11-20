@@ -50,7 +50,7 @@
 //		[delegate buttonPressed:(SHCellOption)((UIButton *)button).tag];
 //	}
 	if ([delegate respondsToSelector:@selector(undrawOptionsView)]) {
-		[delegate undrawOptionsView];
+		[delegate performSelector:@selector(undrawOptionsView)];
 	}
 }
 
