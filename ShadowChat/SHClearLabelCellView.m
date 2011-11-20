@@ -73,7 +73,7 @@
                 
 			}
             self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width*2, self.frame.size.height);
-            [[self accessoryView] setAlpha:0];
+            [[self accessoryView] setHidden:1];
             self.selectionStyle=UITableViewCellSelectionStyleNone;
 		}];
 		[drawer setBackgroundColor:[UIColor blackColor]];
@@ -175,7 +175,7 @@
                              oldFrame=CGRectZero;
                          }
 					 }];
-    [[self accessoryView] setAlpha:1];
+    [[self accessoryView] setHidden:0];
     self.selectionStyle=UITableViewCellSelectionStyleBlue;
     [self setSelected:NO];
 	if ([delegate respondsToSelector:@selector(cellReturned)]) 
