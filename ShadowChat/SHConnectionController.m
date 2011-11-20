@@ -133,10 +133,14 @@
     [super viewDidDisappear:animated];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return YES; // (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+	if (swipedCell != nil) {
+		[swipedCell undrawOptionsView];
+	}
 }
 
 #pragma mark - Table view data source

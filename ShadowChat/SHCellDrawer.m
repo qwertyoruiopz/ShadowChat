@@ -24,12 +24,14 @@
 
 - (void)drawButtons {
 	NSAutoreleasePool *p = [[NSAutoreleasePool alloc] init];
+	NSArray *st = [NSArray arrayWithObjects:@"Edit", @"Del", @"Connect", nil];
 	for (int i = 0; i <= 2; i++) {
 		// this is only temporary. I'm sorry.
-		int pos[ ] = {75, 155, 250};
-		UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(pos[i], self.frame.size.height/3, 20, 20)];
+		int pos[ ] = {55, 140, 225};
+		UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(pos[i], self.frame.size.height/3, 40, 20)];
 		[btn setTag:(SHCellOption)i];
-		[btn setBackgroundColor:[UIColor whiteColor]];
+		[btn setTitle:[st objectAtIndex:i] forState:UIControlStateNormal];
+	//	[btn setBackgroundColor:[UIColor whiteColor]];
 		[btn addTarget:self action:@selector(aButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 		[self addSubview:btn];
 		[btn release];
@@ -43,8 +45,12 @@
 }
 
 - (void)aButtonPressed:(UIButton *)button {
-	if ([delegate respondsToSelector:@selector(buttonPressed:)]) {
-		[delegate buttonPressed:((UIButton *)button).tag];
+	NSLog(@"fdsfs");
+//	if ([delegate respondsToSelector:@selector(buttonPressed:)]) {
+//		[delegate buttonPressed:(SHCellOption)((UIButton *)button).tag];
+//	}
+	if ([delegate respondsToSelector:@selector(undrawOptionsView)]) {
+		[delegate undrawOptionsView];
 	}
 }
 

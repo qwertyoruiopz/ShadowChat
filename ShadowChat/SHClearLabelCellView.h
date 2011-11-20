@@ -20,6 +20,7 @@
 	BOOL wasSwiped;
 	UIView *drawer;
 	CGRect oldFrame;
+	BOOL _isSwiped;
 	UILabel *thirdLabel;
 	id <SHSwipeCellDelegate> delegate;
 }

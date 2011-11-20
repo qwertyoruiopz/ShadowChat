@@ -64,7 +64,6 @@
 		}
 		drawer = [[SHCellDrawer alloc] initWithFrame:CGRectMake(self.frame.size.width, 0, self.frame.size.width, self.frame.size.height) andDelegate:self];
 		oldFrame = self.frame;
-		[drawer performSelectorInBackground:@selector(drawButtons) withObject:nil];
 		[self addSubview:drawer];
         [drawer release];
 		[UIView animateWithDuration:0.15 delay:0.0 options:(UIViewAnimationCurveEaseIn) animations:^ {
@@ -73,7 +72,7 @@
 			if (finished) {
                 
 			}
-            
+            self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width*2, self.frame.size.height);
 		}];
 		[drawer setBackgroundColor:[UIColor blackColor]];
 	}
@@ -138,7 +137,7 @@
 
 - (void)undrawOptionsView {
 	NSLog(@"undrawing...");
-
+    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width/2, self.frame.size.height);
 	[UIView animateWithDuration:0.15
 						  delay:0.0
 						options:(UIViewAnimationCurveEaseIn)
