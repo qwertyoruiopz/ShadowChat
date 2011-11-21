@@ -145,9 +145,7 @@
     _isSwiped=NO;
 	NSLog(@"undrawing...");
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, oldFrame.size.width, self.frame.size.height);
-	[UIView animateWithDuration:0.15
-						  delay:0.0
-						options:(UIViewAnimationCurveEaseIn)
+	[UIView animateWithDuration:0.15 delay:0.0 options:(UIViewAnimationCurveEaseIn)
 					 animations: ^{ self.frame = CGRectMake(oldFrame.origin.x, oldFrame.origin.y, self.frame.size.width, self.frame.size.height); }
 					 completion: ^(BOOL finished) {
                          if (finished&&!self.isEditing) {

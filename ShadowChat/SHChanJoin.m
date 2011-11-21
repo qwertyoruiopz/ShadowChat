@@ -12,16 +12,15 @@
 
 @implementation SHChanJoin
 @synthesize network;
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     if ([textField tag] == 12341||[textField tag] == 12344||[textField tag] == 12343) {
         if ([string isEqualToString:@" "]) {
             return NO;
         }
         if ([textField tag] == 12341) {
-            if (range.length==1&&[[textField text]length]==1) {
-                self.navigationItem.rightBarButtonItem.enabled=NO;
-            } else if (range.length==0&&range.location==0)
+            if (range.length == 1 && [[textField text] length] == 1) {
+                self.navigationItem.rightBarButtonItem.enabled = NO;
+            } else if (range.length == 0 && range.location == 0)
             {
                 self.navigationItem.rightBarButtonItem.enabled=YES;
             }
@@ -29,8 +28,7 @@
     }
     return YES;
 }
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self doneWithJoin];
     return NO;
 }

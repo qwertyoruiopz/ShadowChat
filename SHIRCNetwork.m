@@ -8,32 +8,30 @@
 
 #import "SHIRCNetwork.h"
 #import "SHIRCChannel.h"
-static NSMutableArray* networks=nil;
-static NSMutableArray* connectedNetworks=nil;
+static NSMutableArray* networks = nil;
+static NSMutableArray* connectedNetworks = nil;
 @implementation SHIRCNetwork
 @synthesize server, port, descr, hasSSL, username, nickname, realname, serverPassword, nickServPassword, socket;
-+(SHIRCNetwork*)createNetworkWithServer:(NSString*)server andPort:(int)port isSSLEnabled:(BOOL)ssl
-                            description:(NSString*)description withUsername:(NSString*)username andNickname:(NSString*)nickname
-                            andRealname:(NSString*)realname serverPassword:(NSString*)password nickServPassword:(NSString*)nickserv
-{
-    [(Class)self allNetworks];
-    SHIRCNetwork* ret=[[(Class)self alloc] init];
-    [ret setServer:server];
-    [ret setDescr:description];
-    [ret setPort:port];
-    [ret setHasSSL:ssl];
-    [ret setUsername:username];
-    [ret setNickname:nickname];
-    [ret setRealname:realname];
-    [ret setServerPassword:password];
-    [ret setNickServPassword:nickserv];
-    [networks addObject:ret];
-    [self saveDefaults];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadNetworks" object:nil];
-    return ret;
++ (SHIRCNetwork *)createNetworkWithServer:(NSString *)server andPort:(int)port isSSLEnabled:(BOOL)ssl
+                            description:(NSString *)description withUsername:(NSString *)username andNickname:(NSString *)nickname
+                            andRealname:(NSString *)realname serverPassword:(NSString *)password nickServPassword:(NSString *)nickserv {
+	[(Class)self allNetworks];
+	SHIRCNetwork *ret = [[(Class)self alloc] init];
+	[ret setServer:server];
+	[ret setDescr:description];
+	[ret setPort:port];
+	[ret setHasSSL:ssl];
+	[ret setUsername:username];
+	[ret setNickname:nickname];
+	[ret setRealname:realname];
+	[ret setServerPassword:password];
+	[ret setNickServPassword:nickserv];
+	[networks addObject:ret];
+	[self saveDefaults];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadNetworks" object:nil];
+	return ret;
 }
-- (void) encodeWithCoder: (NSCoder *)coder
-{
+- (void) encodeWithCoder: (NSCoder *)coder {
     [coder encodeObject:server forKey:@"server"];
     [coder encodeObject:descr forKey:@"description"];
     [coder encodeObject:[NSNumber numberWithInt:port] forKey:@"port"];
@@ -44,10 +42,8 @@ static NSMutableArray* connectedNetworks=nil;
     [coder encodeObject:serverPassword forKey:@"serverPassword"];
     [coder encodeObject:nickServPassword forKey:@"nickServPassword"];
 }
-- (id) initWithCoder: (NSCoder *)coder
-{
-    if (self = [super init])
-    {
+- (id)initWithCoder:(NSCoder *)coder {
+    if (self = [super init]) {
         NSAutoreleasePool* poolz=[NSAutoreleasePool new];
         if ([coder containsValueForKey:@"server"])
             self.server = [coder decodeObjectForKey:@"server"];
@@ -72,88 +68,75 @@ static NSMutableArray* connectedNetworks=nil;
     return self;
 }
 
-+(void)saveDefaults
-{
-    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:networks] forKey:@"Networks"];
++ (void)saveDefaults {
+	[[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:networks] forKey:@"Networks"];
 }
--(void)saveDefaults
-{
-    [[self class] saveDefaults];
+- (void)saveDefaults {
+	[[self class] saveDefaults];
 }
--(void)dealloc
-{
-    NSLog(@"OMG HAX");
-    [socket disconnect];
-    [socket release];
-    [super dealloc];
+- (void)dealloc {
+	[socket disconnect];
+	[socket release];
+	[super dealloc];
 }
-+(NSMutableArray*)allNetworks
-{
-    if(!networks)
-    {
-        NSAutoreleasePool* pawl=[NSAutoreleasePool new];
-        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"Networks"])
-        {
-            NSArray* stuff=[NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"Networks"]];//  mutableCopy];
++ (NSMutableArray*)allNetworks {
+	if (!networks) {
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"Networks"]) {
+            NSArray *stuff = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"Networks"]];//  mutableCopy];
             networks = [stuff mutableCopy];
-        } else {
+        }
+		else {
             networks = [[NSMutableArray alloc] init];
         }
-        [pawl release];
+        [pool drain];
     }
     return networks;
 }
-+ (NSMutableArray*)allConnectedNetworks
-{
-    if(!connectedNetworks)
-    {
-        NSAutoreleasePool* pawl=[NSAutoreleasePool new];
++ (NSMutableArray *)allConnectedNetworks {
+    if(!connectedNetworks) {
+        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
         connectedNetworks = [[NSMutableArray alloc] init];
-        [pawl release];
+		[pool drain];
     }
     return connectedNetworks;
 }
--(void)disconnect
-{
+- (void)disconnect {
     [socket retain];
     [[[self class] allConnectedNetworks] removeObject:self];
     [socket disconnect];
 }
--(BOOL)isOpen
-{
+- (BOOL)isOpen {
     return ([socket status] == SHSocketStausOpen || [socket status] == SHSocketStausConnecting);
 }
--(BOOL)isRegistered
-{
+- (BOOL)isRegistered {
     return ([socket didRegister]);
 }
--(void)hasBeenRegisteredCallback:(SHIRCSocket*)sock
-{
+- (void)hasBeenRegisteredCallback:(SHIRCSocket *)sock {
     NSLog(@"%@ - Callback", self);
     [[[self class] allConnectedNetworks] addObject:self];
 }
--(SHIRCSocket*)connect
-{
-    if([socket status] == SHSocketStausOpen || [socket status] == SHSocketStausConnecting)
-    {
+- (SHIRCSocket *)connect {
+    if ([socket status] == SHSocketStausOpen || [socket status] == SHSocketStausConnecting) {
         NSLog(@"ShIRCCore: Already connected");
         return nil;
-    }
-    [self disconnect];
-    if (!socket){
-        socket=[[SHIRCSocket socketWithServer:[self server] andPort:[self port] usesSSL:[self hasSSL]] retain];
+	}
+	[self disconnect];
+	if (!socket) {
+		socket = [[SHIRCSocket socketWithServer:[self server] andPort:[self port] usesSSL:[self hasSSL]] retain];
     } 
-    [socket setDelegate:self];
-    if (self.serverPassword) {
-        [socket connectWithNick:[self nickname] andUser:[self username] andPassword:[self serverPassword]];
-    } else {
-        [socket connectWithNick:[self nickname] andUser:[self username]];
-    }
-    if ([self nickServPassword]) {
-        [socket sendCommand:@"PRIVMSG NickServ" withArguments:[@"IDENTIFY " stringByAppendingString:[self nickServPassword]] waitUntilRegistered:YES];
-    }
-    [socket setDelegate:self];
-    [socket release];
-    return socket;
+	[socket setDelegate:self];
+	if (self.serverPassword) {
+		[socket connectWithNick:[self nickname] andUser:[self username] andPassword:[self serverPassword]];
+	}
+	else {
+		[socket connectWithNick:[self nickname] andUser:[self username]];
+	}
+	if ([self nickServPassword]) {
+		[socket sendCommand:@"PRIVMSG NickServ" withArguments:[@"IDENTIFY " stringByAppendingString:[self nickServPassword]] waitUntilRegistered:YES];
+	}
+	[socket setDelegate:self];
+	[socket release];
+	return socket;
 }
 @end
