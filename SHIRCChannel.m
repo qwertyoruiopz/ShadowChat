@@ -71,6 +71,15 @@ extern id objc_msgSend(id target, SEL msg, ...);
 	else
 		[self sendMessage:command flavor:SHMessageFlavorNormal];
 }
+
+- (void)setIsJoined:(BOOL)joind {
+	joined = joind;
+}
+
+- (BOOL)isJoined {
+	return joined;
+}
+
 - (void)parseCommand:(NSString*)command {
     NSAutoreleasePool* pool = [NSAutoreleasePool new];
     NSScanner* scan = [NSScanner scannerWithString:command];
@@ -167,9 +176,13 @@ extern id objc_msgSend(id target, SEL msg, ...);
 
 - (void)part {
     [socket sendCommand:@"PART" withArguments:[self formattedName]];
-    [socket removeChannel:self];
+//	[socket removeChannel:self];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadChans" object:nil];
     [self release];
+}
+
+- (void)join {
+	[socket sendCommand:@"JOIN" withArguments:[self formattedName]];
 }
 
 - (void)didRecieveMessageFrom:(NSString*)nick text:(NSString*)ircMessage {

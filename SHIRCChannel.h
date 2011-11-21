@@ -24,8 +24,9 @@ typedef enum SHEventType {
 } SHEventType;
 
 @interface SHIRCChannel : NSObject {
-    NSString* net;
-    NSString* name;
+    NSString *net;
+    NSString *name;
+	BOOL joined;
     SHIRCSocket* socket;
     id delegate;
 }
@@ -37,6 +38,8 @@ typedef enum SHEventType {
 - (BOOL)sendMessage:(NSString *)message flavor:(SHMessageFlavor)flavor;
 - (NSString *)formattedName;
 - (void)part;
+- (void)setIsJoined:(BOOL)joind;
+- (BOOL)isJoined;
 - (void)didRecieveMessageFrom:(NSString *)nick text:(NSString *)ircMessage;
 - (void)parseCommand:(NSString *)command;
 - (void)parseAndEventuallySendMessage:(NSString *)command;

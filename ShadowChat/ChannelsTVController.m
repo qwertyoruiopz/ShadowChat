@@ -108,7 +108,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
+
     return [[[(SHIRCNetwork *)[[SHIRCNetwork allConnectedNetworks] objectAtIndex:section] socket] channels] count] + (int)isReallyEditing;
 }
 

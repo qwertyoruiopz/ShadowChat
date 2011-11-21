@@ -24,16 +24,6 @@
 	return newShadow;
 }
 
-/*- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event { //Never again.. :P
-	[super hitTest:point withEvent:event];
-	UIView *retval = nil;
-	// traverse the subviews in backwards order until one returns something
-	for (UIView *subview in [[self subviews] reverseObjectEnumerator])
-		if ((retval = [subview hitTest:[subview convertPoint:point fromView:self] withEvent:event]))
-			break;
-	
-	return retval;
-}*/
 
 - (void)layoutSubviews {
 	[super layoutSubviews];

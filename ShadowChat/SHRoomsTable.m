@@ -13,9 +13,7 @@
 - (id)initWithFrame:(CGRect)frame {
 
 	if ((self = [super initWithFrame:frame])) {
-		self.transform = CGAffineTransformMakeRotation(M_PI/2);
-		
-	
+		self.transform = CGAffineTransformMakeRotation(M_PI/2);	
 	}
     
     return self;

@@ -9,6 +9,8 @@
 
 #import <Foundation/Foundation.h>
 #import "Foundation/NSStream.h"
+#import "SHChannelSaver.h"
+
 @class SHIRCChannel;
 @class SHIRCSocket;
 typedef enum SHSocketStaus
@@ -54,9 +56,12 @@ typedef enum SHSocketStaus
 - (BOOL)sendCommand:(NSString *)command withArguments:(NSString*)args waitUntilRegistered:(BOOL)wur;
 - (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent;
 - (void)disconnect;
-- (void)addChannel:(SHIRCChannel*)chan;
-- (void)removeChannel:(SHIRCChannel*)chan;
+- (void)joinChannel:(SHIRCChannel *)chan;
+- (void)partChannel:(SHIRCChannel *)chan;
+- (void)addChannel:(SHIRCChannel *)chan;
+- (void)removeChannel:(SHIRCChannel *)chan;
+- (void)saveRooms;
 - (void)setDidRegister:(BOOL)didReg;
 - (void)dealloc;
-- (SHIRCChannel*)retainedChannelWithFormattedName:(NSString*)fName;
+- (SHIRCChannel *)retainedChannelWithFormattedName:(NSString*)fName;
 @end

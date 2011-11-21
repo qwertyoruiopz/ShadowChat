@@ -15,6 +15,7 @@
 		509346D114748A1B007C57C5 /* SHCellDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 509346D014748A1B007C57C5 /* SHCellDrawer.m */; };
 		50ACAA3314774BAF00E1756E /* ctbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 50ACAA3114774BAF00E1756E /* ctbg.png */; };
 		50ACAA3414774BAF00E1756E /* ctbg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50ACAA3214774BAF00E1756E /* ctbg@2x.png */; };
+		50C449B3147B15F800DF8C76 /* SHChannelSaver.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C449B2147B15F800DF8C76 /* SHChannelSaver.m */; };
 		50C4CB2E1474A71D00B8EA1C /* SHDrawerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C4CB2D1474A71D00B8EA1C /* SHDrawerButton.m */; };
 		EA00819D147058DE00AF13B3 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA00819B147058DE00AF13B3 /* MainWindow-iPad.xib */; };
 		EA00940D14143FE90059261C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA00940C14143FE90059261C /* UIKit.framework */; };
@@ -63,6 +64,8 @@
 		509346D014748A1B007C57C5 /* SHCellDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHCellDrawer.m; sourceTree = "<group>"; };
 		50ACAA3114774BAF00E1756E /* ctbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ctbg.png; sourceTree = "<group>"; };
 		50ACAA3214774BAF00E1756E /* ctbg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ctbg@2x.png"; sourceTree = "<group>"; };
+		50C449B1147B15F800DF8C76 /* SHChannelSaver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHChannelSaver.h; sourceTree = "<group>"; };
+		50C449B2147B15F800DF8C76 /* SHChannelSaver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHChannelSaver.m; sourceTree = "<group>"; };
 		50C4CB2C1474A71D00B8EA1C /* SHDrawerButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHDrawerButton.h; sourceTree = "<group>"; };
 		50C4CB2D1474A71D00B8EA1C /* SHDrawerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHDrawerButton.m; sourceTree = "<group>"; };
 		EA00819C147058DE00AF13B3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "iPad/en.lproj/MainWindow-iPad.xib"; sourceTree = "<group>"; };
@@ -216,6 +219,8 @@
 				1A223128141CBC39009F9578 /* ChannelUserList.m */,
 				509346CF14748A1B007C57C5 /* SHCellDrawer.h */,
 				509346D014748A1B007C57C5 /* SHCellDrawer.m */,
+				50C449B1147B15F800DF8C76 /* SHChannelSaver.h */,
+				50C449B2147B15F800DF8C76 /* SHChannelSaver.m */,
 			);
 			path = ShadowChat;
 			sourceTree = "<group>";
@@ -332,6 +337,7 @@
 				EA68CA4F146ABE4D00AC1628 /* SHChanJoin.m in Sources */,
 				509346D114748A1B007C57C5 /* SHCellDrawer.m in Sources */,
 				50C4CB2E1474A71D00B8EA1C /* SHDrawerButton.m in Sources */,
+				50C449B3147B15F800DF8C76 /* SHChannelSaver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

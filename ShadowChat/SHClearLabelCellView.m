@@ -124,25 +124,11 @@
 	// yay?
 }
 
-
-//- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-// overridden to prevent the swipe-to-show-delete button :[[ 
-// I'm sorry... 
-// Just to clarify, ac3xx.. nothing goes here... 
-// except maybe some stupid comments..
-// potatoe. 
-// <3
-// actually.. i later realized this doesn't affect it all
-// but in fact is probably screwing up somethign else.
-
-// :'( \
-}
-
 - (void)undrawOptionsView {
     if (!_isSwiped) {
         return;
     }
-    _isSwiped=NO;
+    _isSwiped = NO;
 	NSLog(@"undrawing...");
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, oldFrame.size.width, self.frame.size.height);
 	[UIView animateWithDuration:0.15 delay:0.0 options:(UIViewAnimationCurveEaseIn)
@@ -176,7 +162,7 @@
                          }
 					 }];
     [[self accessoryView] setHidden:0];
-    self.selectionStyle=UITableViewCellSelectionStyleBlue;
+    self.selectionStyle = UITableViewCellSelectionStyleBlue;
     [self setSelected:NO];
 	if ([delegate respondsToSelector:@selector(cellReturned)]) 
 		[delegate cellReturned];

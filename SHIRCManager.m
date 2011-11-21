@@ -26,8 +26,7 @@ static SHIRCManager* sharedSHManager;
     }
 }
 
-- (void)parseMessageWithArray:(NSArray*)args
-{
+- (void)parseMessageWithArray:(NSArray*)args {
     id pool = [NSAutoreleasePool new];
     if ([args count]!=2) {
         [args release];
@@ -39,10 +38,8 @@ static SHIRCManager* sharedSHManager;
 }
 
 #define NO_THREADING 1
-- (void)parseMessage:(NSMutableString*)msg fromSocket:(SHIRCSocket*)socket {
-#ifdef __DEBUG__
-	NSLog(@"[%@ parseMessage:%@ fromSocket:%@] : %x", self, msg, socket, __LINE__);
-#endif
+- (void)parseMessage:(NSMutableString*)msg fromSocket:(SHIRCSocket *)socket {
+	NSLog(@"[%@ parseMessage:%@ fromSocket:%@] : %u", self, msg, socket, __LINE__);
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	#ifndef NO_THREADING
 	if ([NSThread isMainThread]) {
@@ -50,8 +47,8 @@ static SHIRCManager* sharedSHManager;
 		return;
 	}
 	#endif
-	NSScanner* scan=[NSScanner scannerWithString:msg];
-	if([msg hasPrefix:@":"])
+	NSScanner *scan = [NSScanner scannerWithString:msg];
+	if ([msg hasPrefix:@":"])
 		[scan setScanLocation:1];
 	NSString *sender = nil;
 	NSString *command = nil;

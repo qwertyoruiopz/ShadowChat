@@ -55,81 +55,66 @@
 
 #pragma mark - View lifecycle
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:[self tableView]];
-    [super dealloc];
+	[[NSNotificationCenter defaultCenter] removeObserver:[self tableView]];
+	[super dealloc];
 }
 - (void)viewDidLoad {
-    [[NSNotificationCenter defaultCenter] addObserver:[self tableView]
-                                             selector:@selector(reloadData) 
-                                                 name:@"ReloadNetworks"
-                                               object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:[self tableView]
+											 selector:@selector(reloadData) 
+												 name:@"ReloadNetworks"
+											   object:nil];
     
-    [super viewDidLoad];
-    [self.view addSubview:nothingView];
-    [nothingView setAlpha:0];
-    self.title = @"Connections";
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+	[super viewDidLoad];
+	[self.view addSubview:nothingView];
+	[nothingView setAlpha:0];
+	self.title = @"Connections";
     UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(edit)];
-    self.navigationItem.leftBarButtonItem = rightBarButtonItem;
-    [rightBarButtonItem release];
-    self.tableView.allowsSelectionDuringEditing = YES;
+	self.navigationItem.leftBarButtonItem = rightBarButtonItem;
+	[rightBarButtonItem release];
+	self.tableView.allowsSelectionDuringEditing = YES;
 }
 
 - (void)edit {
 	[self scrollViewDidScroll:nil];
 	// fix... So the cell wasn't hidden for some odd reason when set editing..
     isReallyEditing=!isReallyEditing;
-    [((UITableView*)self.view) setEditing:!isReallyEditing animated:NO];
-    [((UITableView*)self.view) setEditing:isReallyEditing animated:YES];
-    UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:([((UITableView*)self.view) isEditing] ? UIBarButtonSystemItemDone : UIBarButtonSystemItemEdit) target:self action:@selector(edit)];
-    self.navigationItem.leftBarButtonItem = rightBarButtonItem;
-    [rightBarButtonItem release];
-    [((UITableView*)self.view) beginUpdates]; 
-    (
-     isReallyEditing ?
-     [((UITableView*)self.view) insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[[SHIRCNetwork allNetworks] count] inSection:0]] withRowAnimation:UITableViewRowAnimationTop] :
-     [((UITableView*)self.view) deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[[SHIRCNetwork allNetworks] count] inSection:0]] withRowAnimation:UITableViewRowAnimationTop]
-     );
-    [((UITableView*)self.view) endUpdates];
+    [((UITableView *)self.view) setEditing:!isReallyEditing animated:NO];
+    [((UITableView *)self.view) setEditing:isReallyEditing animated:YES];
+	UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:([((UITableView*)self.view) isEditing] ? UIBarButtonSystemItemDone : UIBarButtonSystemItemEdit) target:self action:@selector(edit)];
+	self.navigationItem.leftBarButtonItem = rightBarButtonItem;
+	[rightBarButtonItem release];
+	[((UITableView *)self.view) beginUpdates]; 
+	(isReallyEditing ?
+     [((UITableView *)self.view) insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[[SHIRCNetwork allNetworks] count] inSection:0]] withRowAnimation:UITableViewRowAnimationTop] :
+     [((UITableView *)self.view) deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[[SHIRCNetwork allNetworks] count] inSection:0]] withRowAnimation:UITableViewRowAnimationTop]);
+    [((UITableView *)self.view) endUpdates];
 }
 
 - (void)addConnection {
-    NSLog(@"MUDKIPZ CONNECT! :D");
-    SHAddCTController *addConnectionVC = [[SHAddCTController alloc] initWithStyle:UITableViewStyleGrouped];
-    UINavigationController *addConnectionNavController = [[UINavigationController alloc] initWithRootViewController:addConnectionVC];
-    [self presentModalViewController:addConnectionNavController animated:YES];
-    [addConnectionVC release];
-    [addConnectionNavController release];
+	SHAddCTController *addConnectionVC = [[SHAddCTController alloc] initWithStyle:UITableViewStyleGrouped];
+	UINavigationController *addConnectionNavController = [[UINavigationController alloc] initWithRootViewController:addConnectionVC];
+	[self presentModalViewController:addConnectionNavController animated:YES];
+	[addConnectionVC release];
+	[addConnectionNavController release];
 }
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
+- (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
 }
 
@@ -146,26 +131,23 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
-    return 1;
+	return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
-    [self updateNoNetworks];
-    return (isReallyEditing ? [[SHIRCNetwork allNetworks] count]+1 : [[SHIRCNetwork allNetworks] count]);
+	[self updateNoNetworks];
+	return (isReallyEditing ? [[SHIRCNetwork allNetworks] count] +1 : [[SHIRCNetwork allNetworks] count]);
 }
 
-- (int)updateNoNetworks
-{
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.5f];
-    if(([[SHIRCNetwork allNetworks] count]!=0)||isReallyEditing)
-        [nothingView setAlpha:0];
-    else
-        [nothingView setAlpha:1];
-    [UIView commitAnimations];
-    return 0;
+- (int)updateNoNetworks {
+	[UIView beginAnimations:nil context:nil];
+	[UIView setAnimationDuration:0.5f];
+	if (([[SHIRCNetwork allNetworks] count] !=0) || isReallyEditing)
+		[nothingView setAlpha:0];
+	else
+		[nothingView setAlpha:1];
+	[UIView commitAnimations];
+	return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

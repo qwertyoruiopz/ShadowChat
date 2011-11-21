@@ -12,16 +12,18 @@
 @implementation SHIRCSocket
 
 #define clean() [input close]; \
-[output close]; \
-[input setDelegate:nil]; \
-[output setDelegate:nil]; \
-[input release]; \
-[output release]; \
-input = nil; \
-output = nil; 
+	[output close]; \
+	[input setDelegate:nil]; \
+	[output setDelegate:nil]; \
+	[input release]; \
+	[output release]; \
+	input = nil; \
+	output = nil;
+
 @synthesize input, output, port, server, usesSSL, channels, status, delegate;
-+ (SHIRCSocket*)socketWithServer:(NSString *)srv andPort:(int)prt usesSSL:(BOOL)ssl {
-    SHIRCSocket* ret = [[(Class)self alloc]init];
+
++ (SHIRCSocket *)socketWithServer:(NSString *)srv andPort:(int)prt usesSSL:(BOOL)ssl {
+    SHIRCSocket *ret = [[(Class)self alloc]init];
     ret.server = srv;
     ret.port = prt;
     ret.usesSSL = ssl;
@@ -32,16 +34,14 @@ output = nil;
 }
 - (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user andPassword:(NSString *)pass {
     [self retain];
-    IF_IOS4_OR_GREATER
-    (
-     bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{ 
-        [[UIApplication sharedApplication] endBackgroundTask:bgTask]; 
-        bgTask = UIBackgroundTaskInvalid;
-    }];
-    );
+    IF_IOS4_OR_GREATER (
+						bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{ 
+		[[UIApplication sharedApplication] endBackgroundTask:bgTask]; 
+        bgTask = UIBackgroundTaskInvalid;}]; 
+	);
     NSInputStream *iStream;
     NSOutputStream *oStream;
-    CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)server, port ? port : 6667, (CFReadStreamRef*)&iStream, (CFWriteStreamRef *)&oStream);
+    CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)server, port ? port : 6667, (CFReadStreamRef *)&iStream, (CFWriteStreamRef *)&oStream);
     self.input = iStream;
     self.output = oStream;
     [iStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
@@ -86,14 +86,12 @@ output = nil;
     [self sendCommand:[NSString stringWithFormat:@"NICK %@", nick] withArguments:nil];
     return YES;
 }
-- (NSString*)nick_
-{
+- (NSString *)nick_ {
     return nick_;
 }
-- (void)setNick_:(NSString *)nick
-{
-    if (nick==nick_) return;
-    if (nick==nil||[nick isEqualToString:@""]) return;
+- (void)setNick_:(NSString *)nick {
+    if (nick == nick_) return;
+    if (nick == nil || [nick isEqualToString:@""]) return;
     [nick_ release];
     nick_ = [nick retain];
     [self sendCommand:@"NICK" withArguments:nick];
@@ -193,57 +191,68 @@ output = nil;
         bgTask = UIBackgroundTaskInvalid;
     }
 }
-- (void)addChannel:(SHIRCChannel*)chan
-{
-    NSLog(@"Joiny fun!");
-    if(!channels) channels=[NSMutableArray new];
-    if (channels) {
-        NSLog(@"%@", channels);
-        [self sendCommand:@"JOIN" withArguments:[chan formattedName] waitUntilRegistered:YES];
-        if (![channels containsObject:chan]) {
-            [channels addObject:chan];
-        }
-    }
-    
+
+- (void)saveRooms {
+	SHChannelSaver *sv = [SHChannelSaver sharedSaver];
+	[sv saveChannels:server rooms:(NSArray *)channels];
 }
-- (void)removeChannel:(SHIRCChannel*)chan
-{
-    [self sendCommand:@"PART" withArguments:[chan formattedName] waitUntilRegistered:YES];
+
+- (void)addChannel:(SHIRCChannel *)chan {
+	NSLog(@"Joiny fun!");
+	if (!channels) channels = [NSMutableArray new];
+	if (channels) {
+		if (![channels containsObject:chan]) 
+			[channels addObject:chan];
+		[self joinChannel:chan];
+	}
+}
+- (void)removeChannel:(SHIRCChannel *)chan {
+	[self partChannel:chan];
     [channels removeObject:chan];
+	[self saveRooms];
 }
-- (BOOL) didRegister
-{
+
+- (void)joinChannel:(SHIRCChannel *)chan {
+	if (![channels containsObject:chan]) {
+		[self sendCommand:@"JOIN" withArguments:[chan formattedName] waitUntilRegistered:YES];
+		[chan setIsJoined:YES];
+		[channels addObject:chan];
+		[self saveRooms];
+	}
+}
+
+- (void)partChannel:(SHIRCChannel *)chan {
+	[self sendCommand:@"PART" withArguments:[chan formattedName] waitUntilRegistered:YES];
+	[chan setIsJoined:NO];
+}
+
+- (BOOL) didRegister {
     return didRegister;
 }
-- (void)setDidRegister:(BOOL)didReg
-{
-    if (didReg==didRegister) {
-        return;
-    }
-    didRegister=didReg;
-    if (didReg)
-    {
-        for(NSString* cmd in commandsWaiting)
-        {
-            if([cmd isKindOfClass:[NSString class]])
-            {
-                [output write:(uint8_t*)[cmd UTF8String] maxLength:[cmd length]];
-                [output write:(uint8_t*)"\r\n" maxLength:2];
-            }
-        }
-        [commandsWaiting release];
-        commandsWaiting=nil;
-        for (id obj in channels) {
-            [self addChannel:obj];
-        }
-        if ([delegate respondsToSelector:@selector(hasBeenRegisteredCallback:)]) {
-            [delegate performSelector:@selector(hasBeenRegisteredCallback:) withObject:self];
-        }
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadNetworks" object:nil];
-    }
+- (void)setDidRegister:(BOOL)didReg {
+	if (didReg == didRegister) {
+		return;
+	}
+	didRegister = didReg;
+	if (didReg) {
+		for (NSString *cmd in commandsWaiting) {
+			if ([cmd isKindOfClass:[NSString class]]) {
+				[output write:(uint8_t*)[cmd UTF8String] maxLength:[cmd length]];
+				[output write:(uint8_t*)"\r\n" maxLength:2];
+			}
+		}
+		[commandsWaiting release];
+		commandsWaiting=nil;
+		for (id obj in channels) {
+			[self addChannel:obj];
+		}
+		if ([delegate respondsToSelector:@selector(hasBeenRegisteredCallback:)]) {
+			[delegate performSelector:@selector(hasBeenRegisteredCallback:) withObject:self];
+		}
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadNetworks" object:nil];
+	}
 }
-- (void)dealloc
-{
+- (void)dealloc {
     [self disconnect];
     NSLog(@"lol wtf");
     for (id obj in channels) {
@@ -254,8 +263,7 @@ output = nil;
     [output release];
     [super dealloc];
 }
-- (SHIRCChannel*)retainedChannelWithFormattedName:(NSString*)fName;
-{
+- (SHIRCChannel*)retainedChannelWithFormattedName:(NSString *)fName; {
     for (SHIRCChannel* rtn in [self channels]) {
         if ([[[rtn formattedName] lowercaseString] isEqualToString:[fName lowercaseString]]) {
             return [rtn retain];

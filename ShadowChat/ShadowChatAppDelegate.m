@@ -23,6 +23,13 @@
     [TestFlight takeOff:@"35b8aa0d259ae0c61c57bc770aeafe63_Mzk5NDYyMDExLTExLTA5IDE4OjQ0OjEwLjc4MTM3MQ"];
 #endif
 #endif
+	NSFileManager *mngr = [NSFileManager defaultManager];
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory = [[paths objectAtIndex:0] stringByAppendingString:@"/"];
+	if (![mngr fileExistsAtPath:[documentsDirectory stringByAppendingString:@"Rooms.plist"]]) {
+		[mngr createFileAtPath:[documentsDirectory stringByAppendingString:@"Rooms.plist"] contents:(NSData *)[NSDictionary dictionary] attributes:NULL];
+	}
+	
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
     return YES;
