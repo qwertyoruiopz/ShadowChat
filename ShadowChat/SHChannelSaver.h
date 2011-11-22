@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface SHChannelSaver : NSObject {
 	NSString *path;
 }
 - (id)init;
 + (id)sharedSaver;
-- (void)saveChannels:(NSString *)serv rooms:(NSArray *)rooms;
+- (NSArray *)roomsForServer:(NSString *)server;
+- (void)saveChannels:(NSArray *)chans server:(id)serv;
 @end

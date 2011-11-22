@@ -11,6 +11,7 @@
 #import "Foundation/NSStream.h"
 #import "SHChannelSaver.h"
 
+
 @class SHIRCChannel;
 @class SHIRCSocket;
 typedef enum SHSocketStaus
@@ -23,27 +24,27 @@ typedef enum SHSocketStaus
 } SHSocketStaus;
 @interface SHIRCSocket : NSObject <NSStreamDelegate>
 {
-    NSInputStream* input;
-    NSOutputStream* output;
-    NSString* server;
+    NSInputStream *input;
+    NSOutputStream *output;
+    NSString *server;
     int port;
     BOOL usesSSL;
     SHSocketStaus status;
-    NSMutableString* data;
+    NSMutableString *data;
     BOOL didRegister;
-    NSMutableArray* commandsWaiting;
-    NSMutableString* queuedCommands;
-    NSMutableArray* channels;
-    NSString* nick_;
+    NSMutableArray *commandsWaiting;
+    NSMutableString *queuedCommands;
+    NSMutableArray *_channels;
+    NSString *nick_;
     BOOL canWrite;
     id delegate;
     int bgTask;
 }
-@property(retain, readwrite) NSInputStream* input;
-@property(retain, readwrite) NSOutputStream* output;
-@property(retain, readwrite) NSString* server;
-@property(retain, readwrite) NSString* nick_;
-@property(assign, readwrite) NSMutableArray* channels;
+@property(retain, readwrite) NSInputStream *input;
+@property(retain, readwrite) NSOutputStream *output;
+@property(retain, readwrite) NSString *server;
+@property(retain, readwrite) NSString *nick_;
+@property(assign, readwrite) NSMutableArray *_channels;
 @property(assign, readwrite) int port;
 @property(assign, readwrite) BOOL usesSSL;
 @property(assign, readwrite) BOOL didRegister;
@@ -56,6 +57,7 @@ typedef enum SHSocketStaus
 - (BOOL)sendCommand:(NSString *)command withArguments:(NSString*)args waitUntilRegistered:(BOOL)wur;
 - (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent;
 - (void)disconnect;
+- (id)channels;
 - (void)joinChannel:(SHIRCChannel *)chan;
 - (void)partChannel:(SHIRCChannel *)chan;
 - (void)addChannel:(SHIRCChannel *)chan;

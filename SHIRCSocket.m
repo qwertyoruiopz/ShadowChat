@@ -9,6 +9,7 @@
 #import "SHIRCSocket.h"
 #import "SHIRCManager.h"
 #import "SHIRCChannel.h"
+
 @implementation SHIRCSocket
 
 #define clean() [input close]; \
@@ -20,7 +21,7 @@
 	input = nil; \
 	output = nil;
 
-@synthesize input, output, port, server, usesSSL, channels, status, delegate;
+@synthesize input, output, port, server, usesSSL, _channels, status, delegate;
 
 + (SHIRCSocket *)socketWithServer:(NSString *)srv andPort:(int)prt usesSSL:(BOOL)ssl {
     SHIRCSocket *ret = [[(Class)self alloc]init];
@@ -96,10 +97,17 @@
     nick_ = [nick retain];
     [self sendCommand:@"NICK" withArguments:nick];
 }
+
+- (id)channels {
+	if (!self._channels)
+		self._channels = [[[SHChannelSaver sharedSaver] roomsForServer:(id)self] mutableCopy];
+	return self._channels;
+}
+
 - (BOOL)sendCommand:(NSString *)command withArguments:(NSString *)args {
     NSString *cmd;
     NSLog(@"Command: %@ Args: %@", command, args);
-    if(args)
+    if (args)
         cmd = [command stringByAppendingFormat:@" :%@\r\n", args];
     else
         cmd = [command stringByAppendingString:@"\r\n"];
@@ -194,30 +202,36 @@
 
 - (void)saveRooms {
 	SHChannelSaver *sv = [SHChannelSaver sharedSaver];
-	[sv saveChannels:server rooms:(NSArray *)channels];
+	NSMutableArray *tmp = [[NSMutableArray alloc] init];
+	for (SHIRCChannel *chan in _channels) {
+		[tmp addObject:chan.name];
+	}
+	[sv saveChannels:(NSArray *)tmp server:self.server];
+	[tmp release];
+
 }
 
 - (void)addChannel:(SHIRCChannel *)chan {
 	NSLog(@"Joiny fun!");
-	if (!channels) channels = [NSMutableArray new];
-	if (channels) {
-		if (![channels containsObject:chan]) 
-			[channels addObject:chan];
+	if (!_channels) _channels = [NSMutableArray new];
+	if (_channels) {
+		if (![_channels containsObject:chan]) 
+			[_channels addObject:chan];
 		[self joinChannel:chan];
 	}
+	[self saveRooms];
 }
 - (void)removeChannel:(SHIRCChannel *)chan {
 	[self partChannel:chan];
-    [channels removeObject:chan];
+    [_channels removeObject:chan];
 	[self saveRooms];
 }
 
 - (void)joinChannel:(SHIRCChannel *)chan {
-	if (![channels containsObject:chan]) {
+	if (![_channels containsObject:chan]) {
 		[self sendCommand:@"JOIN" withArguments:[chan formattedName] waitUntilRegistered:YES];
 		[chan setIsJoined:YES];
-		[channels addObject:chan];
-		[self saveRooms];
+		[_channels addObject:chan];
 	}
 }
 
@@ -243,7 +257,7 @@
 		}
 		[commandsWaiting release];
 		commandsWaiting=nil;
-		for (id obj in channels) {
+		for (id obj in _channels) {
 			[self addChannel:obj];
 		}
 		if ([delegate respondsToSelector:@selector(hasBeenRegisteredCallback:)]) {
@@ -255,10 +269,10 @@
 - (void)dealloc {
     [self disconnect];
     NSLog(@"lol wtf");
-    for (id obj in channels) {
+    for (id obj in _channels) {
         [obj release];
     }
-    [channels release];
+    [_channels release];
     [input release];
     [output release];
     [super dealloc];

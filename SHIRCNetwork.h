@@ -8,8 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SHIRCSocket.h"
-@interface SHIRCNetwork : NSObject
-{
+@interface SHIRCNetwork : NSObject {
     SHIRCSocket* socket;
     NSString* server;
     NSString* descr;
@@ -44,6 +43,6 @@
 - (void)hasBeenRegisteredCallback:(SHIRCSocket*)sock;
 - (void)disconnect;
 - (BOOL)isOpen;
-- (SHIRCSocket*)connect;
+- (SHIRCSocket *)connect;
 - (BOOL)isRegistered;
 @end

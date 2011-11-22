@@ -148,7 +148,9 @@
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        //[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+		id chan = [[((SHIRCSocket *)[((SHIRCNetwork *)[[SHIRCNetwork allConnectedNetworks] objectAtIndex:indexPath.section]) socket]) channels] objectAtIndex:indexPath.row];
+		[[((SHIRCNetwork *)[[SHIRCNetwork allConnectedNetworks] objectAtIndex:indexPath.section]) socket] removeChannel:chan]; 
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
