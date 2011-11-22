@@ -18,6 +18,7 @@
     NSString* serverPassword;
     NSString* nickServPassword;
     int port;
+    NSMutableArray* channels;
     BOOL hasSSL;
 }
 @property(retain) NSString* server;
@@ -27,6 +28,7 @@
 @property(retain) NSString* realname;
 @property(retain) NSString* serverPassword;
 @property(retain) NSString* nickServPassword;
+@property(retain) NSMutableArray* channels;
 @property(assign) int port;
 @property(assign) BOOL hasSSL;
 @property(assign) SHIRCSocket* socket;

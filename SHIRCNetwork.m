@@ -11,7 +11,7 @@
 static NSMutableArray* networks = nil;
 static NSMutableArray* connectedNetworks = nil;
 @implementation SHIRCNetwork
-@synthesize server, port, descr, hasSSL, username, nickname, realname, serverPassword, nickServPassword, socket;
+@synthesize server, port, descr, hasSSL, username, nickname, realname, serverPassword, nickServPassword, socket, channels;
 + (SHIRCNetwork *)createNetworkWithServer:(NSString *)server andPort:(int)port isSSLEnabled:(BOOL)ssl
                             description:(NSString *)description withUsername:(NSString *)username andNickname:(NSString *)nickname
                             andRealname:(NSString *)realname serverPassword:(NSString *)password nickServPassword:(NSString *)nickserv {
@@ -26,6 +26,7 @@ static NSMutableArray* connectedNetworks = nil;
 	[ret setRealname:realname];
 	[ret setServerPassword:password];
 	[ret setNickServPassword:nickserv];
+    [ret setChannels:[NSMutableArray new]];
 	[networks addObject:ret];
 	[self saveDefaults];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadNetworks" object:nil];
@@ -41,6 +42,7 @@ static NSMutableArray* connectedNetworks = nil;
     [coder encodeObject:realname forKey:@"realname"];
     [coder encodeObject:serverPassword forKey:@"serverPassword"];
     [coder encodeObject:nickServPassword forKey:@"nickServPassword"];
+    [coder encodeObject:channels forKey:@"channels"];
 }
 - (id)initWithCoder:(NSCoder *)coder {
     if (self = [super init]) {
@@ -63,6 +65,10 @@ static NSMutableArray* connectedNetworks = nil;
             self.serverPassword = [coder decodeObjectForKey:@"serverPassword"];
         if ([coder containsValueForKey:@"nickServPassword"])
             self.nickServPassword = [coder decodeObjectForKey:@"nickServPassword"];
+        if ([coder containsValueForKey:@"channels"])
+            self.channels = [[coder decodeObjectForKey:@"channels"] mutableCopy];
+        else
+            self.channels = [NSMutableArray new];
         [poolz release];
     }
     return self;
@@ -125,7 +131,7 @@ static NSMutableArray* connectedNetworks = nil;
 	if (!socket) {
 		socket = [[SHIRCSocket socketWithServer:[self server] andPort:[self port] usesSSL:[self hasSSL]] retain];
     } 
-	[socket setDelegate:self];
+    [socket setDelegate:self];
 	if (self.serverPassword) {
 		[socket connectWithNick:[self nickname] andUser:[self username] andPassword:[self serverPassword]];
 	}

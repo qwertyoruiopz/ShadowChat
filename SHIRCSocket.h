@@ -9,7 +9,6 @@
 
 #import <Foundation/Foundation.h>
 #import "Foundation/NSStream.h"
-#import "SHChannelSaver.h"
 
 
 @class SHIRCChannel;
@@ -62,7 +61,6 @@ typedef enum SHSocketStaus
 - (void)partChannel:(SHIRCChannel *)chan;
 - (void)addChannel:(SHIRCChannel *)chan;
 - (void)removeChannel:(SHIRCChannel *)chan;
-- (void)saveRooms;
 - (void)setDidRegister:(BOOL)didReg;
 - (void)dealloc;
 - (SHIRCChannel *)retainedChannelWithFormattedName:(NSString*)fName;
