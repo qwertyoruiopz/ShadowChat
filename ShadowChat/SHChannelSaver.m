@@ -47,7 +47,8 @@ static id singleton = nil;
 		NSLog(@"dsadas %@ %d", [rooms objectAtIndex:i], i);
 		NSLog(@"dfsfds %@", [[SHIRCChannel alloc] initWithSocket:serve andChanName:[rooms objectAtIndex:i]]);
 	}
-	// need to make array of SHIRCChannels here and return it.. WTF IS HAPPENING!!?!??!!?!?!?!
+	// need to make array of SHIRCChannels here and return it.. WTF IS HAPPENING!!?!??!!?!?!?! 
+	
 	return nil;
 }
 
