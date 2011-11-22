@@ -41,13 +41,13 @@ static id singleton = nil;
 }
 
 - (NSArray *)roomsForServer:(id)serve {
-	NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:path];
-	NSArray *rooms = [dict objectForKey:[serve server]];
-	for (int i = 0; i < [rooms count]; i++) {
-		NSLog(@"dsadas %@ %d", [rooms objectAtIndex:i], i);
-		NSLog(@"dfsfds %@", [[SHIRCChannel alloc] initWithSocket:serve andChanName:[rooms objectAtIndex:i]]);
-	}
-	// need to make array of SHIRCChannels here and return it.. WTF IS HAPPENING!!?!??!!?!?!?! 
+//	NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:path];
+//	NSArray *rooms = [dict objectForKey:[serve server]];
+//	for (int i = 0; i < [rooms count]; i++) {
+//		NSLog(@"dsadas %@ %d", [rooms objectAtIndex:i], i);
+//		NSLog(@"dfsfds %@", [[SHIRCChannel alloc] initWithSocket:serve andChanName:[rooms objectAtIndex:i]]);
+//	}
+//	// need to make array of SHIRCChannels here and return it.. WTF IS HAPPENING!!?!??!!?!?!?! 
 	
 	return nil;
 }
