@@ -128,7 +128,7 @@ output = nil;
 		cmd = [command stringByAppendingFormat:@" :%@\r\n", args];
     else
         cmd = command;
-    if (!wur){
+    if (!wur) {
         if (canWrite) {
             [output write:(uint8_t*)[cmd UTF8String] maxLength:[cmd length]];
             [output write:(uint8_t*)"\r\n" maxLength:2];
@@ -245,10 +245,14 @@ output = nil;
 		}
 		[commandsWaiting release];
 		commandsWaiting=nil;
-		for (id obj in [delegate channels]) {
-            id chan=[self retainedChannelWithFormattedName:obj];
-			[self addChannel:chan ? chan : [[SHIRCChannel alloc] initWithSocket:self andChanName:obj]];
-            [chan release];
+		@synchronized(self) {
+			for (id obj in [delegate channels]) {
+
+				id chan = [self retainedChannelWithFormattedName:obj];
+				[self addChannel:chan ? chan : [[SHIRCChannel alloc] initWithSocket:self andChanName:obj]];
+				// crash is here...  ^ 
+				[chan release];			
+			}
 		}
 		if ([delegate respondsToSelector:@selector(hasBeenRegisteredCallback:)]) {
 			[delegate performSelector:@selector(hasBeenRegisteredCallback:) withObject:self];
