@@ -10,6 +10,8 @@
 #import "SHIRCChannel.h"
 #import "ChannelUserList.h"
 
+#define is_iPad ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
+
 @interface SHChatPanel : UIViewController <UITextFieldDelegate> {
     SHIRCChannel *chan;
     UITextField *tfield;
@@ -18,13 +20,14 @@
     UIToolbar *bar;
     BOOL isViewHidden;
 }
-@property(retain) SHIRCChannel* chan;
-@property(retain) IBOutlet UITextField* tfield;
-@property(retain) IBOutlet UIWebView* output;
-@property(retain) IBOutlet UIBarButtonItem* sendbtn;
-@property(retain) IBOutlet UIToolbar* bar;
+@property(retain) SHIRCChannel *chan;
+@property(retain) IBOutlet UITextField *tfield;
+@property(retain) IBOutlet UIWebView *output;
+@property(retain) IBOutlet UIBarButtonItem *sendbtn;
+@property(retain) IBOutlet UIToolbar *bar;
 - (SHChatPanel *)initWithChan:(SHIRCChannel *)chan_;
 - (BOOL)textFieldShouldReturn:(UITextField *)textField;
 - (IBAction)sendMessageAndResign;
 - (void)didRecieveMessageFrom:(NSString *)nick text:(NSString *)ircMessage;
+- (BOOL)keyboardShouldUpdate:(BOOL)update;
 @end

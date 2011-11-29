@@ -71,14 +71,12 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (void)doneWithJoin
-{
+- (void)doneWithJoin {
     [[SHIRCChannel alloc] initWithSocket:network.socket andChanName:([[(UITextField*)[self.tableView viewWithTag:12340] text] isEqualToString:@""] ? [(UITextField*)[self.tableView viewWithTag:12340] placeholder] : [(UITextField*)[self.tableView viewWithTag:12340] text])];
     [self done];
 }
 
-- (void)done
-{
+- (void)done {
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -107,7 +105,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
 }
 
 #pragma mark - Table view data source
@@ -134,8 +132,7 @@
     return 0;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     switch (section) {
         case 0:
             return @"Pick a channel";

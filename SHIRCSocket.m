@@ -249,7 +249,7 @@ output = nil;
 			for (id obj in [delegate channels]) {
 
 				id chan = [self retainedChannelWithFormattedName:obj];
-				[self addChannel:chan ? chan : [[SHIRCChannel alloc] initWithSocket:self andChanName:obj]];
+			//	[self addChannel:chan ? chan : [[SHIRCChannel alloc] initWithSocket:self andChanName:obj]];
 				// crash is here...  ^ 
 				[chan release];			
 			}

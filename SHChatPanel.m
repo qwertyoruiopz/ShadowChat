@@ -8,6 +8,8 @@
 
 #import "SHChatPanel.h"
 
+//#define is_iPad ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
+
 @implementation SHChatPanel
 @synthesize tfield, output, sendbtn, bar;
 
@@ -43,38 +45,51 @@
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-	[UIView beginAnimations:nil context:NULL]; // Begin animation
-	[UIView setAnimationDuration:0.3f];
+	return [self keyboardShouldUpdate:YES];
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+	return [self keyboardShouldUpdate:NO];
+}
+
+- (BOOL)keyboardShouldUpdate:(BOOL)update {
+	NSLog(@"fdfs yay %@", bar);
+	CGRect frame = [[UIScreen mainScreen] applicationFrame];
+	NSLog(@"fdfds %@", NSStringFromCGRect(frame));
+	[UIView beginAnimations:nil context:NULL];
+	[UIView setAnimationCurve:0.3f];
 	CGRect pnt = bar.frame;
-	pnt.origin.y = 156;
+	int offset = 0;
+	if (update) {
+		if ([[UIDevice currentDevice] userInterfaceIdiom] != UIUserInterfaceIdiomPad)
+			offset = 47;
+		if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]))
+			offset = -65;
+		pnt.origin.y = frame.size.height-307-pnt.size.height+offset;
+			NSLog(@"fdfs yay %@", bar);
+	}
+	else {
+		if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]))
+			offset = -167;
+		pnt.origin.y = frame.size.height-93-pnt.size.height+offset;
+	}
 	bar.frame = pnt;
 	pnt = output.frame;
-	pnt.size.height = 157;
+	pnt.size.height = bar.frame.origin.y;
 	output.frame = pnt;
 	[UIView commitAnimations];
 	[output stringByEvaluatingJavaScriptFromString:@"window.scrollTo(0, document.body.scrollHeight);"];
 	return YES;
 }
 
-
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
-    [UIView beginAnimations:nil context:NULL]; // Begin animation
-    [UIView setAnimationDuration:0.3f];
-    CGRect pnt=bar.frame;
-    pnt.origin.y=323;
-    bar.frame=pnt;
-    pnt=output.frame;
-    pnt.size.height=324;
-    output.frame=pnt;
-    [UIView commitAnimations];
-    [output stringByEvaluatingJavaScriptFromString:@"window.scrollTo(0, document.body.scrollHeight);"];
-    return YES;
-}
-
 - (void)viewWillDisappear:(BOOL)animated {
     isViewHidden = YES;
     [tfield resignFirstResponder];
     [super viewDidDisappear:animated];
+}
+
+- (BOOL)canBecomeFirstResponder {
+	return YES;
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
@@ -87,17 +102,31 @@
     return YES;
 }
 
-
 - (IBAction)sendMessageAndResign {
     [self textFieldShouldReturn:nil];
 }
 
-- (void)didRecieveMessageFrom:(NSString*)nick text:(NSString*)ircMessage {
+- (void)didRecieveMessageFrom:(NSString *)nick text:(NSString *)ircMessage {
 	NSLog(@"Nick:%@ Message:%@", nick, ircMessage);
-    NSString *java = [NSString stringWithFormat:@"addMessage('%@','%@');",
+	NSString *format = @"addMessage('%@','%@');";
+//	NSRange rr = [[ircMessage lowercaseString] rangeOfString:@"http://"];
+//	if (rr.location == NSNotFound) {
+//		rr = [[ircMessage lowercaseString] rangeOfString:@"https://"];
+//		if (rr.location != NSNotFound) {
+//			format = @"addMessageWithHTML('%@', '%@',);";
+//			NSRange ar = [ircMessage rangeOfString:@" " options:NSCaseInsensitiveSearch range:NSMakeRange(rr.location, [ircMessage length]-rr.location)];
+	//		NSLog(@"fdsfsd %@", [ircMessage substringWithRange:NSMakeRange(rr.location, ar.location)]);
+	//		[ircMessage stringByReplacingOccurrencesOfString:nil withString:nil options:nil range:nil];
+			
+//		}
+//	}
+//	else {
+//		format = @"addMessageWithHTML('%@', '%@',);";
+//	}
+	NSString *java = [NSString stringWithFormat:format,
                       [[nick stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"],
                       [[ircMessage stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"]];
-    [output stringByEvaluatingJavaScriptFromString:java];
+	NSLog(@"fdfsd %@", [output stringByEvaluatingJavaScriptFromString:java]);
 }
 
 - (void)didRecieveActionFrom:(NSString*)nick text:(NSString*)ircMessage_ {
@@ -157,13 +186,13 @@
 	 body {font-family:'Tahoma';}\
 	 </style>\
      <script>\
-     function emojify(str)  \
-     {  \
+     function emojify(str) {  \
      return str;\
      }  \
-     \
-     function htmlEntities(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;'); }\
+     function htmlEntities(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;');}\
      function addMessage(nick, msg) { document.body.innerHTML += '<div><strong>' + htmlEntities(nick) + ':</strong> ' + htmlEntities(emojify(msg)) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
+	 function addMessageWithHTML(nick, msg) {\
+	  document.body.innerHTML += '<div><strong>' + htmlEntities(nick) + ':</strong> ' + htmlEntities(emojify(msg)) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
      function addAction(nick, msg) { document.body.innerHTML += '<div><strong>• ' + htmlEntities(nick) + '</strong> ' + htmlEntities(msg) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
      function background_color() {\
          document.body.style.background=\"#dae0ec\";\
@@ -213,6 +242,14 @@
     // Return YES for supported orientations
     return YES;
     // (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+	NSLog(@"fdfsd %@", self.navigationController.topViewController);
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
+	NSLog(@"fdfsd %@", self.navigationController.topViewController);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
