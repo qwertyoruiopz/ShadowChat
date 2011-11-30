@@ -74,11 +74,21 @@
 	self.tableView.allowsSelectionDuringEditing = YES;
 }
 
-- (void)editConnectionForCell:(id)cell {
+- (void)editConnectionForCell:(SHClearLabelCellView *)cell {
 	NSLog(@"Cell: %@",cell);
 	for (SHIRCNetwork *n in [SHIRCNetwork allNetworks]) {
-		NSLog(@"fdsfsd %@", n);
+		if ([[n.server lowercaseString] isEqualToString:[cell.detailTextLabel.text lowercaseString]]) {
+			NSLog(@"Found which network....%@", n);
+			SHAddCTController *tmp = [[SHAddCTController alloc] initWithStyle:UITableViewStyleGrouped andNetwork:n];
+				UINavigationController *addConnectionNavController = [[UINavigationController alloc] initWithRootViewController:tmp];
+				[self presentModalViewController:addConnectionNavController animated:YES];
+				[tmp release];
+				[addConnectionNavController release];
+			break;
+		}
 	}
+	NSLog(@"Nothing found..:(");
+
 }
 
 - (void)edit {
@@ -98,7 +108,7 @@
 }
 
 - (void)addConnection {
-	SHAddCTController *addConnectionVC = [[SHAddCTController alloc] initWithStyle:UITableViewStyleGrouped theUser:nil aNick:nil aName:nil thePass:nil nickPass:nil aDescription:nil aServer:nil aPortal:nil usesSSL:NO];
+	SHAddCTController *addConnectionVC = [[SHAddCTController alloc] initWithStyle:UITableViewStyleGrouped andNetwork:nil];
 	UINavigationController *addConnectionNavController = [[UINavigationController alloc] initWithRootViewController:addConnectionVC];
 	[self presentModalViewController:addConnectionNavController animated:YES];
 	[addConnectionVC release];

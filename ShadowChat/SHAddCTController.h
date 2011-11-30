@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SHIRCNetwork.h"
 
-@interface SHAddCTController : UITableViewController <UITextFieldDelegate>
-{
+@interface SHAddCTController : UITableViewController <UITextFieldDelegate> {
     UITextField* user;
 	NSString *_user;
     UITextField* nick;
@@ -26,7 +26,9 @@
 	NSString *_server;
     UITextField* port;
 	NSString *_port;
+	SHIRCNetwork *_network;
     BOOL hasSSL;
+	BOOL existingConnection;
 }
-- (id)initWithStyle:(UITableViewStyle)style theUser:(NSString *)__user aNick:(NSString *)__nick aName:(NSString *)__name thePass:(NSString *)__spass nickPass:(NSString *)__npass aDescription:(NSString *)__description aServer:(NSString *)__server aPortal:(NSString *)__port usesSSL:(BOOL)__ssl;
+- (id)initWithStyle:(UITableViewStyle)style andNetwork:(SHIRCNetwork *)net;
 @end

@@ -9,6 +9,8 @@
 #import "SHCellDrawer.h"
 
 @protocol SHSwipeCellDelegate <NSObject>
+@optional
+- (void)editConnectionForCell:(id)cell;
 @required
 - (void)clearCellSwiped:(id)c;
 - (void)cellReturned;
