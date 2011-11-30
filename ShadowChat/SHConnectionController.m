@@ -30,14 +30,14 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 	if (isCellSwiped) {
-		[swipedCell undrawOptionsView];
+		[swipedCell undrawOptionsViewAnimated:YES];
 		isCellSwiped = NO;
 	}
 }
 
 - (void)clearCellSwiped:(id)c {
 	if (isCellSwiped) {
-		[swipedCell undrawOptionsView];
+		[swipedCell undrawOptionsViewAnimated:YES];
 	}
 	isCellSwiped = YES;
 	swipedCell = (SHClearLabelCellView *)c;
@@ -74,10 +74,17 @@
 	self.tableView.allowsSelectionDuringEditing = YES;
 }
 
+- (void)editConnectionForCell:(id)cell {
+	NSLog(@"Cell: %@",cell);
+	for (SHIRCNetwork *n in [SHIRCNetwork allNetworks]) {
+		NSLog(@"fdsfsd %@", n);
+	}
+}
+
 - (void)edit {
 	[self scrollViewDidScroll:nil];
 	// fix... So the cell wasn't hidden for some odd reason when set editing..
-    isReallyEditing=!isReallyEditing;
+    isReallyEditing = !isReallyEditing;
     [((UITableView *)self.view) setEditing:!isReallyEditing animated:NO];
     [((UITableView *)self.view) setEditing:isReallyEditing animated:YES];
 	UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:([((UITableView*)self.view) isEditing] ? UIBarButtonSystemItemDone : UIBarButtonSystemItemEdit) target:self action:@selector(edit)];
@@ -91,7 +98,7 @@
 }
 
 - (void)addConnection {
-	SHAddCTController *addConnectionVC = [[SHAddCTController alloc] initWithStyle:UITableViewStyleGrouped];
+	SHAddCTController *addConnectionVC = [[SHAddCTController alloc] initWithStyle:UITableViewStyleGrouped theUser:nil aNick:nil aName:nil thePass:nil nickPass:nil aDescription:nil aServer:nil aPortal:nil usesSSL:NO];
 	UINavigationController *addConnectionNavController = [[UINavigationController alloc] initWithRootViewController:addConnectionVC];
 	[self presentModalViewController:addConnectionNavController animated:YES];
 	[addConnectionVC release];
@@ -124,7 +131,7 @@
 }
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
 	if (swipedCell != nil) {
-		[swipedCell undrawOptionsView];
+		[swipedCell undrawOptionsViewAnimated:YES];
 	}
 }
 
@@ -163,7 +170,7 @@
 		cell.textLabel.text = @"Add an IRC Network";
 		cell.detailTextLabel.text = @"Click here to configure a new network";
 		cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-        [cell undrawOptionsView];
+        [cell undrawOptionsViewAnimated:YES];
 		return cell;
 	}
     cell.textLabel.text = [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] descr] ? [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] descr] : [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] server];
@@ -179,7 +186,7 @@
     }
 	cell.detailTextLabel.text = [((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]).server ? ((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]).server : @"" lowercaseString];
     [cell.thirdLabel sizeToFit];
-    [cell undrawOptionsView];
+    [cell undrawOptionsViewAnimated:NO];
     return cell;
 }
 

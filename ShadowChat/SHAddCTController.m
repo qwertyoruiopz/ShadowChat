@@ -30,8 +30,17 @@
 
 @implementation SHAddCTController
 
-- (id)initWithStyle:(UITableViewStyle)style {
+- (id)initWithStyle:(UITableViewStyle)style theUser:(NSString *)__user aNick:(NSString *)__nick aName:(NSString *)__name thePass:(NSString *)__spass nickPass:(NSString *)__npass aDescription:(NSString *)__description aServer:(NSString *)__server aPortal:(NSString *)__port usesSSL:(BOOL)__ssl {
 	if ((self = [super initWithStyle:style])) {
+		_user = __user;
+		_nick = __nick;
+		_name = __name;
+		_spass = __spass;
+		_npass = __npass;
+		_description = __description;
+		_server = __server;
+		_port = __port;
+		__ssl = hasSSL;
         description = nil;
         server = nil;
         user = nil;
@@ -92,18 +101,15 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 }
 
@@ -194,6 +200,7 @@
                     UITextField *adescr = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 180, 22)];
                     adescr.adjustsFontSizeToFitWidth = YES;
                     adescr.placeholder = @"Enter a description";
+					adescr.text = _description;
                     adescr.returnKeyType = UIReturnKeyNext;
                     adescr.tag = 12340;
                     adescr.keyboardAppearance = UIKeyboardAppearanceAlert;

@@ -32,6 +32,7 @@ static NSMutableArray* connectedNetworks = nil;
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadNetworks" object:nil];
 	return ret;
 }
+
 - (void) encodeWithCoder: (NSCoder *)coder {
     [coder encodeObject:server forKey:@"server"];
     [coder encodeObject:descr forKey:@"description"];
@@ -122,6 +123,11 @@ static NSMutableArray* connectedNetworks = nil;
     NSLog(@"%@ - Callback", self);
     [[[self class] allConnectedNetworks] addObject:self];
 }
+
+- (id)description {
+	return [NSString stringWithFormat:@"<%@: %p; server = %@; description = %@; username = %@; channels = %@;>", NSStringFromClass([self class]), self, self.server, self.descr, self.username, self.channels];
+}
+
 - (SHIRCSocket *)connect {
     if ([socket status] == SHSocketStausOpen || [socket status] == SHSocketStausConnecting) {
         NSLog(@"ShIRCCore: Already connected");

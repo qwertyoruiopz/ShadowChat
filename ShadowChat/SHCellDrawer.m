@@ -9,10 +9,11 @@
 #import "SHCellDrawer.h"
 
 @implementation SHCellDrawer
+@synthesize delegate;
 
-- (id)initWithFrame:(CGRect)frame andDelegate:(id)del {
+- (id)initWithFrame:(CGRect)frame {
 	if ((self = [super initWithFrame:frame])) {
-		del = delegate;
+
 		UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ctbg"]];
         [self addSubview:bg];
 		[bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
@@ -22,9 +23,13 @@
 }
 
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+	NSLog(@"[%@ touchesBegan:%@ withEvent:%@]", NSStringFromClass([self class]), touches, event);
+}
+
 - (void)drawButtons {
 	NSAutoreleasePool *p = [[NSAutoreleasePool alloc] init];
-	NSArray *st = [NSArray arrayWithObjects:@"Edit", @"Del", @"Connect", nil];
+	NSArray *st = [NSArray arrayWithObjects:@"Del", @"Edit", @"Connect", nil];
 	for (int i = 0; i <= 2; i++) {
 		// this is only temporary. I'm sorry.
 		int pos[ ] = {55, 140, 225};
@@ -45,12 +50,10 @@
 }
 
 - (void)aButtonPressed:(UIButton *)button {
-	NSLog(@"fdsfs");
-//	if ([delegate respondsToSelector:@selector(buttonPressed:)]) {
-//		[delegate buttonPressed:(SHCellOption)((UIButton *)button).tag];
-//	}
-	if ([delegate respondsToSelector:@selector(undrawOptionsView)]) {
-		[delegate performSelector:@selector(undrawOptionsView)];
+	NSLog(@"Yay! %@, del: %@",button, delegate);
+
+	if ([delegate respondsToSelector:@selector(buttonPressed:)]) {
+		[delegate buttonPressed:(SHCellOption)button.tag];
 	}
 }
 

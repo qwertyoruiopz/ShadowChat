@@ -22,7 +22,8 @@ typedef enum SHCellOption {
 @interface SHCellDrawer : UIView {
 	id delegate;
 }
-- (id)initWithFrame:(CGRect)frame andDelegate:(id)del;
+@property (nonatomic, retain, setter=setDelegate:) id delegate;
+- (id)initWithFrame:(CGRect)frame;
 - (void)drawButtons;
 
 @end

@@ -40,11 +40,12 @@
 + (void)saveDefaults;
 - (void)saveDefaults;
 - (void)dealloc;
-+ (NSMutableArray*)allNetworks;
-+ (NSMutableArray*)allConnectedNetworks;
++ (NSMutableArray *)allNetworks;
++ (NSMutableArray *)allConnectedNetworks;
 - (void)hasBeenRegisteredCallback:(SHIRCSocket*)sock;
 - (void)disconnect;
 - (BOOL)isOpen;
+- (id)description;
 - (SHIRCSocket *)connect;
 - (BOOL)isRegistered;
 @end

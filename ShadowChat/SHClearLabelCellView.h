@@ -17,7 +17,7 @@
 
 @interface SHClearLabelCellView : UITableViewCell <SHCellDrawerDelegate> {
 	BOOL wasSwiped;
-	UIView *drawer;
+	SHCellDrawer *drawer;
 	CGRect oldFrame;
 	BOOL _isSwiped;
 	UILabel *thirdLabel;
@@ -29,6 +29,6 @@
 - (void)removeAllGestureRecognizers;
 - (void)cellWasSwiped:(UISwipeGestureRecognizer *)recog;
 - (void)drawOptionsView;
-- (void)undrawOptionsView;
+- (void)undrawOptionsViewAnimated:(BOOL)animated;
 - (void)buttonPressed:(SHCellOption)option;
 @end

@@ -149,44 +149,42 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *CellIdentifier = [[NSString alloc] initWithFormat:@"chanjoin-%d-%d", indexPath.section, indexPath.row];
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        switch (indexPath.section) {
-            case 0:
-                switch (indexPath.row) {
-                    case 0:
-                        cell.textLabel.text=@"Channel Name";
-                        cell.selectionStyle=UITableViewCellSelectionStyleNone;
-                        cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
-                        UITextField *adescr = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 150, 22)];
-                        adescr.adjustsFontSizeToFitWidth = YES;
-                        adescr.placeholder = @"#help";
-                        adescr.returnKeyType = UIReturnKeyDone;
-                        adescr.tag = 12340;
-                        adescr.keyboardAppearance = UIKeyboardAppearanceAlert;
-                        [adescr setDelegate:(id<UITextFieldDelegate>)self];
-                        [cell setAccessoryView: adescr];
-                        [adescr release];
-                        break;
-                        
-                    default:
-                        break;
-                }
-                
-                break;
-            case 1:
-                cell.textLabel.text=@"Not yet implemented";
-                break;
-            default:
-                break;
-        }
+	NSString *CellIdentifier = [[NSString alloc] initWithFormat:@"chanjoin-%d-%d", indexPath.section, indexPath.row];
+	
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	if (cell == nil) {
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+		switch (indexPath.section) {
+			case 0:
+				switch (indexPath.row) {
+					case 0:
+						cell.textLabel.text = @"Channel Name";
+						cell.selectionStyle = UITableViewCellSelectionStyleNone;
+						cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
+						UITextField *adescr = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 150, 22)];
+						adescr.adjustsFontSizeToFitWidth = YES;
+						adescr.placeholder = @"#help";
+						adescr.returnKeyType = UIReturnKeyDone;
+						adescr.tag = 12340;
+						adescr.keyboardAppearance = UIKeyboardAppearanceAlert;
+						[adescr setDelegate:(id<UITextFieldDelegate>)self];
+						[cell setAccessoryView: adescr];
+						[adescr release];
+						break;
+					default:
+						break;
+				}
+				break;
+			case 1:
+				cell.textLabel.text = @"Not yet implemented";
+				break;
+			default:
+				break;
+		}
         // Configure the cell...
-    }
-    return cell;
+	}
+	return cell;
 }
 
 /*

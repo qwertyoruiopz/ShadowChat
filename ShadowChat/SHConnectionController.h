@@ -20,5 +20,6 @@
     BOOL isReallyEditing;
 }
 @property (assign,nonatomic) IBOutlet UIView* nothingView;
+- (void)editConnectionForCell:(id)cell;
 - (int)updateNoNetworks;
 @end
