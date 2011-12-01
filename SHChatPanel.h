@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SHIRCChannel.h"
+#import "SHUsersTableView.h"
 #import "ChannelUserList.h"
 
 #define is_iPad ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)

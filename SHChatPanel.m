@@ -172,11 +172,32 @@
     return YES;
 }
 
+- (void)showUsersView:(id)btn {
+	SHUsersTableView *userList = [[[SHUsersTableView alloc] initWithStyle:UITableViewStylePlain] autorelease];
+	[userList setUsers:chan.users];
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+		UIPopoverController *userPopover = [[[UIPopoverController alloc] initWithContentViewController:userList] autorelease];
+		[userPopover setContentViewController:userList];
+		[userPopover setPopoverContentSize:CGSizeMake(320, 480)];
+		if ([btn isKindOfClass:[UIBarButtonItem class]]) {
+			[userPopover presentPopoverFromBarButtonItem:btn permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+		}
+		else 
+			[userPopover presentPopoverFromRect:((UIView *)btn).frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+	}
+	else {
+		[self.navigationController pushViewController:userList animated:YES];
+	}
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 	[[self navigationItem] setTitle:[chan formattedName]];
+	UIBarButtonItem *users = [[UIBarButtonItem alloc] initWithTitle:@"Users" style:UIBarButtonItemStyleBordered target:self action:@selector(showUsersView:)];
+	[[self navigationItem] setRightBarButtonItem:users];
+	[users release];
 	[output loadHTMLString:@"\
      <html>\
      <head>\

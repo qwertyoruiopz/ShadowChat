@@ -11,6 +11,7 @@
 		1AABE8FD1417FFEC00F9532E /* ChannelsTVController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AABE8FC1417FFEC00F9532E /* ChannelsTVController.m */; };
 		1AD9BF96141683EB002E1C6A /* SHConnectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD9BF95141683EA002E1C6A /* SHConnectionController.m */; };
 		1AD9BF9A141684D2002E1C6A /* SHAddCTController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD9BF99141684D2002E1C6A /* SHAddCTController.m */; };
+		5025F8521487094000E39116 /* SHUsersTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5025F8511487094000E39116 /* SHUsersTableView.m */; };
 		50465FEC1481F73A007F8F56 /* SupportedURLs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 50465FEB1481F73A007F8F56 /* SupportedURLs.plist */; };
 		507424751416F3FC0080EC23 /* SHRoomsTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 507424741416F3FC0080EC23 /* SHRoomsTable.m */; };
 		509346D114748A1B007C57C5 /* SHCellDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 509346D014748A1B007C57C5 /* SHCellDrawer.m */; };
@@ -58,6 +59,8 @@
 		1AD9BF95141683EA002E1C6A /* SHConnectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHConnectionController.m; sourceTree = "<group>"; };
 		1AD9BF98141684D1002E1C6A /* SHAddCTController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHAddCTController.h; sourceTree = "<group>"; };
 		1AD9BF99141684D2002E1C6A /* SHAddCTController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHAddCTController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		5025F8501487094000E39116 /* SHUsersTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHUsersTableView.h; sourceTree = "<group>"; };
+		5025F8511487094000E39116 /* SHUsersTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHUsersTableView.m; sourceTree = "<group>"; };
 		50465FEB1481F73A007F8F56 /* SupportedURLs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SupportedURLs.plist; sourceTree = "<group>"; };
 		507424731416F3FC0080EC23 /* SHRoomsTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHRoomsTable.h; sourceTree = "<group>"; };
 		507424741416F3FC0080EC23 /* SHRoomsTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHRoomsTable.m; sourceTree = "<group>"; };
@@ -219,6 +222,8 @@
 				1A223128141CBC39009F9578 /* ChannelUserList.m */,
 				509346CF14748A1B007C57C5 /* SHCellDrawer.h */,
 				509346D014748A1B007C57C5 /* SHCellDrawer.m */,
+				5025F8501487094000E39116 /* SHUsersTableView.h */,
+				5025F8511487094000E39116 /* SHUsersTableView.m */,
 			);
 			path = ShadowChat;
 			sourceTree = "<group>";
@@ -336,6 +341,7 @@
 				EA68CA4F146ABE4D00AC1628 /* SHChanJoin.m in Sources */,
 				509346D114748A1B007C57C5 /* SHCellDrawer.m in Sources */,
 				50C4CB2E1474A71D00B8EA1C /* SHDrawerButton.m in Sources */,
+				5025F8521487094000E39116 /* SHUsersTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

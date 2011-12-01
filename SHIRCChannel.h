@@ -27,13 +27,15 @@ typedef enum SHEventType {
     NSString *net;
     NSString *name;
 	BOOL joined;
+	NSArray *users;
     SHIRCSocket* socket;
     id delegate;
 }
-@property(retain) NSString *net;
-@property(retain) NSString *name;
-@property(assign) SHIRCSocket *socket;
-@property(retain) id delegate;
+@property (retain) NSString *net;
+@property (retain) NSString *name;
+@property (assign) SHIRCSocket *socket;
+@property (nonatomic, retain) NSArray *users;
+@property (retain) id delegate;
 - (id)initWithSocket:(SHIRCSocket *)sock andChanName:(NSString *)chName;
 - (BOOL)sendMessage:(NSString *)message flavor:(SHMessageFlavor)flavor;
 - (NSString *)formattedName;

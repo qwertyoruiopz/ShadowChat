@@ -19,10 +19,11 @@ extern id objc_msgSend(id target, SEL msg, ...);
 @end
 
 @implementation SHIRCChannel
-@synthesize net, name, socket, delegate;
+@synthesize net, name, socket, delegate, users;
 
 - (id)initWithSocket:(SHIRCSocket *)sock andChanName:(NSString *)chName {
 	if ((self = [super init])) {
+		self.users = [[NSMutableArray alloc] init];
 		[self setSocket:sock];
 		[self setName:chName];
 		[self setNet:[sock server]];
