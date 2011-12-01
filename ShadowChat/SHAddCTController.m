@@ -230,7 +230,6 @@
 				else if (indexPath.row == 1) {
                     [cell.textLabel setText: @"Address"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
-                    
                     UITextField *aaddr = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 180, 22)];
                     aaddr.adjustsFontSizeToFitWidth = YES;
                     aaddr.placeholder = @"irc.network.tld";
@@ -242,7 +241,8 @@
                     [aaddr setDelegate:self];
                     [cell setAccessoryView: aaddr];
                     [aaddr release];
-                } else if (indexPath.row == 2) {
+                }
+				else if (indexPath.row == 2) {
                     [cell.textLabel setText: @"Port"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
                     UITextField *portField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 180, 22)];
@@ -251,15 +251,16 @@
                     portField.keyboardType = UIKeyboardTypeNumberPad;
                     portField.returnKeyType = UIReturnKeyNext;
                     portField.tag = 12342;
-					portField.text = (_network.port == 0 ? @"6667" : [NSString stringWithFormat:@"%d", _network.port]);
+					portField.text = (_network.port == 0 ? nil : [NSString stringWithFormat:@"%d", _network.port]);
                     portField.keyboardAppearance = UIKeyboardAppearanceAlert;
                     [portField setDelegate:self];
                     [cell setAccessoryView: portField];
                     [portField release];
-                } else if (indexPath.row == 3) {
+                }
+				else if (indexPath.row == 3) {
                     [cell.textLabel setText: @"Connect via SSL"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
-                    UISwitch* sslSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+                    UISwitch *sslSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
                     sslSwitch.tag = 12350;
                     [sslSwitch addTarget: self action: @selector(flip:) forControlEvents:UIControlEventValueChanged];
                     [cell setAccessoryView:sslSwitch];

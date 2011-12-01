@@ -213,11 +213,12 @@ output = nil;
 - (void)joinChannel:(SHIRCChannel *)chan {
     [self sendCommand:[@"JOIN " stringByAppendingString:[chan formattedName]] withArguments:nil waitUntilRegistered:YES];
     [chan setIsJoined:YES];
-	if (![[delegate channels] containsObject:[chan formattedName]] && ![_channels containsObject:chan]) {
-		[_channels addObject:chan];
+	if (![[delegate channels] containsObject:[chan formattedName]]) {
         [[delegate channels] addObject:[chan formattedName]];
         [SHIRCNetwork saveDefaults];
 	}
+	if (![_channels containsObject:chan])
+		[_channels addObject:chan];
 }
 
 - (void)partChannel:(SHIRCChannel *)chan {
