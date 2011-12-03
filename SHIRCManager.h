@@ -11,7 +11,9 @@
 #import "SHIRCChannel.h"
 
 
-@interface SHIRCManager : NSObject
+@interface SHIRCManager : NSObject {
+	
+}
 + (SHIRCManager *)sharedManager;
 - (void)parseMessage:(NSString*)msg fromSocket:(SHIRCSocket*)socket;
 - (void)parseUsermask:(NSString*)mask nick:(NSString**)nick user:(NSString**)user hostmask:(NSString**)hostmask;

@@ -53,9 +53,7 @@
 }
 
 - (BOOL)keyboardShouldUpdate:(BOOL)update {
-	NSLog(@"fdfs yay %@", bar);
 	CGRect frame = [[UIScreen mainScreen] applicationFrame];
-	NSLog(@"fdfds %@", NSStringFromCGRect(frame));
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationCurve:0.3f];
 	CGRect pnt = bar.frame;
@@ -139,6 +137,7 @@
 
 - (void)didRecieveNamesList:(NSArray*)array {
     NSLog(@"ZOMG I IS EPIC AND THIS IS MY ARRAYYYYY: %@", array);
+
     ChannelUserList *cul = [[ChannelUserList alloc] init];
     [cul setNames:[array mutableCopy]];
     [self.navigationController pushViewController:cul animated:YES];
@@ -175,9 +174,10 @@
 - (void)showUsersView:(id)btn {
 	SHUsersTableView *userList = [[[SHUsersTableView alloc] initWithStyle:UITableViewStylePlain] autorelease];
 	[userList setUsers:chan.users];
+	UINavigationController *ctrlr = [[[UINavigationController alloc] initWithRootViewController:userList] autorelease];
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		UIPopoverController *userPopover = [[[UIPopoverController alloc] initWithContentViewController:userList] autorelease];
-		[userPopover setContentViewController:userList];
+		UIPopoverController *userPopover = [[UIPopoverController alloc] initWithContentViewController:ctrlr];
+		[userPopover setContentViewController:ctrlr];
 		[userPopover setPopoverContentSize:CGSizeMake(320, 480)];
 		if ([btn isKindOfClass:[UIBarButtonItem class]]) {
 			[userPopover presentPopoverFromBarButtonItem:btn permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];

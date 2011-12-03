@@ -13,6 +13,7 @@
 
 - (id)initWithStyle:(UITableViewStyle)style {
 	if ((self = [super initWithStyle:style])) {
+		userTitles = [[NSMutableDictionary alloc] init];
 		ops = [[NSMutableArray alloc] init];
 		vops = [[NSMutableArray alloc] init];
 		hops = [[NSMutableArray alloc] init];
@@ -38,22 +39,28 @@
 
 - (void)sortNicks {
 	for (id _nick in users) {
-		if ([_nick hasPrefix:@"@"]) {
-			[ops addObject:_nick];
-		}
-		else if ([_nick hasPrefix:@"~"]) {
-			[sops addObject:_nick];
+		if (![_nick isEqualToString:@""] || ![_nick isEqualToString:@" "]) {
+			if ([_nick hasPrefix:@"@"]) {
+				[ops addObject:_nick];
 			}
-		else if ([_nick hasPrefix:@"%"]) {
-			[hops addObject:_nick];
-		}
-		else if ([_nick hasPrefix:@"+"]) {
-			[vops addObject:_nick];
-		}
-		else if ([_nick hasPrefix:@"&"]) {
-			[aops addObject:_nick];
+			else if ([_nick hasPrefix:@"~"]) {
+				[sops addObject:_nick];
+				}
+			else if ([_nick hasPrefix:@"%"]) {
+				[hops addObject:_nick];
+			}
+			else if ([_nick hasPrefix:@"+"]) {
+				[vops addObject:_nick];
+			}
+			else if ([_nick hasPrefix:@"&"]) {
+				[aops addObject:_nick];
+			}
+			else {
+				[norms addObject:_nick];
+			}
 		}
 	}
+	
 }
 
 - (void)removeUser:(NSString *)aUser {
@@ -67,12 +74,43 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+		UIBarButtonItem *invite = [[UIBarButtonItem alloc] initWithTitle:@"Invite" style:UIBarButtonItemStyleBordered target:self action:@selector(showInviteView:)];
+		[[self navigationItem] setLeftBarButtonItem:invite];
+		[invite release];
+	}
+	[self doneEditing:nil];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+
+- (void)edit:(id)barBtn {
+	UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneEditing:)];
+	[[self navigationItem] setRightBarButtonItem:done];
+	[done release];
+	if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
+		UIBarButtonItem *invite = [[UIBarButtonItem alloc] initWithTitle:@"Invite" style:UIBarButtonItemStyleBordered target:self action:@selector(showInviteView:)];
+		[[self navigationItem] setLeftBarButtonItem:invite];
+		[invite release];
+	}
+	[self setEditing:YES animated:YES];
+}
+
+- (void)doneEditing:(id)tb {
+	UIBarButtonItem *edit = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(edit:)];
+	[[self navigationItem] setRightBarButtonItem:edit];
+	[edit release];
+	if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
+		[[self navigationItem] setLeftBarButtonItem:nil];
+	[self setEditing:NO animated:YES];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+	return @"Kick";
 }
 
 - (void)viewDidUnload {
@@ -106,21 +144,22 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 6;
+	// return ([sops count] > 0) + ([aops count] > 0) + ([ops count] > 0) + ([hops count] > 0) + ([vops count] > 0) + ([norms count] > 0);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	switch (section) {
-		case 1:
+		case 0:
 			return [sops count];
-		case 2:
+		case 1:
 			return [aops count];
-		case 3: 
+		case 2: 
 			return [ops count];
-		case 4:
+		case 3:
 			return [hops count];
-		case 5:
+		case 4:
 			return [vops count];
-		case 6:
+		case 5:
 			return [norms count];
 		default: 
 			return 0;
@@ -136,22 +175,22 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
 	switch (indexPath.section) {
-		case 1:
+		case 0:
 			cell.textLabel.text = [sops objectAtIndex:indexPath.row];
 			break;
-		case 2:
+		case 1:
 			cell.textLabel.text = [aops objectAtIndex:indexPath.row];
 			break;
-		case 3:
+		case 2:
 			cell.textLabel.text = [ops objectAtIndex:indexPath.row];
 			break;
-		case 4:
+		case 3:
 			cell.textLabel.text = [hops objectAtIndex:indexPath.row];
 			break;
-		case 5:
+		case 4:
 			cell.textLabel.text = [vops objectAtIndex:indexPath.row];
 			break;
-		case 6:
+		case 5:
 			cell.textLabel.text = [norms objectAtIndex:indexPath.row];
 		default:
 			break;
@@ -165,10 +204,10 @@
 
 	switch (section) {
 		case 0:
-			return @"SOP";
+			return @"Owner";
 			break;
 		case 1:
-			return @"AOP";
+			return @"SOP";
 			break;
 		case 2:
 			return @"OP";
@@ -187,6 +226,7 @@
 			break;
 	}
 	return @"HAI";
+	
 }
 
 /*
@@ -231,6 +271,7 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	NSLog(@"MEH! %@", [norms objectAtIndex:indexPath.row]);
     // Navigation logic may go here. Create and push another view controller.
     /*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
@@ -242,14 +283,15 @@
 }
 
 - (void)dealloc {
-	[super dealloc];
 	[users release];
 	[ops release];
 	[vops release];
 	[hops release];
 	[sops release];
 	[aops release];
+	[userTitles release];
 	[norms release];
+	[super dealloc];
 }
 
 @end

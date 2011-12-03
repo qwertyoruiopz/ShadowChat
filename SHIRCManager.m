@@ -97,7 +97,7 @@ static SHIRCManager* sharedSHManager;
             [scan__ scanUpToString:@"\x01" intoString:&arg];
         singlearg:
             if ([command isEqualToString:@"ACTION"]) {
-                id chan=[socket retainedChannelWithFormattedName:toChannel];
+                id chan = [socket retainedChannelWithFormattedName:toChannel];
                 [chan didRecieveActionFrom:nick text:arg];
                 [chan release];
             }
@@ -108,7 +108,7 @@ static SHIRCManager* sharedSHManager;
 		else {
 			NSLog(@"zomg a message %@ to %@ from %@", message, toChannel, nick);
 			id chan = [socket retainedChannelWithFormattedName:toChannel];
-			if ([toChannel isEqualToString:socket.nick_]&&!chan) {
+			if ([toChannel isEqualToString:socket.nick_] && !chan) {
 				chan = [[SHIRCPrivateChat alloc] initWithSocket:socket withNick:nick];
 				[chan retain];
 			}
@@ -131,19 +131,14 @@ static SHIRCManager* sharedSHManager;
 		NSString *roomName = [argument substringWithRange:NSMakeRange(rangeOfSpace.location, rangeOfEndOfRoom.location-rangeOfSpace.location)];
 		NSRange rOfRoom = [argument rangeOfString:roomName];
 		NSString *_tmpUsers = [argument substringWithRange:NSMakeRange(rOfRoom.location+roomName.length+2, [argument length]-rOfRoom.location-roomName.length-2)];
-		NSMutableArray *users = [[_tmpUsers componentsSeparatedByString:@" "] mutableCopy];
-		NSLog(@"Users : %@", users);
-		for (id user in users) {
-			if ([(NSString *)user isEqualToString:@""])
-				[users removeObject:user];
-		}
-		for (SHIRCChannel *c in [socket channels]) {
-			if ([[c.name lowercaseString] isEqualToString:[roomName lowercaseString]]) {
-				c.users = (NSArray *)[users retain];
+		NSLog(@"Found Users:%@",[_tmpUsers componentsSeparatedByString:@" "]);
+		for (SHIRCChannel *chan in [socket channels]) {
+			if ([[[chan name] lowercaseString] isEqualToString:[roomName lowercaseString]]) {
+				[chan addUsers:[_tmpUsers componentsSeparatedByString:@" "]];
+				break;
 			}
 		}
-		[users release];
-    }
+	}
     else if ([command isEqualToString:@"001"]) {
 		socket.didRegister = YES;
 		NSLog(@"Did register");
@@ -177,11 +172,38 @@ static SHIRCManager* sharedSHManager;
         [chanC release];
 	}
 	else if ([command isEqualToString:@"MODE"]) {
+        NSString *nick = nil;
+        NSString *chan = nil;
+        NSString *target = nil;
+        NSString *message = nil;
+        NSScanner *scanz = [NSScanner scannerWithString:argument];
+        [scanz scanUpToString:@" " intoString:&chan];
+        if (![scanz isAtEnd]) 
+            [scanz setScanLocation:[scanz scanLocation]+1];
+        [self parseUsermask:sender nick:&nick user:nil hostmask:nil];
+        [scanz scanUpToString:@" " intoString:&target];
+        if (![scanz isAtEnd]) 
+            [scanz setScanLocation:[scanz scanLocation]+1];
+        int point = [scanz scanLocation];
+        [scanz scanUpToString:@"" intoString:&message];
+		if ([message hasPrefix:@":"]) {
+			@try {
+				[scanz setScanLocation:point+1];
+			}
+			@catch (id e) {
+				NSLog(@"Catched error %@", e);
+			}
+			[scanz scanUpToString:@"" intoString:&message];
+		}
+		SHIRCChannel *chanCC = [socket retainedChannelWithFormattedName:chan];
+		NSLog(@"What iS HAPPENING! ChanCC: %@ Nick:%@ Target:%@ Message:%@", chanCC, nick, target, message);;
+
+		[chanCC didRecieveEvent:SHEventTypeMode from:nick to:target extra:message];
 
     }
 	else if ([command isEqualToString:@"JOIN"]) {
 		if ([argument hasPrefix:@":"]) {
-			NSScanner* scnr=[NSScanner scannerWithString:argument];
+			NSScanner *scnr = [NSScanner scannerWithString:argument];
 			[scnr setScanLocation:1];
 			[scnr scanUpToString:@"" intoString:&argument];
 		}
@@ -235,6 +257,12 @@ static SHIRCManager* sharedSHManager;
         }
         [self parseUsermask:sender nick:&nick user:nil hostmask:nil];
         NSLog(@"%@ parted from %@ with message %@", nick, chan, msg);
+	//	for (SHIRCChannel *ch in [socket channels]) {
+	//		if ([[ch.name lowercaseString] isEqualToString:[chan lowercaseString]]) {
+	//			[ch.users removeObject:nick];
+	//			[ch updateUserList];
+	//		}
+	//	}
         if ([nick isEqualToString:[socket nick_]]) {
             // k, remove dug chan.
         }

@@ -63,5 +63,5 @@ typedef enum SHSocketStaus
 - (void)removeChannel:(SHIRCChannel *)chan;
 - (void)setDidRegister:(BOOL)didReg;
 - (void)dealloc;
-- (SHIRCChannel *)retainedChannelWithFormattedName:(NSString*)fName;
+- (SHIRCChannel *)retainedChannelWithFormattedName:(NSString *)fName;
 @end

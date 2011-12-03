@@ -16,6 +16,9 @@
 	NSMutableArray *sops;
 	NSMutableArray *aops;
 	NSMutableArray *norms;
+	NSMutableDictionary *userTitles;
 }
 - (void)setUsers:(NSArray *)_users;
+- (void)sortNicks;
+- (void)doneEditing:(id)g;
 @end

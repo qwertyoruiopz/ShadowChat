@@ -73,6 +73,10 @@ extern id objc_msgSend(id target, SEL msg, ...);
 		[self sendMessage:command flavor:SHMessageFlavorNormal];
 }
 
+- (void)updateUserList {
+	
+}
+
 - (void)setIsJoined:(BOOL)joind {
 	joined = joind;
 }
@@ -175,6 +179,13 @@ extern id objc_msgSend(id target, SEL msg, ...);
     [pool drain];
 }
 
+- (void)addUsers:(NSArray *)_users {
+	for (NSString *as in _users) {
+		if (![users containsObject:as])
+			[users addObject:as];
+	}
+}
+
 - (void)part {
     [socket sendCommand:@"PART" withArguments:[self formattedName]];
 //	[socket removeChannel:self];
@@ -186,10 +197,16 @@ extern id objc_msgSend(id target, SEL msg, ...);
 	[socket sendCommand:@"JOIN" withArguments:[self formattedName]];
 }
 
-- (void)didRecieveMessageFrom:(NSString*)nick text:(NSString*)ircMessage {
+- (void)didRecieveMessageFrom:(NSString*)nick text:(NSString *)ircMessage {
+	NSLog(@"WTF! Class:%@ MSG:%@", NSStringFromClass([self class]), self.users);
 	if ([delegate respondsToSelector:_cmd]) {
 		[delegate performSelector:_cmd withObject:nick withObject:ircMessage];
 	}
+}
+
+- (void)dealloc {
+	[super dealloc];
+	[users release];
 }
 
 - (void)didRecieveActionFrom:(NSString*)nick text:(NSString*)ircMessage {
@@ -198,7 +215,9 @@ extern id objc_msgSend(id target, SEL msg, ...);
 	}
 }
 
-- (void)didRecieveEvent:(SHEventType)event from:(NSString*)from to:(NSString*)to extra:(NSString *)extra {
+
+- (void)didRecieveEvent:(SHEventType)event from:(NSString *)from to:(NSString *)to extra:(NSString *)extra {
+
 	if ([delegate respondsToSelector:_cmd]) {
 		objc_msgSend(delegate, _cmd, event, from, to, extra);
 	}
