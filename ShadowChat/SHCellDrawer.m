@@ -32,10 +32,11 @@
 	NSArray *st = [NSArray arrayWithObjects:@"Del", @"Edit", @"Connect", nil];
 	for (int i = 0; i <= 2; i++) {
 		// this is only temporary. I'm sorry.
-		int pos[ ] = {55, 140, 225};
-		UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(pos[i], self.frame.size.height/3, 40, 20)];
+		int pos[ ] = {self.frame.size.width/5, self.frame.size.width/3, self.frame.size.width/2};
+		UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(pos[i], 0, 40, self.frame.size.height)];
 		[btn setTag:(SHCellOption)i];
 		[btn setTitle:[st objectAtIndex:i] forState:UIControlStateNormal];
+		[btn setFrame:CGRectMake(((self.frame.size.width/3.8)*(i == 0 ? 1 : i+1))-40, 0, 40, self.frame.size.height)];
 	//	[btn setBackgroundColor:[UIColor whiteColor]];
 		[btn addTarget:self action:@selector(aButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 		[self addSubview:btn];

@@ -24,6 +24,10 @@
     return self;
 }
 
+- (NSString *)nickWithoutFormatting:(NSString *)__nick {
+	return [[[[[__nick stringByReplacingOccurrencesOfString:@"@" withString:@""] stringByReplacingOccurrencesOfString:@"~" withString:@""] stringByReplacingOccurrencesOfString:@"%" withString:@""] stringByReplacingOccurrencesOfString:@"&"withString:@""] stringByReplacingOccurrencesOfString:@"+" withString:@""];
+}
+
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
@@ -32,42 +36,138 @@
 }
 
 - (void)setUsers:(NSArray *)_users {
-	users = [[_users retain] mutableCopy];
-	[self sortNicks];
+	for (NSString *user in _users) {
+		if (![user isEqualToString:@""])
+			if (![[userTitles allKeys] containsObject:[self nickWithoutFormatting:user]])
+				[self categorizeNick:user];
+	}
 	[self.tableView reloadData];
+	NSLog(@"USERTITLES: %@",userTitles);
 }
 
-- (void)sortNicks {
-	for (id _nick in users) {
-		if (![_nick isEqualToString:@""] || ![_nick isEqualToString:@" "]) {
-			if ([_nick hasPrefix:@"@"]) {
-				[ops addObject:_nick];
-			}
-			else if ([_nick hasPrefix:@"~"]) {
-				[sops addObject:_nick];
-				}
-			else if ([_nick hasPrefix:@"%"]) {
-				[hops addObject:_nick];
-			}
-			else if ([_nick hasPrefix:@"+"]) {
-				[vops addObject:_nick];
-			}
-			else if ([_nick hasPrefix:@"&"]) {
-				[aops addObject:_nick];
-			}
-			else {
-				[norms addObject:_nick];
-			}
+
+
+- (BOOL)hasPowerz:(NSString *)sNick {
+	return [sNick hasPrefix:@"@"] || [sNick hasPrefix:@"&"] || [sNick hasPrefix:@"+"] || [sNick hasPrefix:@"~"] || [sNick hasPrefix:@"%"];
+}
+
+- (void)categorizeNick:(NSString *)aNick {
+	if (![aNick isEqualToString:@""] || ![aNick isEqualToString:@" "]) {
+		if ([aNick hasPrefix:@"@"]) {
+			[ops addObject:aNick];
+			[userTitles setObject:[aNick substringWithRange:NSMakeRange(0, 1)] forKey:[self nickWithoutFormatting:aNick]];
+		}
+		else if ([aNick hasPrefix:@"~"]) {
+			[sops addObject:aNick];
+			[userTitles setObject:[aNick substringWithRange:NSMakeRange(0, 1)] forKey:[self nickWithoutFormatting:aNick]];
+		}
+		else if ([aNick hasPrefix:@"%"]) {
+			[hops addObject:aNick];
+			[userTitles setObject:[aNick substringWithRange:NSMakeRange(0, 1)] forKey:[self nickWithoutFormatting:aNick]];
+		}
+		else if ([aNick hasPrefix:@"+"]) {
+			[vops addObject:aNick];
+			[userTitles setObject:[aNick substringWithRange:NSMakeRange(0, 1)] forKey:[self nickWithoutFormatting:aNick]];
+		}
+		else if ([aNick hasPrefix:@"&"]) {
+			[aops addObject:aNick];
+			[userTitles setObject:[aNick substringWithRange:NSMakeRange(0, 1)] forKey:[self nickWithoutFormatting:aNick]];
+		}
+		else {
+			[norms addObject:aNick];
+			[userTitles setObject:@"" forKey:[self nickWithoutFormatting:aNick]];
 		}
 	}
+}
+
+- (void)setUserRank:(NSString *)_user_ rank:(NSString *)_rank {
 	
 }
 
 - (void)removeUser:(NSString *)aUser {
-	
+	if ([[userTitles allKeys] containsObject:aUser]) {
+		[self performSelectorInBackground:@selector(findArrayAndRemoveNick:) withObject:aUser];
+		[userTitles removeObjectForKey:aUser];
+	}
 }
+
+- (void)findArrayAndRemoveNick:(NSString *)_sUser {
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+//	NSLog(@"User groups: vops: %@ ; hops: %@ ; ops: %@ ; aops: %@ ; sops: %@ ; norms: %@ ;", vops, hops, ops, aops, sops, norms);
+	if ([norms containsObject:_sUser]) {
+		[norms removeObject:_sUser];
+		goto cleanup;
+	}
+	_sUser = [@"+" stringByAppendingString:_sUser];
+	if ([vops containsObject:_sUser]) {
+		[vops removeObject:_sUser];
+		goto cleanup;
+	}
+	_sUser = [_sUser stringByReplacingOccurrencesOfString:@"+" withString:@"%"];
+	if ([hops containsObject:_sUser]) {
+		[hops removeObject:_sUser];
+		goto cleanup;
+	}
+	_sUser = [_sUser stringByReplacingOccurrencesOfString:@"%" withString:@"@"];
+	if ([ops containsObject:_sUser]) {
+		[ops removeObject:_sUser];
+		goto cleanup;
+	}
+	_sUser = [_sUser stringByReplacingOccurrencesOfString:@"@" withString:@"&"];
+	if ([aops containsObject:_sUser]) {
+		[aops removeObject:_sUser];
+		goto cleanup;
+	}
+	_sUser = [_sUser stringByReplacingOccurrencesOfString:@"&" withString:@"~"];
+	if ([sops containsObject:_sUser]) {
+		[sops removeObject:_sUser];
+		goto cleanup;
+	}
+cleanup:
+	[self.tableView reloadData];
+	[pool drain];
+	return;
+
+}
+
 - (void)addUser:(NSString *)aUser {
-	
+	[norms addObject:aUser];
+	[self.tableView reloadData];
+}
+
+- (NSString *)titleForModeChange:(NSString *)up {
+	if ([up hasPrefix:@"+"]) {
+		// promotion D:
+		NSString *change = [up substringWithRange:NSMakeRange(1, up.length-1)];
+		if ([change isEqualToString:@"o"]) {
+			
+		}
+	}
+	else {
+		// HOPEFULLLY... only demotion here.. otherwise make case for "-"
+	}
+	return @"";
+}
+
+- (void)setMode:(NSString *)mode forUser:(NSString *)_cUser {
+	if ([userTitles objectForKey:_cUser] == nil) {
+		//someone figure this shit out...
+		// if a user is given voice. (+v)
+		// then given halfop, or a higher ranking
+		// then it's removed, it's forgotten that the user had voice.
+		// need a workaround. Maybe setting the object for the key (nick)
+		// to maybe a +h (+v)
+		// sort of hidden.. but needs to be recognized somehow.. :(
+		// also kind of sad no one will probably ever read this...
+	}
+	NSLog(@"Meh. Mode: %@ User: %@ Key: %@", mode, _cUser, [userTitles objectForKey:_cUser]);
+//	arrayOfArrays = [NSArray arrayWithObjects:norms, vops, hops, ops, aops, sops, nil];
+//	for (int i = 0; i < [arrayOfArrays count]; i++) {
+//		for (int f = 0; f < [[arrayOfArrays objectAtIndex:i] count]; f++) {
+//			id currentArray = [arrayOfArrays objectAtIndex:i];
+//			
+//		}
+//	}
 }
 
 #pragma mark - View lifecycle
@@ -98,6 +198,10 @@
 		[invite release];
 	}
 	[self setEditing:YES animated:YES];
+}
+
+- (void)showInviteView:(id)i {
+	NSLog(@"Nothing to see here...");
 }
 
 - (void)doneEditing:(id)tb {
@@ -283,7 +387,6 @@
 }
 
 - (void)dealloc {
-	[users release];
 	[ops release];
 	[vops release];
 	[hops release];

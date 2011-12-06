@@ -140,8 +140,10 @@
     return YES; // (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+	NSLog(@"Rotating.... %@", swipedCell);
 	if (swipedCell != nil) {
 		[swipedCell undrawOptionsViewAnimated:YES];
+		[self.tableView reloadData];
 	}
 }
 

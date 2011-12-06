@@ -13,10 +13,9 @@
 static SHIRCManager* sharedSHManager;
 @implementation SHIRCManager
 
-+ (SHIRCManager *)sharedManager
-{
++ (SHIRCManager *)sharedManager {
     if(!sharedSHManager)
-        sharedSHManager=[[(Class)self alloc] init];
+        sharedSHManager = [[(Class)self alloc] init];
     return sharedSHManager;
 }
 
@@ -26,9 +25,9 @@ static SHIRCManager* sharedSHManager;
     }
 }
 
-- (void)parseMessageWithArray:(NSArray*)args {
+- (void)parseMessageWithArray:(NSArray *)args {
     id pool = [NSAutoreleasePool new];
-    if ([args count]!=2) {
+    if ([args count] != 2) {
         [args release];
         [pool release];
         return;
@@ -39,7 +38,7 @@ static SHIRCManager* sharedSHManager;
 
 #define NO_THREADING 1
 - (void)parseMessage:(NSMutableString *)msg fromSocket:(SHIRCSocket *)socket {
-	NSLog(@"[%@ parseMessage:%@ fromSocket:%@] : %u", self, msg, socket, __LINE__);
+
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	#ifndef NO_THREADING
 	if ([NSThread isMainThread]) {
@@ -81,8 +80,7 @@ static SHIRCManager* sharedSHManager;
         }
         [scan_ scanUpToString:@"" intoString:&message];
         NSLog(@"%@ lolwat", message);
-        if ([message hasPrefix:@"\x01"]&&[message hasSuffix:@"\x01"])
-        {
+        if ([message hasPrefix:@"\x01"] && [message hasSuffix:@"\x01"]) {
             NSString *command = nil;
             NSString *arg = nil;
             NSScanner *scan__ = [NSScanner scannerWithString:message];

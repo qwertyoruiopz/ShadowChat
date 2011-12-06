@@ -50,6 +50,8 @@
 
 - (void)cellWasSwiped:(UISwipeGestureRecognizer *)recog {
 	NSLog(@"Trying to draw.. %@", recog);
+	if (_isSwiped)
+		return;
 	_isSwiped = NO;
 	if (!self.editing)
 		[self drawOptionsView];
@@ -71,7 +73,7 @@
 		[drawer drawButtons];
 		[self addSubview:drawer];
         [drawer release];
-		[UIView animateWithDuration:0.15 delay:0.0 options:(UIViewAnimationCurveEaseIn) animations:^ {
+		[UIView animateWithDuration:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 0.17 : 0.15 delay:0.0 options:(UIViewAnimationCurveEaseIn) animations:^ {
 			self.frame = CGRectMake(self.frame.size.width*-1, self.frame.origin.y, self.frame.size.width, self.frame.size.height);
 		} completion:^(BOOL finished) {
 			if (finished) {

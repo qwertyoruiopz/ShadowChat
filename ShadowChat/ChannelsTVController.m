@@ -96,6 +96,7 @@
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+	NSLog(@"Rotating....:o %@", NSStringFromClass([self class]));
     // Return YES for supported orientations
     return YES; // (interfaceOrientation == UIInterfaceOrientationPortrait);
 }

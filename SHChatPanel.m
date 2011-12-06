@@ -22,6 +22,7 @@
 		[self release];
 		return [chan_ delegate];        
 	}
+	userList = [[SHUsersTableView alloc] initWithStyle:UITableViewStylePlain];
 	[self setChan:chan_];
 	return self;
 }
@@ -138,10 +139,10 @@
 - (void)didRecieveNamesList:(NSArray*)array {
     NSLog(@"ZOMG I IS EPIC AND THIS IS MY ARRAYYYYY: %@", array);
 
-    ChannelUserList *cul = [[ChannelUserList alloc] init];
-    [cul setNames:[array mutableCopy]];
-    [self.navigationController pushViewController:cul animated:YES];
-    [cul release];
+//	ChannelUserList *cul = [[ChannelUserList alloc] init];
+//	[cul setNames:[array mutableCopy]];
+//	[self.navigationController pushViewController:cul animated:YES];
+//	[cul release];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -172,7 +173,6 @@
 }
 
 - (void)showUsersView:(id)btn {
-	SHUsersTableView *userList = [[[SHUsersTableView alloc] initWithStyle:UITableViewStylePlain] autorelease];
 	[userList setUsers:chan.users];
 	UINavigationController *ctrlr = [[[UINavigationController alloc] initWithRootViewController:userList] autorelease];
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -256,6 +256,7 @@
 - (void)dealloc {
     NSLog(@"cyah");
     [chan setDelegate:nil];
+	[userList release];
     [super dealloc];
 }
 
@@ -282,7 +283,23 @@
 }
 
 - (void)didRecieveEvent:(SHEventType)evt from:(NSString *)from to:(NSString *)to extra:(NSString *)extra {
-    NSLog(@"%d %@ %@", evt, from, to);
+    NSLog(@"%d %@ %@ %@", evt, from, to, extra);
+	switch (evt) {
+		case SHEventTypeJoin:
+			[userList addUser:from];
+			break;
+		case SHEventTypeKick:
+			[userList removeUser:to];
+			break;
+		case SHEventTypeMode:
+			[userList setMode:to forUser:extra];
+			break;
+		case SHEventTypePart:
+			[userList removeUser:from];
+			break;
+		default:
+			break;
+	}
     NSString *java = [NSString stringWithFormat:@"addEvent('%@','%@', '%@', '%@');",
                       [[from stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"],
                       [[to stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"],

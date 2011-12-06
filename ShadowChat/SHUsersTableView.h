@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface SHUsersTableView : UITableViewController {
-	NSMutableArray *users;
 	NSMutableArray *ops;
+	NSArray *arrayOfArrays;
 	NSMutableArray *vops;
 	NSMutableArray *hops;
 	NSMutableArray *sops;
@@ -20,5 +20,9 @@
 }
 - (void)setUsers:(NSArray *)_users;
 - (void)sortNicks;
+- (void)removeUser:(NSString *)aUser;
+- (void)addUser:(NSString *)aUser;
+- (void)categorizeNick:(NSString *)aNick;
 - (void)doneEditing:(id)g;
+- (void)setMode:(NSString *)mode forUser:(NSString *)_cUser;
 @end
