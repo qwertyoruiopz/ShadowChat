@@ -107,7 +107,7 @@
 
 - (void)didRecieveMessageFrom:(NSString *)nick text:(NSString *)ircMessage {
 	NSLog(@"Nick:%@ Message:%@", nick, ircMessage);
-	NSString *format = @"addMessage('%@','%@');";
+	NSString *format = @"addMessageWithHTML('%@','%@');";
 //	NSRange rr = [[ircMessage lowercaseString] rangeOfString:@"http://"];
 //	if (rr.location == NSNotFound) {
 //		rr = [[ircMessage lowercaseString] rangeOfString:@"https://"];
@@ -210,10 +210,13 @@
      function emojify(str) {  \
      return str;\
      }  \
+	 function replaceURLWithHTMLLinks(text) {\
+	 var exp = /(\\b(https?|ftp|file):\\/\\/[-A-Z0-9+&@#\\/%?=~_|!:,.;]*[-A-Z0-9+&@#\\/%=~_|])/ig;\
+	 return text.replace(exp,\"<a href='$1'>$1</a>\"); \
+	 }\
      function htmlEntities(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;');}\
      function addMessage(nick, msg) { document.body.innerHTML += '<div><strong>' + htmlEntities(nick) + ':</strong> ' + htmlEntities(emojify(msg)) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
-	 function addMessageWithHTML(nick, msg) {\
-	  document.body.innerHTML += '<div><strong>' + htmlEntities(nick) + ':</strong> ' + htmlEntities(emojify(msg)) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
+	 function addMessageWithHTML(nick, msg) {  document.body.innerHTML += '<div><strong>' + htmlEntities(nick) + ':</strong> ' + replaceURLWithHTMLLinks(emojify(msg)) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
      function addAction(nick, msg) { document.body.innerHTML += '<div><strong>• ' + htmlEntities(nick) + '</strong> ' + htmlEntities(msg) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
      function background_color() {\
          document.body.style.background=\"#dae0ec\";\
@@ -247,6 +250,12 @@
      </body>\
      </html>\
 	 " baseURL:[NSURL URLWithString:@"about:blank"]];
+	[output setDelegate:self];
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView {
+	NSLog(@"Trying to load.. %@", webView.request.URL.absoluteString);
+	[webView stopLoading];
 }
 
 - (void)viewDidUnload {

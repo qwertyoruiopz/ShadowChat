@@ -13,7 +13,7 @@
 
 #define is_iPad ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
 
-@interface SHChatPanel : UIViewController <UITextFieldDelegate> {
+@interface SHChatPanel : UIViewController <UITextFieldDelegate, UIWebViewDelegate> {
 	SHUsersTableView *userList;
     SHIRCChannel *chan;
     UITextField *tfield;
