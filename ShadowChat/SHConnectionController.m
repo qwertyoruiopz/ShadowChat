@@ -186,7 +186,9 @@
 		return cell;
 	}
     cell.textLabel.text = [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] descr] ? [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] descr] : [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] server];
-	if ([[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isRegistered]) {
+	if ([[[SHIRCNetwork allNetworks]
+          objectAtIndex:indexPath.row]
+         isRegistered]) {
 		cell.thirdLabel.text = @"Connected!";
     }
 	else if ([((SHIRCSocket *)[((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]) socket]) status] == SHSocketStausError) {

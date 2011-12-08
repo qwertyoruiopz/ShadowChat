@@ -119,7 +119,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *CellIdentifier = @"Cell";
-	
+	if (indexPath.section > [self numberOfSectionsInTableView:tableView] || indexPath.row > [self tableView:tableView numberOfRowsInSection:indexPath.section]) {[[self tableView] reloadData]; return nil;}
 	SHClearLabelCellView *cell = (SHClearLabelCellView *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if (cell == nil) {
 		cell = [[[SHClearLabelCellView alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
@@ -129,7 +129,7 @@
 		cell.thirdLabel.hidden = YES;
 		cell.delegate = self;
 	}
-	if ([[[(SHIRCNetwork*)[[SHIRCNetwork allConnectedNetworks] objectAtIndex:indexPath.section] socket] channels] count] == indexPath.row) {
+	if ([self tableView:tableView numberOfRowsInSection:indexPath.section] == indexPath.row && isReallyEditing) {
 		cell.textLabel.text = @"Join a channel";
 	}
 	else

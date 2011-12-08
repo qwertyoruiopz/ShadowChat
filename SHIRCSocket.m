@@ -172,9 +172,9 @@ output = nil;
 			[self setDidRegister:NO];
             [[UIApplication sharedApplication] endBackgroundTask:bgTask]; 
             bgTask = UIBackgroundTaskInvalid;
+            [[SHIRCNetwork allConnectedNetworks] removeObject:[self delegate]];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadNetworks" object:nil];
 		}
-		[self release];
 	} 
 	else if (streamEvent == NSStreamEventHasSpaceAvailable) {
 		if (status == SHSocketStausConnecting) {
@@ -192,12 +192,14 @@ output = nil;
 	}
 }
 - (void)disconnect {
-	if (status != SHSocketStausError || status != SHSocketStausError) {
+	if (status != SHSocketStausError || status != SHSocketStausClosed) {
 		[self sendCommand:@"QUIT" withArguments:@"ShadowChat BETA"];
 		status = SHSocketStausClosed;
 		[self setDidRegister:NO];
         [[UIApplication sharedApplication] endBackgroundTask:bgTask]; 
         bgTask = UIBackgroundTaskInvalid;
+        [[SHIRCNetwork allConnectedNetworks] removeObject:[self delegate]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadNetworks" object:nil];
     }
 }
 
@@ -259,7 +261,7 @@ output = nil;
 			[delegate performSelector:@selector(hasBeenRegisteredCallback:) withObject:self];
 		}
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadNetworks" object:nil];
-	}
+	}  
 }
 - (void)dealloc {
     [self disconnect];
