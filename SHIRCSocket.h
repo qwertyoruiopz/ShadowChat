@@ -13,16 +13,14 @@
 
 @class SHIRCChannel;
 @class SHIRCSocket;
-typedef enum SHSocketStaus
-{
+typedef enum SHSocketStaus {
     SHSocketStausNotOpen,
     SHSocketStausConnecting,
     SHSocketStausOpen,
     SHSocketStausError,
     SHSocketStausClosed
 } SHSocketStaus;
-@interface SHIRCSocket : NSObject <NSStreamDelegate>
-{
+@interface SHIRCSocket : NSObject <NSStreamDelegate> {
     NSInputStream *input;
     NSOutputStream *output;
     NSString *server;
@@ -49,11 +47,11 @@ typedef enum SHSocketStaus
 @property(assign, readwrite) BOOL didRegister;
 @property(assign, readwrite) SHSocketStaus status;
 @property(assign, readwrite) id delegate;
-+ (SHIRCSocket*)socketWithServer:(NSString *)srv andPort:(int)prt usesSSL:(BOOL)ssl;
++ (SHIRCSocket *)socketWithServer:(NSString *)srv andPort:(int)prt usesSSL:(BOOL)ssl;
 - (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user;
 - (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user andPassword:(NSString *)pass;
 - (BOOL)sendCommand:(NSString *)command withArguments:(NSString *)args;
-- (BOOL)sendCommand:(NSString *)command withArguments:(NSString*)args waitUntilRegistered:(BOOL)wur;
+- (BOOL)sendCommand:(NSString *)command withArguments:(NSString *)args waitUntilRegistered:(BOOL)wur;
 - (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent;
 - (void)disconnect;
 - (id)channels;

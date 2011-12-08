@@ -25,4 +25,5 @@
 - (void)categorizeNick:(NSString *)aNick;
 - (void)doneEditing:(id)g;
 - (void)setMode:(NSString *)mode forUser:(NSString *)_cUser;
+- (void)findArrayAndRemoveNick:(NSString *)_sUser;
 @end

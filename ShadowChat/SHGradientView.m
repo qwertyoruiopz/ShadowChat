@@ -16,8 +16,7 @@
 //
 // returns a CAGradientLayer class as the default layer class for this view
 //
-+ (Class)layerClass
-{
++ (Class)layerClass {
 	return [CAGradientLayer class];
 }
 
@@ -25,15 +24,11 @@
 //
 // Initialise the view.
 //
-- (id)initWithFrame:(CGRect)frame 
-{
+- (id)initWithFrame:(CGRect)frame  {
     return [self initWithFrame:frame reversed:NO];
 }
-- (id)initWithFrame:(CGRect)frame reversed:(BOOL)rev
-{
-    self = [super initWithFrame:frame];
-	if (self)
-	{
+- (id)initWithFrame:(CGRect)frame reversed:(BOOL)rev {
+	if ((self = [super initWithFrame:frame])) {
 		CAGradientLayer *gradientLayer = (CAGradientLayer *)self.layer;
         if (rev) {
             gradientLayer.colors =

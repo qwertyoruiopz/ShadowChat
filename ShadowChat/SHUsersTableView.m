@@ -8,6 +8,27 @@
 
 #import "SHUsersTableView.h"
 
+@interface NSString (UserAdditions) 
+- (BOOL)isHigherPowerThan:(NSString *)t;
+@end
+@implementation NSString (UserAdditions)
+
+- (BOOL)isHigherPowerThan:(NSString *)t {
+	if ([self hasPrefix:@"~"])
+		return NO; // Nothing is higher.. don't even bother.
+	else if ([self hasPrefix:@"&"])
+		return [t isEqualToString:@"~"];
+	else if ([self hasPrefix:@"@"])
+		return ([t isEqualToString:@"~"] || [t isEqualToString:@"&"]);
+	else if ([self hasPrefix:@"%"])
+		return ([t isEqualToString:@"~"] || [t isEqualToString:@"@"] || [t isEqualToString:@"&"]);
+	else if ([self hasPrefix:@"+"]) 
+		return ([t isEqualToString:@"~"] || [t isEqualToString:@"@"] || [t isEqualToString:@"&"] || [t isEqualToString:@"%"]);
+	return NO;
+	
+}
+
+@end
 
 @implementation SHUsersTableView
 
@@ -42,17 +63,15 @@
 				[self categorizeNick:user];
 	}
 	[self.tableView reloadData];
-	NSLog(@"USERTITLES: %@",userTitles);
+
 }
-
-
 
 - (BOOL)hasPowerz:(NSString *)sNick {
 	return [sNick hasPrefix:@"@"] || [sNick hasPrefix:@"&"] || [sNick hasPrefix:@"+"] || [sNick hasPrefix:@"~"] || [sNick hasPrefix:@"%"];
 }
 
 - (void)categorizeNick:(NSString *)aNick {
-	if (![aNick isEqualToString:@""] || ![aNick isEqualToString:@" "]) {
+	if (![aNick isEqualToString:@""] && ![aNick isEqualToString:@" "]) {
 		if ([aNick hasPrefix:@"@"]) {
 			[ops addObject:aNick];
 			[userTitles setObject:[aNick substringWithRange:NSMakeRange(0, 1)] forKey:[self nickWithoutFormatting:aNick]];
@@ -80,45 +99,45 @@
 	}
 }
 
+
+
 - (void)setUserRank:(NSString *)_user_ rank:(NSString *)_rank {
 	
 }
 
 - (void)removeUser:(NSString *)aUser {
-	if ([[userTitles allKeys] containsObject:aUser]) {
-		[self performSelectorInBackground:@selector(findArrayAndRemoveNick:) withObject:aUser];
-		[userTitles removeObjectForKey:aUser];
-	}
+	[self performSelectorInBackground:@selector(findArrayAndRemoveNick:) withObject:aUser];
+	[userTitles removeObjectForKey:aUser];
 }
 
 - (void)findArrayAndRemoveNick:(NSString *)_sUser {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-//	NSLog(@"User groups: vops: %@ ; hops: %@ ; ops: %@ ; aops: %@ ; sops: %@ ; norms: %@ ;", vops, hops, ops, aops, sops, norms);
 	if ([norms containsObject:_sUser]) {
 		[norms removeObject:_sUser];
 		goto cleanup;
 	}
-	_sUser = [@"+" stringByAppendingString:_sUser];
+	BOOL p = [_sUser isEqualToString:[self nickWithoutFormatting:_sUser]];
+	if (!p) _sUser = [@"+" stringByAppendingString:_sUser];
 	if ([vops containsObject:_sUser]) {
 		[vops removeObject:_sUser];
 		goto cleanup;
 	}
-	_sUser = [_sUser stringByReplacingOccurrencesOfString:@"+" withString:@"%"];
+	if (!p) _sUser = [_sUser stringByReplacingOccurrencesOfString:@"+" withString:@"%"];
 	if ([hops containsObject:_sUser]) {
 		[hops removeObject:_sUser];
 		goto cleanup;
 	}
-	_sUser = [_sUser stringByReplacingOccurrencesOfString:@"%" withString:@"@"];
+	if (!p) _sUser = [_sUser stringByReplacingOccurrencesOfString:@"%" withString:@"@"];
 	if ([ops containsObject:_sUser]) {
 		[ops removeObject:_sUser];
 		goto cleanup;
 	}
-	_sUser = [_sUser stringByReplacingOccurrencesOfString:@"@" withString:@"&"];
+	if (!p) _sUser = [_sUser stringByReplacingOccurrencesOfString:@"@" withString:@"&"];
 	if ([aops containsObject:_sUser]) {
 		[aops removeObject:_sUser];
 		goto cleanup;
 	}
-	_sUser = [_sUser stringByReplacingOccurrencesOfString:@"&" withString:@"~"];
+	if (!p) _sUser = [_sUser stringByReplacingOccurrencesOfString:@"&" withString:@"~"];
 	if ([sops containsObject:_sUser]) {
 		[sops removeObject:_sUser];
 		goto cleanup;
@@ -129,6 +148,7 @@ cleanup:
 	return;
 
 }
+
 
 - (void)addUser:(NSString *)aUser {
 	[norms addObject:aUser];
@@ -149,8 +169,28 @@ cleanup:
 	return @"";
 }
 
+
+
 - (void)setMode:(NSString *)mode forUser:(NSString *)_cUser {
+	NSString *directMode = [mode substringWithRange:NSMakeRange(1, 1)];
 	if ([userTitles objectForKey:_cUser] == nil) {
+		[self removeUser:_cUser];
+		if ([mode characterAtIndex:0] == '+') {
+			if ([self hasPowerz:_cUser]) {
+				if (![[mode substringWithRange:NSMakeRange(0, 1)] isHigherPowerThan:directMode]) 
+					[userTitles setObject:directMode forKey:_cUser];
+				else return;
+			}
+			else {
+				[userTitles setObject:directMode forKey:_cUser];
+			}
+		}
+		else if ([mode characterAtIndex:0] == '-') {
+			// begin removing shits..
+		}
+		else {
+			// :o wth?!?
+		}
 		//someone figure this shit out...
 		// if a user is given voice. (+v)
 		// then given halfop, or a higher ranking
@@ -375,7 +415,7 @@ cleanup:
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	NSLog(@"MEH! %@", [norms objectAtIndex:indexPath.row]);
+	NSLog(@"MEH! %@ : %@", [norms objectAtIndex:indexPath.row], [userTitles objectForKey:[norms objectAtIndex:indexPath.row]]);
     // Navigation logic may go here. Create and push another view controller.
     /*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
