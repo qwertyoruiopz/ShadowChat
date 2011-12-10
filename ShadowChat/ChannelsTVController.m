@@ -129,17 +129,11 @@
 		cell.thirdLabel.hidden = YES;
 		cell.delegate = self;
 	}
-	NSLog(@"Fuck. You. %d : %d : %d", [self tableView:tableView numberOfRowsInSection:indexPath.section], indexPath.row, isReallyEditing);
 	if ([self tableView:tableView numberOfRowsInSection:indexPath.section]-1 == indexPath.row && isReallyEditing) {
 		cell.textLabel.text = @"Join a channel";
 	}
 	else {
-		@try {
 		cell.textLabel.text = [((SHIRCChannel *)[[[(SHIRCNetwork *)[[SHIRCNetwork allConnectedNetworks] objectAtIndex:indexPath.section] socket] channels] objectAtIndex:indexPath.row]) formattedName];
-		}
-		@catch (id e) {
-			NSLog(@"fuck you. %@",e);
-		}
 	}
 	
     // Confgure the cell...
