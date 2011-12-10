@@ -110,7 +110,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return [[[(SHIRCNetwork *)[[SHIRCNetwork allConnectedNetworks] objectAtIndex:section] socket] channels] count] + (int)isReallyEditing;
+    return [[[(SHIRCNetwork *)[[SHIRCNetwork allConnectedNetworks] objectAtIndex:section] socket] channels] count] + isReallyEditing;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -129,11 +129,19 @@
 		cell.thirdLabel.hidden = YES;
 		cell.delegate = self;
 	}
-	if ([self tableView:tableView numberOfRowsInSection:indexPath.section] == indexPath.row && isReallyEditing) {
+	NSLog(@"Fuck. You. %d : %d : %d", [self tableView:tableView numberOfRowsInSection:indexPath.section], indexPath.row, isReallyEditing);
+	if ([self tableView:tableView numberOfRowsInSection:indexPath.section]-1 == indexPath.row && isReallyEditing) {
 		cell.textLabel.text = @"Join a channel";
 	}
-	else
+	else {
+		@try {
 		cell.textLabel.text = [((SHIRCChannel *)[[[(SHIRCNetwork *)[[SHIRCNetwork allConnectedNetworks] objectAtIndex:indexPath.section] socket] channels] objectAtIndex:indexPath.row]) formattedName];
+		}
+		@catch (id e) {
+			NSLog(@"fuck you. %@",e);
+		}
+	}
+	
     // Confgure the cell...
 	[cell removeAllGestureRecognizers];
 	return cell;
