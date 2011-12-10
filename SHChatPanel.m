@@ -125,7 +125,7 @@
 	NSLog(@"fdfsd %@", [output stringByEvaluatingJavaScriptFromString:java]);
 }
 
-- (void)didRecieveActionFrom:(NSString*)nick text:(NSString*)ircMessage_ {
+- (void)didRecieveActionFrom:(NSString *)nick text:(NSString *)ircMessage_ {
 	NSLog(@"Action(Nick:%@ Message:%@)",nick, ircMessage_);
     NSString *java = [NSString stringWithFormat:@"addAction('%@','%@');",
                       [[nick stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"],
@@ -196,58 +196,59 @@
 	[[self navigationItem] setRightBarButtonItem:users];
 	[users release];
 	[output loadHTMLString:@"\
-     <html>\
-     <head>\
+	 <html>\
+	 <head>\
 	 <style type=\"text/css\">\
 	 * {margin:0px;padding:0px;}\
 	 div { /*border-top:1px solid black;*/border-bottom:1px solid black;padding-left:3px;padding-right:3px;}\
-	 body {font-family:'Tahoma';}\
+	 body {font-family:'Times';font-size:14.5;}\
 	 </style>\
-     <script>\
-     function emojify(str) {  \
-     return str;\
-     }  \
+	 <script>\
+	 function emojify(str) {return str;}\
 	 function replaceURLWithHTMLLinks(text) {\
 	 var exp = /(\\b(https?|ftp|file):\\/\\/[-A-Z0-9+&@#\\/%?=~_|!:,.;]*[-A-Z0-9+&@#\\/%=~_|])/ig;\
-	 return text.replace(exp,\"<a href='$1'>$1</a>\"); \
-	 }\
-     function htmlEntities(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;');}\
+	 return text.replace(exp,\"<a href='sc-urlopen://$1'>$1</a>\");}\
+	 function htmlEntities(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;');}\
      function addMessage(nick, msg) { document.body.innerHTML += '<div><strong>' + htmlEntities(nick) + ':</strong> ' + htmlEntities(emojify(msg)) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
 	 function addHTML(nick, msg) {  document.body.innerHTML += '<div><strong>' + htmlEntities(nick) + ':</strong> ' + replaceURLWithHTMLLinks(emojify(msg)) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
      function addAction(nick, msg) { document.body.innerHTML += '<div><strong>• ' + htmlEntities(nick) + '</strong> ' + htmlEntities(msg) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
      function background_color() {\
          document.body.style.background=\"#dae0ec\";\
          return \"#dae0ec\";\
-     }\
-     function addEvent(from, to, extra, type)\
-     {\
-         if(type==\"SHEventTypeKick\") {\
-             document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' has kicked ' + htmlEntities(to) + ' (' + htmlEntities(extra) + ')</center></div>';\
-             window.scrollTo(0, document.body.scrollHeight);\
-         }\
-         if(type==\"SHEventTypeJoin\") {\
-             document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' has joined the channel </center></div>';\
-             window.scrollTo(0, document.body.scrollHeight);\
-         }\
-         if(type==\"SHEventTypePart\") {\
-             if(extra=='(null)'){\
-                 document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' has left the channel </center></div>';\
-                 window.scrollTo(0, document.body.scrollHeight);\
-             }\
-             else {\
-                 document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' has left the channel (' + htmlEntities(extra) + ')</center></div>';\
-                 window.scrollTo(0, document.body.scrollHeight);\
-             }\
-         }\
-     }\
-     </script>\
-     </head>\
-     <body style=\"word-wrap: break-word; \">\
-     <center>ShadowChat beta</center>\
-     </body>\
-     </html>\
+	 }\
+	 function addEvent(from, to, extra, type) {\
+		if (type == \"SHEventTypeKick\") {\
+			document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' has kicked ' + htmlEntities(to) + ' (' + htmlEntities(extra) + ')</center></div>';\
+			window.scrollTo(0, document.body.scrollHeight);\
+		}\
+		else if (type == \"SHEventTypeJoin\") {\
+			document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' has joined the channel </center></div>';\
+			window.scrollTo(0, document.body.scrollHeight);\
+		}\
+		else if (type == \"SHEventTypePart\") {\
+			if(extra == '(null)'){\
+				document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' has left the channel </center></div>';\
+				window.scrollTo(0, document.body.scrollHeight);\
+			}\
+			else {\
+				document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' has left the channel (' + htmlEntities(extra) + ')</center></div>';\
+				window.scrollTo(0, document.body.scrollHeight);\
+			}\
+		}\
+		else if (type == \"SHEventTypeMode\") {\
+				document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' sets modes ' + htmlEntities(to) + ' ' + htmlEntities(extra) + '</center></div>';\
+				window.scrollTo(0, document.body.scrollHeight);\
+		}\
+	 }\
+	 </script>\
+	 </head>\
+	 <body style=\"word-wrap: break-word; \">\
+	 <center>ShadowChat beta</center>\
+	 </body>\
+	 </html>\
 	 " baseURL:[NSURL URLWithString:@"about:blank"]];
 	[output setDelegate:self];
+	//1 TheGame -v notaqwertyoruiop
 }
 
 /*- (void)webViewDidStartLoad:(UIWebView *)webView {
@@ -287,7 +288,7 @@
     [[self view] addSubview:[tfield superview]];
     [tfield becomeFirstResponder];
 }
-
+//1 TheGame -v notaqwertyoruiop
 - (void)didRecieveEvent:(SHEventType)evt from:(NSString *)from to:(NSString *)to extra:(NSString *)extra {
     NSLog(@"%d %@ %@ %@", evt, from, to, extra);
 	switch (evt) {
@@ -298,7 +299,8 @@
 			[userList removeUser:to];
 			break;
 		case SHEventTypeMode:
-			[userList setMode:to forUser:extra];
+			[userList setMode:to forUser:extra fromUser:from];
+		//	[output stringByEvaluatingJavaScriptFromString:@""];
 			break;
 		case SHEventTypePart:
 			[userList removeUser:from];
@@ -316,20 +318,6 @@
                       (evt == SHEventTypePart) ? @"SHEventTypePart" : nil
                       ];
     [output stringByEvaluatingJavaScriptFromString:java];
-}
-
-- (void)webViewDidStartLoad:(UIWebView *)webView {
-	NSURL *tmp = webView.request.URL;
-	[webView stopLoading];
-	NSLog(@"0.o %@ %@", webView, webView.request);
-	if (![webView.request.URL.absoluteString isEqualToString:@"about:blank"]) {
-				[webView stopLoading];
-			NSLog(@"0.o %@ %@", webView, webView.request);
-		/* if (settings..options..wtf??S?? WHY R DER NO SETTINGS YET?!?? */
-		[[UIApplication sharedApplication] openURL:webView.request.URL];
-
-
-	}
 }
 
 

@@ -24,6 +24,6 @@
 - (void)addUser:(NSString *)aUser;
 - (void)categorizeNick:(NSString *)aNick;
 - (void)doneEditing:(id)g;
-- (void)setMode:(NSString *)mode forUser:(NSString *)_cUser;
+- (void)setMode:(NSString *)mode forUser:(NSString *)_cUser fromUser:(NSString *)__sU;
 - (void)findArrayAndRemoveNick:(NSString *)_sUser;
 @end

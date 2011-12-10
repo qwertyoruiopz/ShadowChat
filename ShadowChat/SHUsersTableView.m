@@ -171,7 +171,8 @@ cleanup:
 
 
 
-- (void)setMode:(NSString *)mode forUser:(NSString *)_cUser {
+- (void)setMode:(NSString *)mode forUser:(NSString *)_cUser fromUser:(NSString *)__sU {
+
 	NSString *directMode = [mode substringWithRange:NSMakeRange(1, 1)];
 	if ([userTitles objectForKey:_cUser] == nil) {
 		[self removeUser:_cUser];
