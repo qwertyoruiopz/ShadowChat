@@ -107,21 +107,18 @@
 
 - (void)didRecieveMessageFrom:(NSString *)nick text:(NSString *)ircMessage {
 	NSLog(@"Nick:%@ Message:%@", nick, ircMessage);
-	NSString *format = @"addMessageWithHTML('%@','%@');";
-//	NSRange rr = [[ircMessage lowercaseString] rangeOfString:@"http://"];
-//	if (rr.location == NSNotFound) {
-//		rr = [[ircMessage lowercaseString] rangeOfString:@"https://"];
-//		if (rr.location != NSNotFound) {
-//			format = @"addMessageWithHTML('%@', '%@',);";
-//			NSRange ar = [ircMessage rangeOfString:@" " options:NSCaseInsensitiveSearch range:NSMakeRange(rr.location, [ircMessage length]-rr.location)];
-	//		NSLog(@"fdsfsd %@", [ircMessage substringWithRange:NSMakeRange(rr.location, ar.location)]);
-	//		[ircMessage stringByReplacingOccurrencesOfString:nil withString:nil options:nil range:nil];
-			
-//		}
-//	}
-//	else {
-//		format = @"addMessageWithHTML('%@', '%@',);";
-//	}
+	NSString *format = @"addMessage('%@','%@');";
+	NSRange r = [ircMessage rangeOfString:@"http://"];
+	if (r.location != NSNotFound) {
+		format = @"addHTML('%@','%@');";
+	}
+	else {
+		// try https...:o
+		r = [ircMessage rangeOfString:@"https://"];
+		if (r.location != NSNotFound) {
+			format = @"addHTML('%@','%@');";	
+		}
+	}
 	NSString *java = [NSString stringWithFormat:format,
                       [[nick stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"],
                       [[ircMessage stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"]];
@@ -216,7 +213,7 @@
 	 }\
      function htmlEntities(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;');}\
      function addMessage(nick, msg) { document.body.innerHTML += '<div><strong>' + htmlEntities(nick) + ':</strong> ' + htmlEntities(emojify(msg)) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
-	 function addMessageWithHTML(nick, msg) {  document.body.innerHTML += '<div><strong>' + htmlEntities(nick) + ':</strong> ' + replaceURLWithHTMLLinks(emojify(msg)) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
+	 function addHTML(nick, msg) {  document.body.innerHTML += '<div><strong>' + htmlEntities(nick) + ':</strong> ' + replaceURLWithHTMLLinks(emojify(msg)) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
      function addAction(nick, msg) { document.body.innerHTML += '<div><strong>• ' + htmlEntities(nick) + '</strong> ' + htmlEntities(msg) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
      function background_color() {\
          document.body.style.background=\"#dae0ec\";\
@@ -253,10 +250,10 @@
 	[output setDelegate:self];
 }
 
-- (void)webViewDidStartLoad:(UIWebView *)webView {
+/*- (void)webViewDidStartLoad:(UIWebView *)webView {
 	NSLog(@"Trying to load.. %@", webView.request.URL.absoluteString);
 	[webView stopLoading];
-}
+}*/
 
 - (void)viewDidUnload {
     [super viewDidUnload];
@@ -320,4 +317,20 @@
                       ];
     [output stringByEvaluatingJavaScriptFromString:java];
 }
+
+- (void)webViewDidStartLoad:(UIWebView *)webView {
+	NSURL *tmp = webView.request.URL;
+	[webView stopLoading];
+	NSLog(@"0.o %@ %@", webView, webView.request);
+	if (![webView.request.URL.absoluteString isEqualToString:@"about:blank"]) {
+				[webView stopLoading];
+			NSLog(@"0.o %@ %@", webView, webView.request);
+		/* if (settings..options..wtf??S?? WHY R DER NO SETTINGS YET?!?? */
+		[[UIApplication sharedApplication] openURL:webView.request.URL];
+
+
+	}
+}
+
+
 @end
