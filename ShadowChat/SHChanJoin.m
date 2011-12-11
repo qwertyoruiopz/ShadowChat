@@ -12,30 +12,34 @@
 
 @implementation SHChanJoin
 @synthesize network;
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    if ([textField tag] == 12341||[textField tag] == 12344||[textField tag] == 12343) {
+    if ([textField tag] == 12341 || [textField tag] == 12344 || [textField tag] == 12343) {
         if ([string isEqualToString:@" "]) {
             return NO;
         }
         if ([textField tag] == 12341) {
             if (range.length == 1 && [[textField text] length] == 1) {
                 self.navigationItem.rightBarButtonItem.enabled = NO;
-            } else if (range.length == 0 && range.location == 0)
-            {
-                self.navigationItem.rightBarButtonItem.enabled=YES;
+            }
+			else if (range.length == 0 && range.location == 0) {
+                self.navigationItem.rightBarButtonItem.enabled = YES;
             }
         }
     }
     return YES;
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [self doneWithJoin];
+	if (![[textField text] isEqualToString:@""] && ![[textField text] isEqualToString:@" "] && ![[textField text] isEqualToString:@"#"] && ![[textField text] isEqualToString:@"# "] && ![[textField text] isEqualToString:@"#  "]) // just in case.. stfu. :P
+		[self doneWithJoin];
+	[textField resignFirstResponder];
     return NO;
 }
 
 
 - (id)initWithStyle:(UITableViewStyle)style {
 	if ((self = [super initWithStyle:style])) {
+		rooms = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -52,27 +56,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Join a channel";
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+
+    [self loadAvailableRoomsOnServer];
+	
     UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Join" style:UIBarButtonItemStyleDone target:self action:@selector(doneWithJoin)];
     self.navigationItem.rightBarButtonItem = rightBarButtonItem;
     [rightBarButtonItem release];
+	
     rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(done)];
     self.navigationItem.leftBarButtonItem = rightBarButtonItem;
     [rightBarButtonItem release];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)doneWithJoin {
-    [[SHIRCChannel alloc] initWithSocket:network.socket andChanName:([[(UITextField*)[self.tableView viewWithTag:12340] text] isEqualToString:@""] ? [(UITextField*)[self.tableView viewWithTag:12340] placeholder] : [(UITextField*)[self.tableView viewWithTag:12340] text])];
+    [[SHIRCChannel alloc] initWithSocket:network.socket andChanName:([[(UITextField *)[self.tableView viewWithTag:12340] text] isEqualToString:@""] ? [(UITextField *)[self.tableView viewWithTag:12340] placeholder] : [(UITextField *)[self.tableView viewWithTag:12340] text])];
     [self done];
 }
 
@@ -91,7 +88,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [[self.tableView viewWithTag:12340] becomeFirstResponder];
+//    [[self.tableView viewWithTag:12340] becomeFirstResponder];
     [super viewDidAppear:animated];
 }
 
@@ -123,13 +120,26 @@
             break;
             
         case 1:
-            return 5;
+            return [[rooms allKeys] count];
             break;
             
         default:
             break;
     }
     return 0;
+}
+
+
+- (void)loadAvailableRoomsOnServer {
+	
+	if ([[[[network socket] availableRooms] allKeys] count] == 0) {
+		[[network socket] findAvailableRoomsWithCallback:self];
+		[rooms setObject:@"k" forKey:@"Loading..."];
+	}
+	else {
+		rooms = [[network socket] availableRooms];
+		[self.tableView reloadData];
+	}
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -176,8 +186,8 @@
 						break;
 				}
 				break;
-			case 1:
-				cell.textLabel.text = @"Not yet implemented";
+			case 1: 
+					cell.textLabel.text = [[rooms allKeys] objectAtIndex:indexPath.row];
 				break;
 			default:
 				break;
@@ -185,6 +195,37 @@
         // Configure the cell...
 	}
 	return cell;
+}
+
+- (void)addRoom:(NSString *)room withUserCount:(NSString *)_count {
+	[rooms removeObjectForKey:@"Loading..."];
+	[self deleteLoadingCellIfNecessary];
+	if (![[rooms allKeys] containsObject:room])
+		[rooms setObject:_count forKey:room];
+//	else {
+//		if (![[rooms objectForKey:room] isEqualToString:_count]) {
+//			[rooms removeObjectForKey:room];
+//			[rooms setObject:_count forKey:room];
+//		}
+//	}
+	[self.tableView reloadData];
+}
+
+- (void)dealloc {
+	[super dealloc];
+	[rooms release];
+	
+}
+
+- (void)deleteLoadingCellIfNecessary {
+	for (UITableViewCell *c in [self.tableView visibleCells]) {
+		if ([c.textLabel.text isEqualToString:@"Loading..."]) {
+			[self.tableView beginUpdates];
+			[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:[self.tableView indexPathForCell:c]] withRowAnimation:UITableViewRowAnimationFade];
+			[self.tableView endUpdates];
+			break;
+		}
+	}
 }
 
 /*

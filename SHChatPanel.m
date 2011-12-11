@@ -248,7 +248,6 @@
 	 </html>\
 	 " baseURL:[NSURL URLWithString:@"about:blank"]];
 	[output setDelegate:self];
-	//1 TheGame -v notaqwertyoruiop
 }
 
 /*- (void)webViewDidStartLoad:(UIWebView *)webView {

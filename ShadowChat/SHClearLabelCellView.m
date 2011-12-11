@@ -50,8 +50,10 @@
 
 - (void)cellWasSwiped:(UISwipeGestureRecognizer *)recog {
 	NSLog(@"Trying to draw.. %@", recog);
-	if (_isSwiped)
+	if (_isSwiped) {
+		_isSwiped = NO;
 		return;
+	}
 	_isSwiped = NO;
 	if (!self.editing)
 		[self drawOptionsView];

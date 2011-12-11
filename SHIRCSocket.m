@@ -10,6 +10,7 @@
 #import "SHIRCManager.h"
 #import "SHIRCChannel.h"
 #import "SHIRCNetwork.h"
+#import <objc/runtime.h>
 
 @implementation SHIRCSocket
 
@@ -25,7 +26,7 @@ output = nil;
 @synthesize input, output, port, server, usesSSL, _channels, status, delegate;
 
 + (SHIRCSocket *)socketWithServer:(NSString *)srv andPort:(int)prt usesSSL:(BOOL)ssl {
-    SHIRCSocket *ret = [[(Class)self alloc]init];
+    SHIRCSocket *ret = [[(Class)self alloc] init];
     ret.server = srv;
     ret.port = prt;
     ret.usesSSL = ssl;
@@ -36,6 +37,7 @@ output = nil;
 }
 - (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user andPassword:(NSString *)pass {
     [self retain];
+	availRoomsOnServ = [[NSMutableDictionary alloc] init];
     IF_IOS4_OR_GREATER (
 						bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{ 
 		[[UIApplication sharedApplication] endBackgroundTask:bgTask]; 
@@ -104,6 +106,20 @@ output = nil;
 		self._channels = [NSMutableArray new];
 	return self._channels;
 }
+
+- (id)availableRooms {
+	return availRoomsOnServ;
+}
+
+- (void)findAvailableRoomsWithCallback:(id)cBack {
+	jCallback = cBack;
+	[self sendCommand:@"LIST" withArguments:nil];
+}
+
+- (void)addRoom:(NSString *)room withUserCount:(NSString *)_count {
+	objc_msgSend(jCallback, _cmd, room, _count);
+}
+
 
 - (BOOL)sendCommand:(NSString *)command withArguments:(NSString *)args {
     NSString *cmd;
@@ -242,8 +258,8 @@ output = nil;
 	if (didReg) {
 		for (NSString *cmd in commandsWaiting) {
 			if ([cmd isKindOfClass:[NSString class]]) {
-				[output write:(uint8_t*)[cmd UTF8String] maxLength:[cmd length]];
-				[output write:(uint8_t*)"\r\n" maxLength:2];
+				[output write:(uint8_t *)[cmd UTF8String] maxLength:[cmd length]];
+				[output write:(uint8_t *)"\r\n" maxLength:2];
 			}
 		}
 		[commandsWaiting release];
@@ -253,7 +269,6 @@ output = nil;
 
 				id chan = [self retainedChannelWithFormattedName:obj];
 				[self addChannel:chan ? chan : [[SHIRCChannel alloc] initWithSocket:self andChanName:obj]];
-				// crash is here...  ^ 
 				[chan release];			
 			}
 		}
@@ -269,6 +284,7 @@ output = nil;
     for (id obj in _channels) {
         [obj release];
     }
+	[availRoomsOnServ release];
     [_channels release];
     [input release];
     [output release];

@@ -207,8 +207,7 @@
 
 // Override to support conditional editing of the table view.
 
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([[SHIRCNetwork allNetworks] count] == indexPath.row) {
         return UITableViewCellEditingStyleInsert;
     }

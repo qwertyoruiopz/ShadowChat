@@ -9,17 +9,18 @@
 #import <Foundation/Foundation.h>
 #import "SHIRCSocket.h"
 @interface SHIRCNetwork : NSObject {
-    SHIRCSocket* socket;
-    NSString* server;
-    NSString* descr;
-    NSString* username;
-    NSString* nickname;
-    NSString* realname;
-    NSString* serverPassword;
-    NSString* nickServPassword;
+    SHIRCSocket *socket;
+    NSString *server;
+    NSString *descr;
+    NSString *username;
+    NSString *nickname;
+    NSString *realname;
+    NSString *serverPassword;
+    NSString *nickServPassword;
     int port;
     NSMutableArray* channels;
     BOOL hasSSL;
+
 }
 @property(retain) NSString* server;
 @property(retain) NSString* descr;

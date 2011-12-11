@@ -38,7 +38,7 @@ static SHIRCManager* sharedSHManager;
 
 #define NO_THREADING 1
 - (void)parseMessage:(NSMutableString *)msg fromSocket:(SHIRCSocket *)socket {
-
+	// 322 = room listing...
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	#ifndef NO_THREADING
 	if ([NSThread isMainThread]) {
@@ -136,6 +136,18 @@ static SHIRCManager* sharedSHManager;
 				break;
 			}
 		}
+	}
+	else if ([command isEqualToString:@"322"]) {
+		// gettting rooms data.. :o
+		/*
+		 2011-12-10 16:12:42.716 ShadowChat[3024:f803] Rooms data... 322 : Maximus-i4 #help 5 :[+nt]  : <SHIRCSocket: 0x68a5570> 
+		 2011-12-10 16:12:42.717 ShadowChat[3024:f803] Rooms data... 322 : Maximus-i4 #test 2 :[+nt]  : <SHIRCSocket: 0x68a5570> 
+		 2011-12-10 16:12:42.723 ShadowChat[3024:f803] Rooms data... 322 : Maximus-i4 #nightcoast 32 :[+tfj] God gave men penis and a brain, but only enough blood to run one at a time <--- Now das a quote to live by ;) | k | max, we should rewrite shadowchat </trolo> | dida is alive (8/12/11) : <SHIRCSocket: 0x68a5570> 
+		 */
+		NSString *testArg = [argument stringByReplacingOccurrencesOfString:[[socket nick_] stringByAppendingString:@" "] withString:@""];
+		NSRange endOfRoom = [testArg rangeOfString:@" "];
+		NSRange endOfUserCount = [testArg rangeOfString:@" " options:NSCaseInsensitiveSearch range:NSMakeRange(endOfRoom.location+1, testArg.length-(endOfRoom.location+1))];
+		[socket addRoom:[testArg substringWithRange:NSMakeRange(0, endOfRoom.location)] withUserCount:[testArg substringWithRange:NSMakeRange(endOfRoom.location+1, endOfUserCount.location-endOfRoom.location+1)]];
 	}
     else if ([command isEqualToString:@"001"]) {
 		socket.didRegister = YES;

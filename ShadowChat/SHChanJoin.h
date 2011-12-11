@@ -9,9 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "SHIRCNetwork.h"
 @interface SHChanJoin : UITableViewController {
-	SHIRCNetwork* network;
+	SHIRCNetwork *network;
+	NSMutableDictionary *rooms;
 }
 @property(nonatomic, assign) SHIRCNetwork* network;
 - (void)done;
 - (void)doneWithJoin;
+- (void)addRoom:(NSString *)room withUserCount:(NSString *)_count;
+- (void)loadAvailableRoomsOnServer;
+- (void)deleteLoadingCellIfNecessary;
 @end

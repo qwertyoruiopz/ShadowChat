@@ -10,9 +10,9 @@
 #import <Foundation/Foundation.h>
 #import "Foundation/NSStream.h"
 
-
 @class SHIRCChannel;
 @class SHIRCSocket;
+
 typedef enum SHSocketStaus {
     SHSocketStausNotOpen,
     SHSocketStausConnecting,
@@ -20,6 +20,7 @@ typedef enum SHSocketStaus {
     SHSocketStausError,
     SHSocketStausClosed
 } SHSocketStaus;
+
 @interface SHIRCSocket : NSObject <NSStreamDelegate> {
     NSInputStream *input;
     NSOutputStream *output;
@@ -36,7 +37,10 @@ typedef enum SHSocketStaus {
     BOOL canWrite;
     id delegate;
     int bgTask;
+	id jCallback;
+	NSMutableDictionary *availRoomsOnServ;
 }
+
 @property(retain, readwrite) NSInputStream *input;
 @property(retain, readwrite) NSOutputStream *output;
 @property(retain, readwrite) NSString *server;
@@ -55,6 +59,9 @@ typedef enum SHSocketStaus {
 - (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent;
 - (void)disconnect;
 - (id)channels;
+- (id)availableRooms;
+- (void)findAvailableRoomsWithCallback:(id)cBack;
+- (void)addRoom:(NSString *)room withUserCount:(NSString *)_count;
 - (void)joinChannel:(SHIRCChannel *)chan;
 - (void)partChannel:(SHIRCChannel *)chan;
 - (void)addChannel:(SHIRCChannel *)chan;

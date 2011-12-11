@@ -64,7 +64,7 @@ extern id objc_msgSend(id target, SEL msg, ...);
 	else if (flavor == SHMessageFlavorAction) {
 		[self didRecieveActionFrom:[socket nick_] text:message];
 	}
-	return [socket sendCommand:[command stringByAppendingFormat:@" %@", [self formattedName]]withArguments:(flavor==SHMessageFlavorAction) ? [NSString stringWithFormat:@"%c%@%@%c", 0x01, @"ACTION ", message, 0x01] : [NSString stringWithFormat:@"%@%@%@", @"", message, @""]];
+	return [socket sendCommand:[command stringByAppendingFormat:@" %@", [self formattedName]] withArguments:(flavor==SHMessageFlavorAction) ? [NSString stringWithFormat:@"%c%@%@%c", 0x01, @"ACTION ", message, 0x01] : [NSString stringWithFormat:@"%@%@%@", @"", message, @""]];
 }
 - (void)parseAndEventuallySendMessage:(NSString *)command {
 	if ([command hasPrefix:@"/"])
@@ -85,8 +85,9 @@ extern id objc_msgSend(id target, SEL msg, ...);
 	return joined;
 }
 
-- (void)parseCommand:(NSString*)command {
-    NSAutoreleasePool* pool = [NSAutoreleasePool new];
+
+- (void)parseCommand:(NSString *)command {
+    NSAutoreleasePool *pool = [NSAutoreleasePool new];
     NSScanner* scan = [NSScanner scannerWithString:command];
     if ([command hasPrefix:@"/"])
         [scan setScanLocation:1];
@@ -103,7 +104,10 @@ extern id objc_msgSend(id target, SEL msg, ...);
 		[scan setScanLocation:1];
 		[scan scanUpToString:@"" intoString:&argument];
 		[self sendMessage:argument flavor:SHMessageFlavorNormal];
-	} 
+	}
+	else if ([command_ isEqualToStringNoCase:@"list"]) {
+		[socket sendCommand:@"LIST\r\n" withArguments:nil];
+	}
 	else if ([command_ isEqualToStringNoCase:@"mode"]) {
 		if ([[argument componentsSeparatedByString:@" "] count] < 1) goto out;
 		[socket sendCommand:[NSString stringWithFormat:@"MODE %@ %@\r\n", [self formattedName], [[argument componentsSeparatedByString:@" "] objectAtIndex:0]] withArguments:nil];
