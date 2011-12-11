@@ -219,7 +219,6 @@ extern id objc_msgSend(id target, SEL msg, ...);
 	}
 }
 
-
 - (void)didRecieveEvent:(SHEventType)event from:(NSString *)from to:(NSString *)to extra:(NSString *)extra {
 
 	if ([delegate respondsToSelector:_cmd]) {

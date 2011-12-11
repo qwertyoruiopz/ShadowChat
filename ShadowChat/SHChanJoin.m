@@ -40,6 +40,7 @@
 - (id)initWithStyle:(UITableViewStyle)style {
 	if ((self = [super initWithStyle:style])) {
 		rooms = [[NSMutableDictionary alloc] init];
+		needsToReIndex = NO;
     }
     return self;
 }
@@ -202,13 +203,18 @@
 	[self deleteLoadingCellIfNecessary];
 	if (![[rooms allKeys] containsObject:room])
 		[rooms setObject:_count forKey:room];
-//	else {
-//		if (![[rooms objectForKey:room] isEqualToString:_count]) {
-//			[rooms removeObjectForKey:room];
-//			[rooms setObject:_count forKey:room];
-//		}
-//	}
+	for (UITableViewCell *c in [self.tableView visibleCells]) {
+	//	NSLog(@"0.o %@ : %d", c, [self.tableView indexPathForCell:c].section);
+		if ([self.tableView indexPathForCell:c].section == 1) {
+			[self.tableView beginUpdates];
+			[self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[self.tableView indexPathForCell:[[self.tableView visibleCells] lastObject]]] withRowAnimation:UITableViewRowAnimationLeft];
+			[self.tableView endUpdates];
+			break;
+		}
+	}
+
 	[self.tableView reloadData];
+
 }
 
 - (void)dealloc {

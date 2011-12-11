@@ -10,12 +10,13 @@
 #import "SHIRCNetwork.h"
 @interface SHChanJoin : UITableViewController {
 	SHIRCNetwork *network;
+	BOOL needsToReIndex;
 	NSMutableDictionary *rooms;
 }
 @property(nonatomic, assign) SHIRCNetwork* network;
 - (void)done;
 - (void)doneWithJoin;
-- (void)addRoom:(NSString *)room withUserCount:(NSString *)_count;
+- (void)addRoom:(NSString *)room withUserCount:(NSString *)_count isDone:(BOOL)done;
 - (void)loadAvailableRoomsOnServer;
 - (void)deleteLoadingCellIfNecessary;
 @end
