@@ -117,7 +117,7 @@
 		r = [ircMessage rangeOfString:@"https://"];
 		if (r.location != NSNotFound) {
 			format = @"addHTML('%@','%@');";	
-		}
+		}	
 	}
 	NSString *java = [NSString stringWithFormat:format,
                       [[nick stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"],

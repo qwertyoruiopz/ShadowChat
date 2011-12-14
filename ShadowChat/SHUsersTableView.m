@@ -201,7 +201,6 @@ cleanup:
 		// sort of hidden.. but needs to be recognized somehow.. :(
 		// also kind of sad no one will probably ever read this...
 	}
-	NSLog(@"Meh. Mode: %@ User: %@ Key: %@", mode, _cUser, [userTitles objectForKey:_cUser]);
 //	arrayOfArrays = [NSArray arrayWithObjects:norms, vops, hops, ops, aops, sops, nil];
 //	for (int i = 0; i < [arrayOfArrays count]; i++) {
 //		for (int f = 0; f < [[arrayOfArrays objectAtIndex:i] count]; f++) {
@@ -416,7 +415,6 @@ cleanup:
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	NSLog(@"MEH! %@ : %@", [norms objectAtIndex:indexPath.row], [userTitles objectForKey:[norms objectAtIndex:indexPath.row]]);
     // Navigation logic may go here. Create and push another view controller.
     /*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];

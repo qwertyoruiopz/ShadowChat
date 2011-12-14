@@ -71,7 +71,25 @@
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
 	if (!url) return NO;
-	NSLog(@"Should open a URL... %@", url);
+// lol so what i learned from this. NSURL = bad. :P if i have urlscheme://http:// it makes it urlscheme://http// :P WHYY
+	NSMutableString *tmp = [url.absoluteString mutableCopy];
+	tmp = [[tmp substringWithRange:NSMakeRange(13, tmp.length-13)] mutableCopy];
+	int index = 4;
+	if ([tmp rangeOfString:@"ftp//"].location != NSNotFound)
+		index = 3;
+	[tmp insertString:@":" atIndex:index];
+	for (UINavigationController *vc in _tabBarController.viewControllers) {
+		if ([vc.visibleViewController isKindOfClass:objc_getClass("SHChatPanel")]) {
+			SHWebBrowser *b = [[SHWebBrowser alloc] init];
+			UINavigationController *c = [[UINavigationController alloc] initWithRootViewController:b];
+			[c setToolbarHidden:NO];
+			[b setURLToLoad:[NSURL URLWithString:tmp]];
+			c.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+			[vc presentModalViewController:c animated:YES];
+			[b release];
+			return NO;
+		}
+	}
 	return NO;
 }
 

@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SHWebBrowser.h"
+#import <objc/runtime.h>
 
 @interface ShadowChatAppDelegate : NSObject <UIApplicationDelegate, UITabBarControllerDelegate>
 

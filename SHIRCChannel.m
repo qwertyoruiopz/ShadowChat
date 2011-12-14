@@ -201,8 +201,7 @@ extern id objc_msgSend(id target, SEL msg, ...);
 	[socket sendCommand:@"JOIN" withArguments:[self formattedName]];
 }
 
-- (void)didRecieveMessageFrom:(NSString*)nick text:(NSString *)ircMessage {
-	NSLog(@"WTF! Class:%@ MSG:%@", NSStringFromClass([self class]), self.users);
+- (void)didRecieveMessageFrom:(NSString *)nick text:(NSString *)ircMessage {
 	if ([delegate respondsToSelector:_cmd]) {
 		[delegate performSelector:_cmd withObject:nick withObject:ircMessage];
 	}

@@ -13,6 +13,7 @@
 		1AD9BF9A141684D2002E1C6A /* SHAddCTController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD9BF99141684D2002E1C6A /* SHAddCTController.m */; };
 		5025F8521487094000E39116 /* SHUsersTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5025F8511487094000E39116 /* SHUsersTableView.m */; };
 		50465FEC1481F73A007F8F56 /* SupportedURLs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 50465FEB1481F73A007F8F56 /* SupportedURLs.plist */; };
+		50663881149823E3006D8DA0 /* SHWebBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 50663880149823E3006D8DA0 /* SHWebBrowser.m */; };
 		507424751416F3FC0080EC23 /* SHRoomsTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 507424741416F3FC0080EC23 /* SHRoomsTable.m */; };
 		509346D114748A1B007C57C5 /* SHCellDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 509346D014748A1B007C57C5 /* SHCellDrawer.m */; };
 		50ACAA3314774BAF00E1756E /* ctbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 50ACAA3114774BAF00E1756E /* ctbg.png */; };
@@ -62,6 +63,8 @@
 		5025F8501487094000E39116 /* SHUsersTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHUsersTableView.h; sourceTree = "<group>"; };
 		5025F8511487094000E39116 /* SHUsersTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHUsersTableView.m; sourceTree = "<group>"; };
 		50465FEB1481F73A007F8F56 /* SupportedURLs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SupportedURLs.plist; sourceTree = "<group>"; };
+		5066387F149823E3006D8DA0 /* SHWebBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHWebBrowser.h; sourceTree = "<group>"; };
+		50663880149823E3006D8DA0 /* SHWebBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHWebBrowser.m; sourceTree = "<group>"; };
 		507424731416F3FC0080EC23 /* SHRoomsTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHRoomsTable.h; sourceTree = "<group>"; };
 		507424741416F3FC0080EC23 /* SHRoomsTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHRoomsTable.m; sourceTree = "<group>"; };
 		509346CF14748A1B007C57C5 /* SHCellDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHCellDrawer.h; sourceTree = "<group>"; };
@@ -224,6 +227,8 @@
 				509346D014748A1B007C57C5 /* SHCellDrawer.m */,
 				5025F8501487094000E39116 /* SHUsersTableView.h */,
 				5025F8511487094000E39116 /* SHUsersTableView.m */,
+				5066387F149823E3006D8DA0 /* SHWebBrowser.h */,
+				50663880149823E3006D8DA0 /* SHWebBrowser.m */,
 			);
 			path = ShadowChat;
 			sourceTree = "<group>";
@@ -342,6 +347,7 @@
 				509346D114748A1B007C57C5 /* SHCellDrawer.m in Sources */,
 				50C4CB2E1474A71D00B8EA1C /* SHDrawerButton.m in Sources */,
 				5025F8521487094000E39116 /* SHUsersTableView.m in Sources */,
+				50663881149823E3006D8DA0 /* SHWebBrowser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
