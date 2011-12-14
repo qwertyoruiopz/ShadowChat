@@ -8,13 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		1A223129141CBC39009F9578 /* ChannelUserList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A223128141CBC39009F9578 /* ChannelUserList.m */; };
-		1AABE8FD1417FFEC00F9532E /* ChannelsTVController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AABE8FC1417FFEC00F9532E /* ChannelsTVController.m */; };
+		1AABE8FD1417FFEC00F9532E /* SHChannelsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AABE8FC1417FFEC00F9532E /* SHChannelsController.m */; };
 		1AD9BF96141683EB002E1C6A /* SHConnectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD9BF95141683EA002E1C6A /* SHConnectionController.m */; };
 		1AD9BF9A141684D2002E1C6A /* SHAddCTController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD9BF99141684D2002E1C6A /* SHAddCTController.m */; };
 		5025F8521487094000E39116 /* SHUsersTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5025F8511487094000E39116 /* SHUsersTableView.m */; };
 		50465FEC1481F73A007F8F56 /* SupportedURLs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 50465FEB1481F73A007F8F56 /* SupportedURLs.plist */; };
 		50663881149823E3006D8DA0 /* SHWebBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 50663880149823E3006D8DA0 /* SHWebBrowser.m */; };
-		507424751416F3FC0080EC23 /* SHRoomsTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 507424741416F3FC0080EC23 /* SHRoomsTable.m */; };
 		509346D114748A1B007C57C5 /* SHCellDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 509346D014748A1B007C57C5 /* SHCellDrawer.m */; };
 		50ACAA3314774BAF00E1756E /* ctbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 50ACAA3114774BAF00E1756E /* ctbg.png */; };
 		50ACAA3414774BAF00E1756E /* ctbg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50ACAA3214774BAF00E1756E /* ctbg@2x.png */; };
@@ -54,8 +53,8 @@
 /* Begin PBXFileReference section */
 		1A223127141CBC39009F9578 /* ChannelUserList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelUserList.h; sourceTree = "<group>"; };
 		1A223128141CBC39009F9578 /* ChannelUserList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelUserList.m; sourceTree = "<group>"; };
-		1AABE8FB1417FFEC00F9532E /* ChannelsTVController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelsTVController.h; sourceTree = "<group>"; };
-		1AABE8FC1417FFEC00F9532E /* ChannelsTVController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelsTVController.m; sourceTree = "<group>"; };
+		1AABE8FB1417FFEC00F9532E /* SHChannelsController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = SHChannelsController.h; sourceTree = "<group>"; };
+		1AABE8FC1417FFEC00F9532E /* SHChannelsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHChannelsController.m; sourceTree = "<group>"; };
 		1AD9BF94141683EA002E1C6A /* SHConnectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHConnectionController.h; sourceTree = "<group>"; };
 		1AD9BF95141683EA002E1C6A /* SHConnectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHConnectionController.m; sourceTree = "<group>"; };
 		1AD9BF98141684D1002E1C6A /* SHAddCTController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHAddCTController.h; sourceTree = "<group>"; };
@@ -65,8 +64,6 @@
 		50465FEB1481F73A007F8F56 /* SupportedURLs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SupportedURLs.plist; sourceTree = "<group>"; };
 		5066387F149823E3006D8DA0 /* SHWebBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHWebBrowser.h; sourceTree = "<group>"; };
 		50663880149823E3006D8DA0 /* SHWebBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHWebBrowser.m; sourceTree = "<group>"; };
-		507424731416F3FC0080EC23 /* SHRoomsTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHRoomsTable.h; sourceTree = "<group>"; };
-		507424741416F3FC0080EC23 /* SHRoomsTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHRoomsTable.m; sourceTree = "<group>"; };
 		509346CF14748A1B007C57C5 /* SHCellDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHCellDrawer.h; sourceTree = "<group>"; };
 		509346D014748A1B007C57C5 /* SHCellDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHCellDrawer.m; sourceTree = "<group>"; };
 		50ACAA3114774BAF00E1756E /* ctbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ctbg.png; sourceTree = "<group>"; };
@@ -217,10 +214,8 @@
 				1AD9BF95141683EA002E1C6A /* SHConnectionController.m */,
 				1AD9BF98141684D1002E1C6A /* SHAddCTController.h */,
 				1AD9BF99141684D2002E1C6A /* SHAddCTController.m */,
-				507424731416F3FC0080EC23 /* SHRoomsTable.h */,
-				507424741416F3FC0080EC23 /* SHRoomsTable.m */,
-				1AABE8FB1417FFEC00F9532E /* ChannelsTVController.h */,
-				1AABE8FC1417FFEC00F9532E /* ChannelsTVController.m */,
+				1AABE8FB1417FFEC00F9532E /* SHChannelsController.h */,
+				1AABE8FC1417FFEC00F9532E /* SHChannelsController.m */,
 				1A223127141CBC39009F9578 /* ChannelUserList.h */,
 				1A223128141CBC39009F9578 /* ChannelUserList.m */,
 				509346CF14748A1B007C57C5 /* SHCellDrawer.h */,
@@ -336,8 +331,7 @@
 				1AD9BF96141683EB002E1C6A /* SHConnectionController.m in Sources */,
 				1AD9BF9A141684D2002E1C6A /* SHAddCTController.m in Sources */,
 				EAAD2BA51416C8F700E1D951 /* SHIRCNetwork.m in Sources */,
-				507424751416F3FC0080EC23 /* SHRoomsTable.m in Sources */,
-				1AABE8FD1417FFEC00F9532E /* ChannelsTVController.m in Sources */,
+				1AABE8FD1417FFEC00F9532E /* SHChannelsController.m in Sources */,
 				EAC95DF614183882000256CE /* SHChatPanel.m in Sources */,
 				1A223129141CBC39009F9578 /* ChannelUserList.m in Sources */,
 				EAFA82391469C68000FD1A88 /* SHShadowedTableView.m in Sources */,

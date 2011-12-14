@@ -6,7 +6,7 @@
 //  Copyright 2011 uiop. All rights reserved.
 //
 
-#import "ChannelsTVController.h"
+#import "SHChannelsController.h"
 #import "SHClearLabelCellView.h"
 #import "SHGradientView.h"
 #import "SHIRCNetwork.h"
@@ -14,7 +14,7 @@
 #import "SHChatPanel.h"
 #import "SHChanJoin.h"
 
-@implementation ChannelsTVController
+@implementation SHChannelsController
 
 - (id)initWithStyle:(UITableViewStyle)style {
 	if ((self = [super initWithStyle:style])) {
@@ -119,13 +119,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *CellIdentifier = @"Cell";
-	if (indexPath.section > [self numberOfSectionsInTableView:tableView] || indexPath.row > [self tableView:tableView numberOfRowsInSection:indexPath.section]) {[[self tableView] reloadData]; return nil;}
+	if (indexPath.section > [self numberOfSectionsInTableView:tableView] || indexPath.row > [self tableView:tableView numberOfRowsInSection:indexPath.section]) {
+		[[self tableView] reloadData];
+		return nil;
+	}
 	SHClearLabelCellView *cell = (SHClearLabelCellView *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if (cell == nil) {
 		cell = [[[SHClearLabelCellView alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
 		cell.backgroundView = [[[SHGradientView alloc] initWithFrame:CGRectZero  reversed: NO] autorelease];
-		cell.accessoryView = [[[SHGradientView alloc] initWithFrame:CGRectMake(0, 0, 70, 30)  reversed: YES] autorelease];
-		cell.accessoryView.layer.cornerRadius = 8;
+	//	cell.accessoryView = [[[SHGradientView alloc] initWithFrame:CGRectMake(0, 0, 70, 30)  reversed: YES] autorelease];
+	//	cell.accessoryView.layer.cornerRadius = 8;
+	//	don't like this concept all that much just yet.. and it's a waste of memory without an actual cause. :P 
 		cell.thirdLabel.hidden = YES;
 		cell.delegate = self;
 	}
@@ -182,7 +186,6 @@
 - (void)cellReturned {
 	
 }
-
 
 - (void)clearCellSwiped:(id)c {
 	

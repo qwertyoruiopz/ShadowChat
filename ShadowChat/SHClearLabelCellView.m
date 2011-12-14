@@ -6,6 +6,7 @@
 //
 
 #import "SHClearLabelCellView.h"
+#import "SHIRCNetwork.h"
 
 @implementation SHClearLabelCellView
 @synthesize delegate;
@@ -129,6 +130,16 @@
 - (void)buttonPressed:(SHCellOption)option {
 	switch ((int)option) {
 		case SHCellOptionDelete:
+			for (SHIRCNetwork *netw in [SHIRCNetwork allNetworks]) {
+				NSLog(@"Removing cell... network: %@", netw);
+			//	NSString *server;
+			//	NSString *descr;
+				if ([self.textLabel.text isEqualToString:netw.descr] && [self.detailTextLabel.text isEqualToString:[netw.server lowercaseString]]) {
+					[[SHIRCNetwork allNetworks] removeObject:netw];
+					[((UITableView *)self.superview) deleteRowsAtIndexPaths:[NSArray arrayWithObject:[((UITableView *)self.superview) indexPathForCell:self]] withRowAnimation:UITableViewRowAnimationRight];
+				}
+			}
+			[SHIRCNetwork saveDefaults];
 			break;
 		case SHCellOptionEdit:
 			if ([delegate respondsToSelector:@selector(editConnectionForCell:)]) {

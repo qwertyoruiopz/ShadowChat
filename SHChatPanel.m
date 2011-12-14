@@ -292,7 +292,8 @@
     NSLog(@"%d %@ %@ %@", evt, from, to, extra);
 	switch (evt) {
 		case SHEventTypeJoin:
-			[userList addUser:from];
+			if (![from isEqualToString:[[chan socket] nick_]])
+				[userList addUser:from];
 			break;
 		case SHEventTypeKick:
 			[userList removeUser:to];

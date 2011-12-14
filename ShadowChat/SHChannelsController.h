@@ -10,7 +10,7 @@
 #import "SHIRCChannel.h"
 #import "SHClearLabelCellView.h"
 
-@interface ChannelsTVController : UITableViewController <SHSwipeCellDelegate> {
+@interface SHChannelsController : UITableViewController <SHSwipeCellDelegate> {
     BOOL isReallyEditing;
 }
 @end

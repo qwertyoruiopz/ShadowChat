@@ -57,6 +57,7 @@
 }
 
 - (void)setUsers:(NSArray *)_users {
+
 	for (NSString *user in _users) {
 		if (![user isEqualToString:@""])
 			if (![[userTitles allKeys] containsObject:[self nickWithoutFormatting:user]])

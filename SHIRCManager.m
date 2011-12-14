@@ -123,13 +123,12 @@ static SHIRCManager* sharedSHManager;
     }
     else if ([command isEqualToString:@"353"]) {
 // MARK: 353
-		NSLog(@"Users Found: %@", argument);
 		NSRange rangeOfSpace = [argument rangeOfString:@"#"];
 		NSRange rangeOfEndOfRoom = [argument rangeOfString:@" " options:NSCaseInsensitiveSearch range:NSMakeRange(rangeOfSpace.location, [argument length]-rangeOfSpace.location)];
 		NSString *roomName = [argument substringWithRange:NSMakeRange(rangeOfSpace.location, rangeOfEndOfRoom.location-rangeOfSpace.location)];
 		NSRange rOfRoom = [argument rangeOfString:roomName];
 		NSString *_tmpUsers = [argument substringWithRange:NSMakeRange(rOfRoom.location+roomName.length+2, [argument length]-rOfRoom.location-roomName.length-2)];
-		NSLog(@"Found Users:%@",[_tmpUsers componentsSeparatedByString:@" "]);
+		NSLog(@"Found Users:%@", [_tmpUsers componentsSeparatedByString:@" "]);
 		for (SHIRCChannel *chan in [socket channels]) {
 			if ([[[chan name] lowercaseString] isEqualToString:[roomName lowercaseString]]) {
 				[chan addUsers:[_tmpUsers componentsSeparatedByString:@" "]];

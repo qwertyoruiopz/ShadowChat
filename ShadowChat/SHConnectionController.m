@@ -186,19 +186,23 @@
 		return cell;
 	}
     cell.textLabel.text = [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] descr] ? [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] descr] : [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] server];
-	if ([[[SHIRCNetwork allNetworks]
-          objectAtIndex:indexPath.row]
-         isRegistered]) {
+	if ([[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isRegistered]) {
 		cell.thirdLabel.text = @"Connected!";
     }
 	else if ([((SHIRCSocket *)[((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]) socket]) status] == SHSocketStausError) {
-        NSLog(@"fdsfsdfsd %@", [[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]);
 		cell.thirdLabel.text = @"Error connecting to the server";
     }
 	else {
 		cell.thirdLabel.text = [[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row] isOpen] ? @"Connecting..." : @"Disconnected.";
     }
-	cell.detailTextLabel.text = [((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]).server ? ((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]).server : @"" lowercaseString];
+	cell.detailTextLabel.text = ((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]).server;
+/* 	cell.detailTextLabel.text = [((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]).server ? ((SHIRCNetwork *)[[SHIRCNetwork allNetworks] objectAtIndex:indexPath.row]).server : @"" lowercaseString];
+ 
+	previously here...^
+	not really necessary.. if the server address if null, we can't connect anyways, we shouldn't be able to add a network if the server is null...
+ 
+ */
+
     [cell.thirdLabel sizeToFit];
     [cell undrawOptionsViewAnimated:NO];
     return cell;
