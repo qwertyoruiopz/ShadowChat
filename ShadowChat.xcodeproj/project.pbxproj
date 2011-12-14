@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1A223129141CBC39009F9578 /* ChannelUserList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A223128141CBC39009F9578 /* ChannelUserList.m */; };
 		1AABE8FD1417FFEC00F9532E /* SHChannelsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AABE8FC1417FFEC00F9532E /* SHChannelsController.m */; };
 		1AD9BF96141683EB002E1C6A /* SHConnectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD9BF95141683EA002E1C6A /* SHConnectionController.m */; };
 		1AD9BF9A141684D2002E1C6A /* SHAddCTController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD9BF99141684D2002E1C6A /* SHAddCTController.m */; };
@@ -51,9 +50,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1A223127141CBC39009F9578 /* ChannelUserList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelUserList.h; sourceTree = "<group>"; };
-		1A223128141CBC39009F9578 /* ChannelUserList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelUserList.m; sourceTree = "<group>"; };
-		1AABE8FB1417FFEC00F9532E /* SHChannelsController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = SHChannelsController.h; sourceTree = "<group>"; };
+		1AABE8FB1417FFEC00F9532E /* SHChannelsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHChannelsController.h; sourceTree = "<group>"; };
 		1AABE8FC1417FFEC00F9532E /* SHChannelsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHChannelsController.m; sourceTree = "<group>"; };
 		1AD9BF94141683EA002E1C6A /* SHConnectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHConnectionController.h; sourceTree = "<group>"; };
 		1AD9BF95141683EA002E1C6A /* SHConnectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHConnectionController.m; sourceTree = "<group>"; };
@@ -216,8 +213,6 @@
 				1AD9BF99141684D2002E1C6A /* SHAddCTController.m */,
 				1AABE8FB1417FFEC00F9532E /* SHChannelsController.h */,
 				1AABE8FC1417FFEC00F9532E /* SHChannelsController.m */,
-				1A223127141CBC39009F9578 /* ChannelUserList.h */,
-				1A223128141CBC39009F9578 /* ChannelUserList.m */,
 				509346CF14748A1B007C57C5 /* SHCellDrawer.h */,
 				509346D014748A1B007C57C5 /* SHCellDrawer.m */,
 				5025F8501487094000E39116 /* SHUsersTableView.h */,
@@ -333,7 +328,6 @@
 				EAAD2BA51416C8F700E1D951 /* SHIRCNetwork.m in Sources */,
 				1AABE8FD1417FFEC00F9532E /* SHChannelsController.m in Sources */,
 				EAC95DF614183882000256CE /* SHChatPanel.m in Sources */,
-				1A223129141CBC39009F9578 /* ChannelUserList.m in Sources */,
 				EAFA82391469C68000FD1A88 /* SHShadowedTableView.m in Sources */,
 				EAFA823A1469C68000FD1A88 /* SHGradientView.m in Sources */,
 				EAFA823B1469C68000FD1A88 /* SHClearLabelCellView.m in Sources */,
