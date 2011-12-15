@@ -12,4 +12,5 @@
 	UIWebView *_browser;
 }
 - (void)setURLToLoad:(NSURL *)aURL;
+- (void)toggleBackButtons;
 @end

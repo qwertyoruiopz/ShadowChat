@@ -19,7 +19,6 @@
 	NSMutableDictionary *userTitles;
 }
 - (void)setUsers:(NSArray *)_users;
-- (void)sortNicks;
 - (void)removeUser:(NSString *)aUser;
 - (void)addUser:(NSString *)aUser;
 - (void)categorizeNick:(NSString *)aNick;

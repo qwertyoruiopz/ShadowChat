@@ -29,22 +29,24 @@ extern id objc_msgSend(id target, SEL msg, ...);
 		[self setNet:[sock server]];
 	}
 	id channel = [sock retainedChannelWithFormattedName:[self formattedName]];
-    if ([[sock channels] containsObject:self] || channel) {
-        [self release];
-        [channel release]; // might be a bug.
-        return channel;
+	if ([[sock channels] containsObject:self] || channel) {
+		[self release];
+		[channel release]; // might be a bug.
+		return channel;
 	}
 	else {
 		[sock addChannel:self];
-    }
-    [channel release];
-    [[SHChatPanel alloc] initWithChan:self];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadChans" object:nil];
-    return [self retain];
+	}
+	[channel release];
+	[[SHChatPanel alloc] initWithChan:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadChans" object:nil];
+	return [self retain];
 }
+
 - (NSString *)formattedName {
-    return [name hasPrefix:@"#"] || [name hasPrefix:@"&"] || [name hasPrefix:@"!"] || [name hasPrefix:@"+"] ? name : [@"#" stringByAppendingString:name];
+	return [name hasPrefix:@"#"] || [name hasPrefix:@"&"] || [name hasPrefix:@"!"] || [name hasPrefix:@"+"] ? name : [@"#" stringByAppendingString:name];
 }
+
 - (BOOL)sendMessage:(NSString*)message flavor:(SHMessageFlavor)flavor {
 	if (![socket didRegister]) return NO;
 	NSString *command;

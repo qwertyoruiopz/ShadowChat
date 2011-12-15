@@ -38,7 +38,6 @@ typedef enum SHSocketStaus {
     id delegate;
     int bgTask;
 	id jCallback;
-	NSMutableDictionary *availRoomsOnServ;
 }
 
 @property(retain, readwrite) NSInputStream *input;
@@ -59,9 +58,8 @@ typedef enum SHSocketStaus {
 - (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent;
 - (void)disconnect;
 - (id)channels;
-- (id)availableRooms;
 - (void)findAvailableRoomsWithCallback:(id)cBack;
-- (void)addRoom:(NSString *)room withUserCount:(NSString *)_count;
+- (void)addRoom:(NSString *)room withRoomInfo:(NSDictionary *)infos;
 - (void)joinChannel:(SHIRCChannel *)chan;
 - (void)partChannel:(SHIRCChannel *)chan;
 - (void)addChannel:(SHIRCChannel *)chan;

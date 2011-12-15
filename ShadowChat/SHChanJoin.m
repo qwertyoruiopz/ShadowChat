@@ -40,7 +40,7 @@
 - (id)initWithStyle:(UITableViewStyle)style {
 	if ((self = [super initWithStyle:style])) {
 		rooms = [[NSMutableDictionary alloc] init];
-		needsToReIndex = NO;
+		_rooms = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -84,23 +84,6 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-//    [[self.tableView viewWithTag:12340] becomeFirstResponder];
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return YES;
@@ -118,29 +101,19 @@
     switch (section) {
         case 0:
             return 1;
-            break;
-            
         case 1:
             return [[rooms allKeys] count];
-            break;
             
         default:
-            break;
+			break;
     }
     return 0;
 }
 
 
 - (void)loadAvailableRoomsOnServer {
-	
-	if ([[[[network socket] availableRooms] allKeys] count] == 0) {
-		[[network socket] findAvailableRoomsWithCallback:self];
-		[rooms setObject:@"k" forKey:@"Loading..."];
-	}
-	else {
-		rooms = [[network socket] availableRooms];
-		[self.tableView reloadData];
-	}
+	[[network socket] findAvailableRoomsWithCallback:self];
+	[rooms setObject:@"k" forKey:@"Loading..."];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -164,62 +137,62 @@
 	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if (cell == nil) {
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+		cell = [[[UITableViewCell alloc] initWithStyle:(indexPath.section == 0 ? UITableViewCellStyleDefault : UITableViewCellStyleSubtitle) reuseIdentifier:CellIdentifier] autorelease];
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-		switch (indexPath.section) {
-			case 0:
-				switch (indexPath.row) {
-					case 0:
-						cell.textLabel.text = @"Channel Name";
-						cell.selectionStyle = UITableViewCellSelectionStyleNone;
-						cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
-						UITextField *adescr = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 150, 22)];
-						adescr.adjustsFontSizeToFitWidth = YES;
-						adescr.placeholder = @"#help";
-						adescr.returnKeyType = UIReturnKeyDone;
-						adescr.tag = 12340;
-						adescr.keyboardAppearance = UIKeyboardAppearanceAlert;
-						[adescr setDelegate:(id<UITextFieldDelegate>)self];
-						[cell setAccessoryView: adescr];
-						[adescr release];
-						break;
-					default:
-						break;
-				}
-				break;
-			case 1: 
-					cell.textLabel.text = [[rooms allKeys] objectAtIndex:indexPath.row];
-				break;
-			default:
-				break;
-		}
-        // Configure the cell...
 	}
+	switch (indexPath.section) {
+		case 0:
+			switch (indexPath.row) {
+				case 0:
+					cell.textLabel.text = @"Channel Name";
+					cell.selectionStyle = UITableViewCellSelectionStyleNone;
+					cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
+					UITextField *adescr = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 150, 22)];
+					adescr.adjustsFontSizeToFitWidth = YES;
+					adescr.placeholder = @"#help";
+					adescr.returnKeyType = UIReturnKeyDone;
+					adescr.tag = 12340;
+					adescr.keyboardAppearance = UIKeyboardAppearanceAlert;
+					[adescr setDelegate:(id<UITextFieldDelegate>)self];
+					[cell setAccessoryView: adescr];
+					[adescr release];
+					break;
+				default:
+					break;
+			}
+			break;
+		case 1: 
+			cell.textLabel.text = [[rooms allKeys] objectAtIndex:indexPath.row];
+		//	cell.detailTextLabel.text = [rooms objectForKey:cell.textLabel.text];
+			break;
+		default:
+			break;
+	}
+        // Configure the cell...
+
 	return cell;
 }
 
-- (void)addRoom:(NSString *)room withUserCount:(NSString *)_count {
-	[rooms removeObjectForKey:@"Loading..."];
-	[self deleteLoadingCellIfNecessary];
-	if (![[rooms allKeys] containsObject:room])
-		[rooms setObject:_count forKey:room];
-	for (UITableViewCell *c in [self.tableView visibleCells]) {
-	//	NSLog(@"0.o %@ : %d", c, [self.tableView indexPathForCell:c].section);
-		if ([self.tableView indexPathForCell:c].section == 1) {
-			[self.tableView beginUpdates];
-			[self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[self.tableView indexPathForCell:[[self.tableView visibleCells] lastObject]]] withRowAnimation:UITableViewRowAnimationLeft];
-			[self.tableView endUpdates];
-			break;
-		}
-	}
 
-	[self.tableView reloadData];
+- (void)addRoom:(NSString *)room withRoomInfo:(NSDictionary *)infos {
+	NSLog(@"NHF %@ %@ %@", NSStringFromClass([self class]), room, infos);
+		[rooms removeObjectForKey:@"Loading..."];
+	
+	[self deleteLoadingCellIfNecessary];
+	[rooms setObject:infos forKey:room];
+
+	//	NSLog(@"0.o %@ : %d", c, [self.tableView indexPathForCell:c].section);
+	[self.tableView beginUpdates];
+	[self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationLeft];
+	[self.tableView endUpdates];
+
 
 }
 
 - (void)dealloc {
 	[super dealloc];
 	[rooms release];
+	[_rooms release];
 	
 }
 

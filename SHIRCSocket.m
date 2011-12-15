@@ -26,79 +26,80 @@ output = nil;
 @synthesize input, output, port, server, usesSSL, _channels, status, delegate;
 
 + (SHIRCSocket *)socketWithServer:(NSString *)srv andPort:(int)prt usesSSL:(BOOL)ssl {
-    SHIRCSocket *ret = [[(Class)self alloc] init];
-    ret.server = srv;
-    ret.port = prt;
-    ret.usesSSL = ssl;
-    return [ret autorelease];
+	SHIRCSocket *ret = [[(Class)self alloc] init];
+	ret.server = srv;
+	ret.port = prt;
+	ret.usesSSL = ssl;
+	return [ret autorelease];
 }
+
 - (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user {
-    return [self connectWithNick:nick andUser:user andPassword:nil];
+	return [self connectWithNick:nick andUser:user andPassword:nil];
 }
+
 - (BOOL)connectWithNick:(NSString *)nick andUser:(NSString *)user andPassword:(NSString *)pass {
-    [self retain];
-	availRoomsOnServ = [[NSMutableDictionary alloc] init];
-    IF_IOS4_OR_GREATER (
+	[self retain];
+	IF_IOS4_OR_GREATER (
 						bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{ 
 		[[UIApplication sharedApplication] endBackgroundTask:bgTask]; 
         bgTask = UIBackgroundTaskInvalid;}]; 
                         );
-    NSInputStream *iStream;
-    NSOutputStream *oStream;
-    CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)server, port ? port : 6667, (CFReadStreamRef *)&iStream, (CFWriteStreamRef *)&oStream);
-    self.input = iStream;
-    self.output = oStream;
-    [iStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-    [oStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-    iStream.delegate = self;
-    oStream.delegate = self;
-    [iStream release];
-    [oStream release];
-    self.nick_ = nick;
-    if ([iStream streamStatus] == NSStreamStatusNotOpen)
-        [iStream open];
-    
-    if ([oStream streamStatus] == NSStreamStatusNotOpen)
-        [oStream open];
-    
-    if ([self status] == SHSocketStausOpen || [self status] == SHSocketStausConnecting) {
-        return NO;
-    }
-    if (usesSSL) {
-		[iStream setProperty:NSStreamSocketSecurityLevelNegotiatedSSL 
-                      forKey:NSStreamSocketSecurityLevelKey];
-        [oStream setProperty:NSStreamSocketSecurityLevelNegotiatedSSL 
-                      forKey:NSStreamSocketSecurityLevelKey];  
-        
-        NSDictionary *settings = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                  [NSNumber numberWithBool:YES], kCFStreamSSLAllowsExpiredCertificates,
-                                  [NSNumber numberWithBool:YES], kCFStreamSSLAllowsAnyRoot,
-                                  [NSNumber numberWithBool:NO], kCFStreamSSLValidatesCertificateChain,
-                                  kCFNull,kCFStreamSSLPeerName,
-                                  nil];
-        
-        CFReadStreamSetProperty((CFReadStreamRef)iStream, kCFStreamPropertySSLSettings, (CFTypeRef)settings);
-        CFWriteStreamSetProperty((CFWriteStreamRef)oStream, kCFStreamPropertySSLSettings, (CFTypeRef)settings);
-        [settings release];
-    }
-    didRegister = NO;
-    status = SHSocketStausConnecting;
-    if (pass) {
-        [self sendCommand:[NSString stringWithFormat:@"PASS %@:%@", user, pass] withArguments:nil];
-    }
-    [self sendCommand:[NSString stringWithFormat:@"USER %@ %@ %@ %@", user, user, user, user] withArguments:nil];
-    [self sendCommand:[NSString stringWithFormat:@"NICK %@", nick] withArguments:nil];
-    return YES;
+	NSInputStream *iStream;
+	NSOutputStream *oStream;
+	CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)server, port ? port : 6667, (CFReadStreamRef *)&iStream, (CFWriteStreamRef *)&oStream);
+	self.input = iStream;
+	self.output = oStream;
+	[iStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+	[oStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+	iStream.delegate = self;
+	oStream.delegate = self;
+	[iStream release];
+	[oStream release];
+	self.nick_ = nick;
+	if ([iStream streamStatus] == NSStreamStatusNotOpen)
+		[iStream open];
+	
+	if ([oStream streamStatus] == NSStreamStatusNotOpen)
+		[oStream open];
+	
+	if ([self status] == SHSocketStausOpen || [self status] == SHSocketStausConnecting) {
+		return NO;
+	}
+	if (usesSSL) {
+		[iStream setProperty:NSStreamSocketSecurityLevelNegotiatedSSL forKey:NSStreamSocketSecurityLevelKey];
+        [oStream setProperty:NSStreamSocketSecurityLevelNegotiatedSSL forKey:NSStreamSocketSecurityLevelKey];
+		
+		NSDictionary *settings = [[NSDictionary alloc] initWithObjectsAndKeys:
+								  [NSNumber numberWithBool:YES], kCFStreamSSLAllowsExpiredCertificates,
+								  [NSNumber numberWithBool:YES], kCFStreamSSLAllowsAnyRoot,
+								  [NSNumber numberWithBool:NO], kCFStreamSSLValidatesCertificateChain,
+								  kCFNull,kCFStreamSSLPeerName,
+								  nil];
+		
+		CFReadStreamSetProperty((CFReadStreamRef)iStream, kCFStreamPropertySSLSettings, (CFTypeRef)settings);
+		CFWriteStreamSetProperty((CFWriteStreamRef)oStream, kCFStreamPropertySSLSettings, (CFTypeRef)settings);
+		[settings release];
+	}
+	didRegister = NO;
+	status = SHSocketStausConnecting;
+	if (pass) {
+		[self sendCommand:[NSString stringWithFormat:@"PASS %@:%@", user, pass] withArguments:nil];
+	}
+	[self sendCommand:[NSString stringWithFormat:@"USER %@ %@ %@ %@", user, user, user, user] withArguments:nil];
+	[self sendCommand:[NSString stringWithFormat:@"NICK %@", nick] withArguments:nil];
+	return YES;
 }
+
 - (NSString *)nick_ {
-    return nick_;
+	return nick_;
 }
+
 - (void)setNick_:(NSString *)nick {
-    if (nick == nick_) return;
-    if (nick == nil || [nick isEqualToString:@""]) return;
-    [nick_ release];
-    nick_ = [nick retain];
-    [self sendCommand:@"NICK" withArguments:nick];
+	if (nick == nick_) return;
+	if (nick == nil || [nick isEqualToString:@""]) return;
+	[nick_ release];
+	nick_ = [nick retain];
+	[self sendCommand:@"NICK" withArguments:nick];
 }
 
 - (id)channels {
@@ -107,17 +108,13 @@ output = nil;
 	return self._channels;
 }
 
-- (id)availableRooms {
-	return availRoomsOnServ;
-}
-
 - (void)findAvailableRoomsWithCallback:(id)cBack {
 	jCallback = cBack;
 	[self sendCommand:@"LIST" withArguments:nil];
 }
 
-- (void)addRoom:(NSString *)room withUserCount:(NSString *)_count {
-	objc_msgSend(jCallback, _cmd, room, _count);
+- (void)addRoom:(NSString *)room withRoomInfo:(NSDictionary *)infos {
+	objc_msgSend(jCallback, _cmd, room, infos);
 }
 
 
@@ -284,7 +281,6 @@ output = nil;
     for (id obj in _channels) {
         [obj release];
     }
-	[availRoomsOnServ release];
     [_channels release];
     [input release];
     [output release];
