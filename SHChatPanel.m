@@ -250,11 +250,6 @@
 	[output setDelegate:self];
 }
 
-/*- (void)webViewDidStartLoad:(UIWebView *)webView {
-	NSLog(@"Trying to load.. %@", webView.request.URL.absoluteString);
-	[webView stopLoading];
-}*/
-
 - (void)viewDidUnload {
     [super viewDidUnload];
 }
@@ -267,9 +262,7 @@
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
     return YES;
-    // (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {

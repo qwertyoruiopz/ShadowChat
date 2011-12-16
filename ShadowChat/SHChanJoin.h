@@ -15,7 +15,7 @@
 }
 @property(nonatomic, assign) SHIRCNetwork* network;
 - (void)done;
-- (void)doneWithJoin;
+- (void)doneWithJoin:(NSString *)room;
 - (void)addRoom:(NSString *)room withRoomInfo:(NSDictionary *)infos;
 - (void)loadAvailableRoomsOnServer;
 - (void)deleteLoadingCellIfNecessary;

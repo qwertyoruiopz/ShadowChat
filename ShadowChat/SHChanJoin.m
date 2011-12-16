@@ -31,7 +31,7 @@
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 	if (![[textField text] isEqualToString:@""] && ![[textField text] isEqualToString:@" "] && ![[textField text] isEqualToString:@"#"] && ![[textField text] isEqualToString:@"# "] && ![[textField text] isEqualToString:@"#  "]) // just in case.. stfu. :P
-		[self doneWithJoin];
+		[self doneWithJoin:[textField text]];
 	[textField resignFirstResponder];
     return NO;
 }
@@ -69,8 +69,8 @@
     [rightBarButtonItem release];
 }
 
-- (void)doneWithJoin {
-    [[SHIRCChannel alloc] initWithSocket:network.socket andChanName:([[(UITextField *)[self.tableView viewWithTag:12340] text] isEqualToString:@""] ? [(UITextField *)[self.tableView viewWithTag:12340] placeholder] : [(UITextField *)[self.tableView viewWithTag:12340] text])];
+- (void)doneWithJoin:(NSString *)room {
+    [[SHIRCChannel alloc] initWithSocket:network.socket andChanName:(room ? room : @"#help")];
     [self done];
 }
 
@@ -163,30 +163,39 @@
 			break;
 		case 1: 
 			cell.textLabel.text = [[rooms allKeys] objectAtIndex:indexPath.row];
-		//	cell.detailTextLabel.text = [rooms objectForKey:cell.textLabel.text];
+			id dict = [rooms objectForKey:cell.textLabel.text];
+			if ([dict isKindOfClass:[NSDictionary class]]) {
+				cell.detailTextLabel.text = ([[[rooms objectForKey:cell.textLabel.text] objectForKey:@"T0PIC"] isEqualToString:@" "] ? @"No Topic Set" : [[rooms objectForKey:cell.textLabel.text] objectForKey:@"T0PIC"]);
+			}
 			break;
 		default:
 			break;
 	}
-        // Configure the cell...
-
 	return cell;
 }
 
 
 - (void)addRoom:(NSString *)room withRoomInfo:(NSDictionary *)infos {
-	NSLog(@"NHF %@ %@ %@", NSStringFromClass([self class]), room, infos);
-		[rooms removeObjectForKey:@"Loading..."];
 	
 	[self deleteLoadingCellIfNecessary];
 	[rooms setObject:infos forKey:room];
-
-	//	NSLog(@"0.o %@ : %d", c, [self.tableView indexPathForCell:c].section);
 	[self.tableView beginUpdates];
 	[self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationLeft];
 	[self.tableView endUpdates];
+	[self.tableView reloadData];
+	//	NSLog(@"0.o %@ : %d", c, [self.tableView indexPathForCell:c].section);
+}
 
-
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	switch (indexPath.section) {
+		case 0:
+			return 40.0;
+		case 1:
+			return 50.0;
+		default:
+			return 40.0;
+	}
+	return 40.0;
 }
 
 - (void)dealloc {
@@ -197,6 +206,9 @@
 }
 
 - (void)deleteLoadingCellIfNecessary {
+	if (![[rooms allKeys] containsObject:@"Loading..."])
+		return;
+	[rooms removeObjectForKey:@"Loading..."];
 	for (UITableViewCell *c in [self.tableView visibleCells]) {
 		if ([c.textLabel.text isEqualToString:@"Loading..."]) {
 			[self.tableView beginUpdates];
@@ -249,6 +261,9 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (indexPath.section == 1) {
+		[self doneWithJoin:[[[tableView cellForRowAtIndexPath:indexPath] textLabel] text]];
+	}
     // Navigation logic may go here. Create and push another view controller.
     /*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];

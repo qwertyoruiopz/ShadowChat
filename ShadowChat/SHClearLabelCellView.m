@@ -91,42 +91,6 @@
 }
 
 
-/*
-- (void)willTransitionToState:(UITableViewCellStateMask)state {
-	if (!self.editing) {
-		if (state == 2)
-            return;
-	}
-	switch (state) {
-		case 0: 
-			[UIView animateWithDuration:0.25 delay:0.75 options:(UIViewAnimationCurveEaseOut) animations:^{self.thirdLabel.alpha = 1; } completion:^(BOOL finished) { }];
-			// this doesn't seem like it's being called at all..
-			// i modify the duration/delay and there's no change..
-			// but if you log something here.. it's called..
-			// btw this is the case, when you Edit>Red Button "-" (When Edit button shows up) and then Hitting edit again
-			// Erm.. :[
-			break;
-		case 1:
-			[UIView animateWithDuration:0.25 animations:^{self.thirdLabel.alpha = 1; }];
-			break;
-		case 3:
-			[UIView animateWithDuration:0.25 animations:^{self.thirdLabel.alpha = 0; }];
-			break;
-	}
-	[super willTransitionToState:state];
-}
-*/
-/*
- - (void)addSubview:(UIView *)view {
- NSString *hax = NSStringFromClass([view class]);
- if ([hax hasSuffix:@"ConfirmationControl"]) {
- 
- return;
- }
- [super addSubview:view];
- }
- */
-
 - (void)buttonPressed:(SHCellOption)option {
 	switch ((int)option) {
 		case SHCellOptionDelete:
