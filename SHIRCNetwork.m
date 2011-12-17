@@ -91,7 +91,7 @@ static NSMutableArray* connectedNetworks = nil;
 	[super dealloc];
 }
 
-+ (NSMutableArray*)allNetworks {
++ (NSMutableArray *)allNetworks {
 	if (!networks) {
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"Networks"]) {

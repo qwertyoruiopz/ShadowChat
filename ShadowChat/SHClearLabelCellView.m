@@ -118,6 +118,7 @@
 - (void)removeMeGlobally {
 	for (SHIRCNetwork *netw in [SHIRCNetwork allNetworks]) {
 		if ([self.textLabel.text isEqualToString:netw.descr] && [self.detailTextLabel.text isEqualToString:netw.server]) {
+			[netw disconnect];
 			[[SHIRCNetwork allNetworks] removeObject:netw];
 			[((UITableView *)self.superview) beginUpdates];
 			[((UITableView *)self.superview) deleteRowsAtIndexPaths:[NSArray arrayWithObject:[((UITableView *)self.superview) indexPathForCell:self]] withRowAnimation:UITableViewRowAnimationRight];

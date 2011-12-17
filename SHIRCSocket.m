@@ -10,6 +10,7 @@
 #import "SHIRCManager.h"
 #import "SHIRCChannel.h"
 #import "SHIRCNetwork.h"
+#import "SHIRCPrivateChat.h"
 #import <objc/runtime.h>
 
 @implementation SHIRCSocket
@@ -116,7 +117,6 @@ output = nil;
 - (void)addRoom:(NSString *)room withRoomInfo:(NSDictionary *)infos {
 	objc_msgSend(jCallback, _cmd, room, infos);
 }
-
 
 - (BOOL)sendCommand:(NSString *)command withArguments:(NSString *)args {
     NSString *cmd;
@@ -262,9 +262,10 @@ output = nil;
 		}
 		[commandsWaiting release];
 		commandsWaiting = nil;
-		for (id obj in [delegate channels]) {
+		for (NSString *obj in [delegate channels]) {
 			id chan = [self retainedChannelWithFormattedName:obj];
-			[self addChannel:chan ? chan : [[SHIRCChannel alloc] initWithSocket:self andChanName:obj]];
+			[self addChannel:chan ? chan : ([chan hasPrefix:@"#"] ? [[SHIRCChannel alloc] initWithSocket:self andChanName:obj] : [[SHIRCPrivateChat alloc] initWithSocket:self withNick:obj])];
+			NSLog(@"IC.. %@ %@ ", obj, chan);
 			[chan release];			
 		}
 		if ([delegate respondsToSelector:@selector(hasBeenRegisteredCallback:)]) {
@@ -287,7 +288,7 @@ output = nil;
 }
 
 - (SHIRCChannel *)retainedChannelWithFormattedName:(NSString *)fName {
-		for (SHIRCChannel* rtn in [self channels]) {
+		for (SHIRCChannel *rtn in [self channels]) {
 			if ([[[rtn formattedName] lowercaseString] isEqualToString:[fName lowercaseString]]) {
 				return [rtn retain];
 			}

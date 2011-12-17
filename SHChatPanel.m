@@ -24,6 +24,7 @@
 	}
 	userList = [[SHUsersTableView alloc] initWithStyle:UITableViewStylePlain];
 	[self setChan:chan_];
+	
 	return self;
 }
 
@@ -35,8 +36,7 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
 	if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
-        NSLog(@"no u");
-        // Custom initialization
+
     }
     return self;
 }
@@ -195,6 +195,7 @@
 	UIBarButtonItem *users = [[UIBarButtonItem alloc] initWithTitle:@"Users" style:UIBarButtonItemStyleBordered target:self action:@selector(showUsersView:)];
 	[[self navigationItem] setRightBarButtonItem:users];
 	[users release];
+	
 	[output loadHTMLString:@"\
 	 <html>\
 	 <head>\
@@ -209,36 +210,36 @@
 	 var exp = /(\\b(https?|ftp|file):\\/\\/[-A-Z0-9+&@#\\/%?=~_|!:,.;]*[-A-Z0-9+&@#\\/%=~_|])/ig;\
 	 return text.replace(exp,\"<a href='sc-urlopen://$1'>$1</a>\");}\
 	 function htmlEntities(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;');}\
-     function addMessage(nick, msg) { document.body.innerHTML += '<div><strong>' + htmlEntities(nick) + ':</strong> ' + htmlEntities(emojify(msg)) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
+	 function addMessage(nick, msg) { document.body.innerHTML += '<div><strong>' + htmlEntities(nick) + ':</strong> ' + htmlEntities(emojify(msg)) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
 	 function addHTML(nick, msg) {  document.body.innerHTML += '<div><strong>' + htmlEntities(nick) + ':</strong> ' + replaceURLWithHTMLLinks(emojify(msg)) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
-     function addAction(nick, msg) { document.body.innerHTML += '<div><strong>• ' + htmlEntities(nick) + '</strong> ' + htmlEntities(msg) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
-     function background_color() {\
-         document.body.style.background=\"#dae0ec\";\
-         return \"#dae0ec\";\
+	 function addAction(nick, msg) { document.body.innerHTML += '<div><strong>• ' + htmlEntities(nick) + '</strong> ' + htmlEntities(msg) + '</div>'; window.scrollTo(0, document.body.scrollHeight); }\
+	 function background_color() {\
+	 document.body.style.background=\"#dae0ec\";\
+	 return \"#dae0ec\";\
 	 }\
 	 function addEvent(from, to, extra, type) {\
-		if (type == \"SHEventTypeKick\") {\
-			document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' has kicked ' + htmlEntities(to) + ' (' + htmlEntities(extra) + ')</center></div>';\
-			window.scrollTo(0, document.body.scrollHeight);\
-		}\
-		else if (type == \"SHEventTypeJoin\") {\
-			document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' has joined the channel </center></div>';\
-			window.scrollTo(0, document.body.scrollHeight);\
-		}\
-		else if (type == \"SHEventTypePart\") {\
-			if(extra == '(null)'){\
-				document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' has left the channel </center></div>';\
-				window.scrollTo(0, document.body.scrollHeight);\
-			}\
-			else {\
-				document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' has left the channel (' + htmlEntities(extra) + ')</center></div>';\
-				window.scrollTo(0, document.body.scrollHeight);\
-			}\
-		}\
-		else if (type == \"SHEventTypeMode\") {\
-				document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' sets modes ' + htmlEntities(to) + ' ' + htmlEntities(extra) + '</center></div>';\
-				window.scrollTo(0, document.body.scrollHeight);\
-		}\
+	 if (type == \"SHEventTypeKick\") {\
+	 document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' has kicked ' + htmlEntities(to) + ' (' + htmlEntities(extra) + ')</center></div>';\
+	 window.scrollTo(0, document.body.scrollHeight);\
+	 }\
+	 else if (type == \"SHEventTypeJoin\") {\
+	 document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' has joined the channel </center></div>';\
+	 window.scrollTo(0, document.body.scrollHeight);\
+	 }\
+	 else if (type == \"SHEventTypePart\") {\
+	 if(extra == '(null)'){\
+	 document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' has left the channel </center></div>';\
+	 window.scrollTo(0, document.body.scrollHeight);\
+	 }\
+	 else {\
+	 document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' has left the channel (' + htmlEntities(extra) + ')</center></div>';\
+	 window.scrollTo(0, document.body.scrollHeight);\
+	 }\
+	 }\
+	 else if (type == \"SHEventTypeMode\") {\
+	 document.body.innerHTML += '<div><center>' + htmlEntities(from) + ' sets modes ' + htmlEntities(to) + ' ' + htmlEntities(extra) + '</center></div>';\
+	 window.scrollTo(0, document.body.scrollHeight);\
+	 }\
 	 }\
 	 </script>\
 	 </head>\
@@ -248,6 +249,7 @@
 	 </html>\
 	 " baseURL:[NSURL URLWithString:@"about:blank"]];
 	[output setDelegate:self];
+
 }
 
 - (void)viewDidUnload {

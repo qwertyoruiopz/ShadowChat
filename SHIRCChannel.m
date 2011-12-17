@@ -39,7 +39,7 @@ extern id objc_msgSend(id target, SEL msg, ...);
 		[sock addChannel:self];
 	}
 	[channel release];
-	[[SHChatPanel alloc] initWithChan:self];
+	[[[SHChatPanel alloc] initWithChan:self] viewDidLoad];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadChans" object:nil];
 	return [self retain];
 }

@@ -89,7 +89,7 @@
 	NSLog(@"Nothing found..:(");
 }
 
-/* Maybe one day i will try to reincarnate this concept.
+/* Maybe one day i will try to reincarnate this concept. Never going to happen...
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
 	return !([[SHIRCNetwork allNetworks] count] == indexPath.row);
 }
@@ -100,11 +100,11 @@
 
 - (void)edit {
 	[self scrollViewDidScroll:nil];
-	// fix... So the cell wasn't hidden for some odd reason when set editing..
+
     isReallyEditing = !isReallyEditing;
     [((UITableView *)self.view) setEditing:!isReallyEditing animated:NO];
     [((UITableView *)self.view) setEditing:isReallyEditing animated:YES];
-	UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:([((UITableView*)self.view) isEditing] ? UIBarButtonSystemItemDone : UIBarButtonSystemItemEdit) target:self action:@selector(edit)];
+	UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:([((UITableView *)self.view) isEditing] ? UIBarButtonSystemItemDone : UIBarButtonSystemItemEdit) target:self action:@selector(edit)];
 	self.navigationItem.leftBarButtonItem = rightBarButtonItem;
 	[rightBarButtonItem release];
 	[((UITableView *)self.view) beginUpdates]; 
@@ -134,7 +134,7 @@
     [super viewDidAppear:animated];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)viewWillDisappear:(BOOL)animated { 
     [super viewWillDisappear:animated];
 }
 
