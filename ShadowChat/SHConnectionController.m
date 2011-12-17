@@ -41,7 +41,6 @@
 	}
 	isCellSwiped = YES;
 	swipedCell = (SHClearLabelCellView *)c;
-	NSLog(@"fdsfdsfsd %@", swipedCell);
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

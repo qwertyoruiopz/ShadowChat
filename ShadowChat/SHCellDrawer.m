@@ -22,11 +22,6 @@
     return self;
 }
 
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-	NSLog(@"[%@ touchesBegan:%@ withEvent:%@]", NSStringFromClass([self class]), touches, event);
-}
-
 - (void)drawButtons {
 	NSAutoreleasePool *p = [[NSAutoreleasePool alloc] init];
 	NSArray *st = [NSArray arrayWithObjects:@"Del", @"Edit", @"Connect", nil];
@@ -37,34 +32,19 @@
 		[btn setTag:(SHCellOption)i];
 		[btn setTitle:[st objectAtIndex:i] forState:UIControlStateNormal];
 		[btn setFrame:CGRectMake(((self.frame.size.width/3.8)*(i == 0 ? 1 : i+1))-40, 0, 40, self.frame.size.height)];
-	//	[btn setBackgroundColor:[UIColor whiteColor]];
+
 		[btn addTarget:self action:@selector(aButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 		[self addSubview:btn];
 		[btn release];
-		// Allocate UIbutton.. or subclass? idk yet.
-		// set each buttons tag to one SHCellOption
-		// so it can be passed directly. 
-		// set up their frames here, release them all after adding them to be efficient with memory.. :[
-		// this will be fun! 
 	}
 	[p drain];
 }
 
 - (void)aButtonPressed:(UIButton *)button {
-	NSLog(@"Yay! %@, del: %@",button, delegate);
 
 	if ([delegate respondsToSelector:@selector(buttonPressed:)]) {
 		[delegate buttonPressed:(SHCellOption)button.tag];
 	}
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end

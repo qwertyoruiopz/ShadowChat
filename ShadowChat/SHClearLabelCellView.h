@@ -17,7 +17,7 @@
 @end
 
 
-@interface SHClearLabelCellView : UITableViewCell <SHCellDrawerDelegate> {
+@interface SHClearLabelCellView : UITableViewCell <SHCellDrawerDelegate, UIActionSheetDelegate> {
 	BOOL wasSwiped;
 	SHCellDrawer *drawer;
 	CGRect oldFrame;

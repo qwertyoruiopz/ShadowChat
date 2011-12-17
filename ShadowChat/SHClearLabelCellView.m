@@ -7,6 +7,7 @@
 
 #import "SHClearLabelCellView.h"
 #import "SHIRCNetwork.h"
+#import "ShadowChatAppDelegate.h"
 
 @implementation SHClearLabelCellView
 @synthesize delegate;
@@ -83,32 +84,25 @@
                 
 			}
             self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width*2, self.frame.size.height);
-            [[self accessoryView] setHidden:1];
-            self.selectionStyle=UITableViewCellSelectionStyleNone;
+            [[self accessoryView] setHidden:YES];
+            self.selectionStyle = UITableViewCellSelectionStyleNone;
 		}];
 		[drawer setBackgroundColor:[UIColor blackColor]];
 	}
 }
 
+- (void)showConfirmation {
+	UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Are you sure you want to delete network %@", self.textLabel.text] delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete" otherButtonTitles:nil];
+	[sheet showFromTabBar:((ShadowChatAppDelegate *)[[UIApplication sharedApplication] delegate]).tabBarController.tabBar];
+	[sheet release];
+}
 
 - (void)buttonPressed:(SHCellOption)option {
-	switch ((int)option) {
+	switch (option) {
 		case SHCellOptionDelete:
-			for (SHIRCNetwork *netw in [SHIRCNetwork allNetworks]) {
-				NSLog(@"Removing cell... network: %@", netw);
-			//	NSString *server;
-			//	NSString *descr;
-				if ([self.textLabel.text isEqualToString:netw.descr] && [self.detailTextLabel.text isEqualToString:netw.server]) {
-					NSLog(@"Passed tests... %@", self.superview);
-					[[SHIRCNetwork allNetworks] removeObject:netw];
-					[((UITableView *)self.superview) beginUpdates];
-					[((UITableView *)self.superview) deleteRowsAtIndexPaths:[NSArray arrayWithObject:[((UITableView *)self.superview) indexPathForCell:self]] withRowAnimation:UITableViewRowAnimationRight];
-					[((UITableView *)self.superview) endUpdates];
-					break;
-				}
-			}
-			[SHIRCNetwork saveDefaults];
+			[self showConfirmation];
 			break;
+			
 		case SHCellOptionEdit:
 			if ([delegate respondsToSelector:@selector(editConnectionForCell:)]) {
 				[delegate editConnectionForCell:self];
@@ -119,9 +113,32 @@
 		default: break;
 	}
 	[self undrawOptionsViewAnimated:YES];
-	// here let's notify the table view controller that something has happened..
-	// so that class can send a UIActionSheet confirming a delete, or push the edit view controller..
-	// yay?
+}
+
+- (void)removeMeGlobally {
+	for (SHIRCNetwork *netw in [SHIRCNetwork allNetworks]) {
+		if ([self.textLabel.text isEqualToString:netw.descr] && [self.detailTextLabel.text isEqualToString:netw.server]) {
+			[[SHIRCNetwork allNetworks] removeObject:netw];
+			[((UITableView *)self.superview) beginUpdates];
+			[((UITableView *)self.superview) deleteRowsAtIndexPaths:[NSArray arrayWithObject:[((UITableView *)self.superview) indexPathForCell:self]] withRowAnimation:UITableViewRowAnimationRight];
+			[((UITableView *)self.superview) endUpdates];
+			break;
+		}
+	}
+	[SHIRCNetwork saveDefaults];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+	switch (buttonIndex) {
+		case 0:
+			[self removeMeGlobally];
+			break;
+		case 1:
+			// cancelled.. :D
+			break;
+		default:
+			break;
+	}
 }
 
 - (void)undrawOptionsViewAnimated:(BOOL)animated {
@@ -130,12 +147,11 @@
 			return;
 		}
 		_isSwiped = NO;
-		NSLog(@"undrawing...");
 		self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, oldFrame.size.width, self.frame.size.height);
 		[UIView animateWithDuration:0.15 delay:0.0 options:(UIViewAnimationCurveEaseIn) 
 						 animations: ^{ self.frame = CGRectMake(oldFrame.origin.x, oldFrame.origin.y, self.frame.size.width, self.frame.size.height); }
 						 completion: ^(BOOL finished) {
-							 if (finished&&!self.isEditing) {
+							 if (finished && !self.isEditing) {
 								 [UIView animateWithDuration:0.10 delay:0.0 options:(UIViewAnimationCurveEaseOut) animations:^{
 									 self.frame = CGRectMake(-10, oldFrame.origin.y, self.frame.size.width, self.frame.size.height);
 								 }
@@ -165,7 +181,7 @@
 
 		}
 	else {
-	
+		self.frame = oldFrame;
 	}
 	[[self accessoryView] setHidden:0];
 	self.selectionStyle = UITableViewCellSelectionStyleBlue;
