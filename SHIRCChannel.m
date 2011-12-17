@@ -8,6 +8,7 @@
 
 #import "SHIRCChannel.h"
 extern id objc_msgSend(id target, SEL msg, ...);
+
 @interface NSString (casecompare)
 - (BOOL)isEqualToStringNoCase:(NSString *)aString;
 @end

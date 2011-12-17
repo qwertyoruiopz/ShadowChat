@@ -247,6 +247,7 @@ output = nil;
 - (BOOL) didRegister {
     return didRegister;
 }
+
 - (void)setDidRegister:(BOOL)didReg {
 	if (didReg == didRegister) {
 		return;
@@ -260,14 +261,11 @@ output = nil;
 			}
 		}
 		[commandsWaiting release];
-		commandsWaiting=nil;
-		@synchronized(self) {
-			for (id obj in [delegate channels]) {
-
-				id chan = [self retainedChannelWithFormattedName:obj];
-				[self addChannel:chan ? chan : [[SHIRCChannel alloc] initWithSocket:self andChanName:obj]];
-				[chan release];			
-			}
+		commandsWaiting = nil;
+		for (id obj in [delegate channels]) {
+			id chan = [self retainedChannelWithFormattedName:obj];
+			[self addChannel:chan ? chan : [[SHIRCChannel alloc] initWithSocket:self andChanName:obj]];
+			[chan release];			
 		}
 		if ([delegate respondsToSelector:@selector(hasBeenRegisteredCallback:)]) {
 			[delegate performSelector:@selector(hasBeenRegisteredCallback:) withObject:self];
@@ -275,6 +273,7 @@ output = nil;
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadNetworks" object:nil];
 	}  
 }
+
 - (void)dealloc {
     [self disconnect];
     NSLog(@"lol wtf");
@@ -286,12 +285,14 @@ output = nil;
     [output release];
     [super dealloc];
 }
-- (SHIRCChannel*)retainedChannelWithFormattedName:(NSString *)fName; {
-    for (SHIRCChannel* rtn in [self channels]) {
-        if ([[[rtn formattedName] lowercaseString] isEqualToString:[fName lowercaseString]]) {
-            return [rtn retain];
-        }
-    }
+
+- (SHIRCChannel *)retainedChannelWithFormattedName:(NSString *)fName {
+		for (SHIRCChannel* rtn in [self channels]) {
+			if ([[[rtn formattedName] lowercaseString] isEqualToString:[fName lowercaseString]]) {
+				return [rtn retain];
+			}
+		}
+	
     return nil;
 }
 @end

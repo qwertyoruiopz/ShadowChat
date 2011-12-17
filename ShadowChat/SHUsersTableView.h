@@ -17,6 +17,7 @@
 	NSMutableArray *aops;
 	NSMutableArray *norms;
 	NSMutableDictionary *userTitles;
+	int count;
 }
 - (void)setUsers:(NSArray *)_users;
 - (void)removeUser:(NSString *)aUser;

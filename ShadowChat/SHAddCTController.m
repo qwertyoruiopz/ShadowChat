@@ -58,7 +58,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    NSLog(@"ffuuuuu %@ %@", self.parentViewController, [self navigationController].parentViewController);
     self.title = @"Add Connection";
 
     UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneConnection)];
@@ -123,22 +123,6 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return YES;
@@ -155,16 +139,12 @@
     switch (section) {
         case 0:
             return 4;
-            break;
         case 1:
             return 3;
-            break;
         case 2:
             return 2;
-            break;
         default:
             return 0;
-            break;
     }
 }
 
@@ -172,38 +152,16 @@
     switch (section) {
         case 0:
             return @"Connection Information";
-            break;
         case 1:
             return @"User Information";
-            break;
         case 2:
             return @"Authentication";
-            break;
         default:
             return nil;
-            break;
     }
 	return @"Whaaa?! :'(";
 }
-/*
-- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section 
-{
-    // | <UITableHeaderFooterView: 0x4b69830; frame = (0 10; 320 36); text = 'Connection Information'; autoresize = W; layer = <CALayer: 0x4b69480>>
-    UILabel *headerView = [[[UILabel alloc] initWithFrame:CGRectMake(10, 10, tableView.bounds.size.width, 36)] autorelease];
-    [headerView setBackgroundColor:[UIColor clearColor]];
-    [headerView setTextColor:[UIColor whiteColor]];
-    [headerView setShadowColor:[UIColor blackColor]];
-    [headerView setShadowOffset:CGSizeMake(0, 1)];
-    [headerView setFont:[UIFont boldSystemFontOfSize:[UIFont labelFontSize]-1]];
-    [headerView setText:[self tableView:tableView titleForHeaderInSection:section]];
-    return headerView;
-}
 
--(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 30;
-}
- */
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *CellIdentifier = [[NSString alloc] initWithFormat:@"serverconnection-%d-%d", indexPath.section, indexPath.row];
 
@@ -303,7 +261,7 @@
                 } else if (indexPath.row == 2) {
                     [cell.textLabel setText: @"Real Name"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
-                    
+
                     UITextField *rlname = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 180, 22)];
                     rlname.adjustsFontSizeToFitWidth = YES;
                     rlname.keyboardAppearance = UIKeyboardAppearanceAlert;
@@ -332,7 +290,8 @@
                     [passField setDelegate:self];
                     [cell setAccessoryView: passField];
                     [passField release];
-                } else if (indexPath.row == 1) {
+                }
+				else if (indexPath.row == 1) {
                     [cell.textLabel setText: @"Server password"];
                     cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
                     UITextField *nserv = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 155, 22)];
@@ -382,7 +341,6 @@
     return NO;
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    NSLog(@"Saving!");
     switch ([textField tag]) {
         case 12340: // Description 
             description = textField;

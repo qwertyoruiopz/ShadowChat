@@ -60,9 +60,12 @@
 
 	for (NSString *user in _users) {
 		if (![user isEqualToString:@""])
-			if (![[userTitles allKeys] containsObject:[self nickWithoutFormatting:user]])
+			if (![[userTitles allKeys] containsObject:[self nickWithoutFormatting:user]]) {
 				[self categorizeNick:user];
+				count++;
+			}
 	}
+	[self resetTitle];
 	[self.tableView reloadData];
 
 }
@@ -147,13 +150,17 @@ cleanup:
 	[self.tableView reloadData];
 	[pool drain];
 	return;
-
 }
 
+- (void)resetTitle {
+	self.title = [NSString stringWithFormat:@"%d Users", count];
+}
 
 - (void)addUser:(NSString *)aUser {
+	count++;
 	[norms addObject:aUser];
 	[self.tableView reloadData];
+	[self resetTitle];
 }
 
 - (NSString *)titleForModeChange:(NSString *)up {

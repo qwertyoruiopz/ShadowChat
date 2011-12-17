@@ -12,6 +12,7 @@ static NSMutableArray* networks = nil;
 static NSMutableArray* connectedNetworks = nil;
 @implementation SHIRCNetwork
 @synthesize server, port, descr, hasSSL, username, nickname, realname, serverPassword, nickServPassword, socket, channels;
+
 + (SHIRCNetwork *)createNetworkWithServer:(NSString *)server andPort:(int)port isSSLEnabled:(BOOL)ssl
                             description:(NSString *)description withUsername:(NSString *)username andNickname:(NSString *)nickname
                             andRealname:(NSString *)realname serverPassword:(NSString *)password nickServPassword:(NSString *)nickserv {
@@ -45,6 +46,7 @@ static NSMutableArray* connectedNetworks = nil;
     [coder encodeObject:nickServPassword forKey:@"nickServPassword"];
     [coder encodeObject:channels forKey:@"channels"];
 }
+
 - (id)initWithCoder:(NSCoder *)coder {
     if (self = [super init]) {
         NSAutoreleasePool* poolz=[NSAutoreleasePool new];
@@ -78,14 +80,17 @@ static NSMutableArray* connectedNetworks = nil;
 + (void)saveDefaults {
 	[[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:networks] forKey:@"Networks"];
 }
+
 - (void)saveDefaults {
 	[[self class] saveDefaults];
 }
+
 - (void)dealloc {
 	[socket disconnect];
 	[socket release];
 	[super dealloc];
 }
+
 + (NSMutableArray*)allNetworks {
 	if (!networks) {
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -100,6 +105,7 @@ static NSMutableArray* connectedNetworks = nil;
     }
     return networks;
 }
+
 + (NSMutableArray *)allConnectedNetworks {
     if(!connectedNetworks) {
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -108,17 +114,21 @@ static NSMutableArray* connectedNetworks = nil;
     }
     return connectedNetworks;
 }
+
 - (void)disconnect {
     [socket retain];
     [[[self class] allConnectedNetworks] removeObject:self];
     [socket disconnect];
 }
+
 - (BOOL)isOpen {
     return ([socket status] == SHSocketStausOpen || [socket status] == SHSocketStausConnecting);
 }
+
 - (BOOL)isRegistered {
     return ([socket didRegister]);
 }
+
 - (void)hasBeenRegisteredCallback:(SHIRCSocket *)sock {
     NSLog(@"%@ - Callback", self);
     [[[self class] allConnectedNetworks] addObject:self];

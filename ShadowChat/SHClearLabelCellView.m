@@ -36,7 +36,6 @@
 	}
 }
 
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
 	[super setSelected:selected animated:animated];
     
@@ -52,6 +51,7 @@
 - (void)cellWasSwiped:(UISwipeGestureRecognizer *)recog {
 	NSLog(@"Trying to draw.. %@", recog);
 	if (_isSwiped) {
+		[self undrawOptionsViewAnimated:YES];
 		_isSwiped = NO;
 		return;
 	}
@@ -98,9 +98,13 @@
 				NSLog(@"Removing cell... network: %@", netw);
 			//	NSString *server;
 			//	NSString *descr;
-				if ([self.textLabel.text isEqualToString:netw.descr] && [self.detailTextLabel.text isEqualToString:[netw.server lowercaseString]]) {
+				if ([self.textLabel.text isEqualToString:netw.descr] && [self.detailTextLabel.text isEqualToString:netw.server]) {
+					NSLog(@"Passed tests... %@", self.superview);
 					[[SHIRCNetwork allNetworks] removeObject:netw];
+					[((UITableView *)self.superview) beginUpdates];
 					[((UITableView *)self.superview) deleteRowsAtIndexPaths:[NSArray arrayWithObject:[((UITableView *)self.superview) indexPathForCell:self]] withRowAnimation:UITableViewRowAnimationRight];
+					[((UITableView *)self.superview) endUpdates];
+					break;
 				}
 			}
 			[SHIRCNetwork saveDefaults];

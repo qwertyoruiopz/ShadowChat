@@ -29,6 +29,7 @@
     }
     return YES;
 }
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 	if (![[textField text] isEqualToString:@""] && ![[textField text] isEqualToString:@" "] && ![[textField text] isEqualToString:@"#"] && ![[textField text] isEqualToString:@"# "] && ![[textField text] isEqualToString:@"#  "]) // just in case.. stfu. :P
 		[self doneWithJoin:[textField text]];
@@ -46,18 +47,12 @@
 }
 
 - (void)didReceiveMemoryWarning {
-    // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
 }
-
-#pragma mark - View lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Join a channel";
-
     [self loadAvailableRoomsOnServer];
 	
     UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Join" style:UIBarButtonItemStyleDone target:self action:@selector(doneWithJoin)];
@@ -80,19 +75,13 @@
 
 - (void)viewDidUnload {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
     return YES;
 }
 
-#pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
     return 2;
 }
 
@@ -103,7 +92,6 @@
             return 1;
         case 1:
             return [[rooms allKeys] count];
-            
         default:
 			break;
     }
@@ -120,12 +108,8 @@
     switch (section) {
         case 0:
             return @"Pick a channel";
-            break;
-            
         case 1:
-            return @"Channel List";
-            break;
-            
+            return @"Channel List";            
         default:
             break;
     }
@@ -174,16 +158,13 @@
 	return cell;
 }
 
-
 - (void)addRoom:(NSString *)room withRoomInfo:(NSDictionary *)infos {
-	
 	[self deleteLoadingCellIfNecessary];
 	[rooms setObject:infos forKey:room];
 	[self.tableView beginUpdates];
 	[self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationLeft];
 	[self.tableView endUpdates];
 	[self.tableView reloadData];
-	//	NSLog(@"0.o %@ : %d", c, [self.tableView indexPathForCell:c].section);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -219,59 +200,10 @@
 	}
 }
 
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }   
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }   
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
-#pragma mark - Table view delegate
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (indexPath.section == 1) {
 		[self doneWithJoin:[[[tableView cellForRowAtIndexPath:indexPath] textLabel] text]];
 	}
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

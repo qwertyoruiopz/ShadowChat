@@ -53,11 +53,11 @@
 	isCellSwiped = NO;
 }
 
-#pragma mark - View lifecycle
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:[self tableView]];
 	[super dealloc];
 }
+
 - (void)viewDidLoad {
 	[[NSNotificationCenter defaultCenter] addObserver:[self tableView]
 											 selector:@selector(reloadData) 
@@ -80,16 +80,24 @@
 		if ([[n.server lowercaseString] isEqualToString:[cell.detailTextLabel.text lowercaseString]]) {
 			NSLog(@"Found which network....%@", n);
 			SHAddCTController *tmp = [[SHAddCTController alloc] initWithStyle:UITableViewStyleGrouped andNetwork:n];
-				UINavigationController *addConnectionNavController = [[UINavigationController alloc] initWithRootViewController:tmp];
-				[self presentModalViewController:addConnectionNavController animated:YES];
-				[tmp release];
-				[addConnectionNavController release];
+			UINavigationController *addConnectionNavController = [[UINavigationController alloc] initWithRootViewController:tmp];
+			[self presentModalViewController:addConnectionNavController animated:YES];
+			[tmp release];
+			[addConnectionNavController release];
 			break;
 		}
 	}
 	NSLog(@"Nothing found..:(");
-
 }
+
+/* Maybe one day i will try to reincarnate this concept.
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+	return !([[SHIRCNetwork allNetworks] count] == indexPath.row);
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+	
+}*/
 
 - (void)edit {
 	[self scrollViewDidScroll:nil];
