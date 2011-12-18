@@ -37,6 +37,9 @@
     return NO;
 }
 
+- (void)doneWithJoin {
+	[self textFieldShouldReturn:((UITextField *)[self.tableView viewWithTag:12340])];
+}
 
 - (id)initWithStyle:(UITableViewStyle)style {
 	if ((self = [super initWithStyle:style])) {

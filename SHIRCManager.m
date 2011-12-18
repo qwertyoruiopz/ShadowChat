@@ -140,19 +140,28 @@ static SHIRCManager* sharedSHManager;
 		/* gettting rooms data.. :o
 		 2011-12-10 16:12:42.723 ShadowChat[3024:f803] Rooms data... 322 : Maximus-i4 #nightcoast 32 :[+tfj] God gave men penis and a brain, but only enough blood to run one at a time <--- Now das a quote to live by ;) | k | max, we should rewrite shadowchat </trolo> | dida is alive (8/12/11) : <SHIRCSocket: 0x68a5570> 
 		 */
-		
-		NSString *testArg = [argument stringByReplacingOccurrencesOfString:[[socket nick_] stringByAppendingString:@" "] withString:@""];
-		NSRange endOfRoom = [testArg rangeOfString:@" "];
-		NSRange endOfUserCount = [testArg rangeOfString:@" " options:NSCaseInsensitiveSearch range:NSMakeRange(endOfRoom.location+1, testArg.length-(endOfRoom.location+1))];
-		NSRange rangeOfColon = [testArg rangeOfString:@" :" options:NSCaseInsensitiveSearch range:NSMakeRange(endOfUserCount.location, testArg.length-endOfUserCount.location)];
-		NSString *topic = [testArg substringWithRange:NSMakeRange(rangeOfColon.location+rangeOfColon.length, testArg.length-(rangeOfColon.location+rangeOfColon.length))];
-		NSMutableDictionary *infos = [[NSMutableDictionary alloc] init];
-		[infos setObject:topic forKey:@"T0PIC"];
-		[infos setObject:[testArg substringWithRange:NSMakeRange(endOfRoom.location+1, endOfUserCount.location-(endOfRoom.location+1))] forKey:@"C0UNT"];
-		[socket addRoom:[testArg substringWithRange:NSMakeRange(0, endOfRoom.location)] withRoomInfo:infos];
-
+		NSString *testArg;
+		NSRange endOfRoom;
+		NSRange rangeOfColon;
+		NSRange endOfUserCount;
+		NSString *topic;
+		NSMutableDictionary *infos;
+		@try {
+			testArg = [argument stringByReplacingOccurrencesOfString:[[socket nick_] stringByAppendingString:@" "] withString:@""];
+			endOfRoom = [testArg rangeOfString:@" "];
+			endOfUserCount = [testArg rangeOfString:@" " options:NSCaseInsensitiveSearch range:NSMakeRange(endOfRoom.location+1, testArg.length-(endOfRoom.location+1))];
+			rangeOfColon = [testArg rangeOfString:@" :" options:NSCaseInsensitiveSearch range:NSMakeRange(endOfUserCount.location, testArg.length-endOfUserCount.location)];
+			topic = [testArg substringWithRange:NSMakeRange(rangeOfColon.location+rangeOfColon.length, testArg.length-(rangeOfColon.location+rangeOfColon.length))];
+			infos = [[NSMutableDictionary alloc] init];
+			[infos setObject:topic forKey:@"T0PIC"];
+			[infos setObject:[testArg substringWithRange:NSMakeRange(endOfRoom.location+1, endOfUserCount.location-(endOfRoom.location+1))]	forKey:@"C0UNT"];
+			[socket addRoom:[testArg substringWithRange:NSMakeRange(0, endOfRoom.location)] withRoomInfo:infos];
+		}
+		@catch (id e) {
+			NSLog(@"wtff...  dumpp %@ %@ Ranges: er %@ eu %@ rc %@ ", infos, topic, NSStringFromRange(endOfRoom), NSStringFromRange(endOfUserCount), NSStringFromRange(rangeOfColon));
+		}
 		//	http://d.pr/AzCq
-				NSLog(@"Infos: %@",infos);
+
 	}
     else if ([command isEqualToString:@"001"]) {
 		socket.didRegister = YES;
@@ -249,6 +258,9 @@ static SHIRCManager* sharedSHManager;
 			[socket setNick_:argument];
 		}
 	}
+	else if ([command isEqualToString:@"323"]) {
+		// end of channel list...
+	}
 	else if ([command isEqualToString:@"PART"]) {
         NSScanner *scnr = [NSScanner scannerWithString:argument];
         NSString *chan = nil;
@@ -286,7 +298,10 @@ static SHIRCManager* sharedSHManager;
         SHIRCChannel *chanC = [socket retainedChannelWithFormattedName:chan];
         [chanC didRecieveEvent:SHEventTypePart from:nick to:argument extra:msg];
         [chanC release];
-    } 
+    }
+	else {
+		NSLog(@"Sender:%@ CMD:%@ Arg: %@",sender, command, argument);
+	}
     [pool release];
 }
 
