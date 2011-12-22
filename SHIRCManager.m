@@ -46,6 +46,7 @@ static SHIRCManager* sharedSHManager;
 		return;
 	}
 	#endif
+	static BOOL didSend = NO;
 	NSScanner *scan = [NSScanner scannerWithString:msg];
 	if ([msg hasPrefix:@":"])
 		[scan setScanLocation:1];
@@ -136,39 +137,46 @@ static SHIRCManager* sharedSHManager;
 			}
 		}
 	}
+
 	else if ([command isEqualToString:@"322"]) {
 		/* gettting rooms data.. :o
 		 2011-12-10 16:12:42.723 ShadowChat[3024:f803] Rooms data... 322 : Maximus-i4 #nightcoast 32 :[+tfj] God gave men penis and a brain, but only enough blood to run one at a time <--- Now das a quote to live by ;) | k | max, we should rewrite shadowchat </trolo> | dida is alive (8/12/11) : <SHIRCSocket: 0x68a5570> 
 		 */
-		NSString *testArg;
-		NSRange endOfRoom;
-		NSRange rangeOfColon;
-		NSRange endOfUserCount;
-		NSString *topic;
-		NSMutableDictionary *infos;
-		@try {
-			testArg = [argument stringByReplacingOccurrencesOfString:[[socket nick_] stringByAppendingString:@" "] withString:@""];
-			endOfRoom = [testArg rangeOfString:@" "];
-			endOfUserCount = [testArg rangeOfString:@" " options:NSCaseInsensitiveSearch range:NSMakeRange(endOfRoom.location+1, testArg.length-(endOfRoom.location+1))];
-			rangeOfColon = [testArg rangeOfString:@" :" options:NSCaseInsensitiveSearch range:NSMakeRange(endOfUserCount.location, testArg.length-endOfUserCount.location)];
-			topic = [testArg substringWithRange:NSMakeRange(rangeOfColon.location+rangeOfColon.length, testArg.length-(rangeOfColon.location+rangeOfColon.length))];
-			infos = [[NSMutableDictionary alloc] init];
+
+		NSLog(@"Parsing user item... %@", argument);
+		NSString *testArg = [argument stringByReplacingOccurrencesOfString:[[socket nick_] stringByAppendingString:@" "] withString:@""];
+		if (![[sender lowercaseString] isEqualToString:@"irc.saurik.com"]) {
+			// hate to have a check on every request.. :(
+			NSRange endOfRoom = [testArg rangeOfString:@" "];
+			NSRange endOfUserCount = [testArg rangeOfString:@" " options:NSCaseInsensitiveSearch range:NSMakeRange(endOfRoom.location+1, testArg.length-(endOfRoom.location+1))];
+			NSRange	rangeOfColon = [testArg rangeOfString:@" :" options:NSCaseInsensitiveSearch range:NSMakeRange(endOfUserCount.location, testArg.length-endOfUserCount.location)];
+			NSString *topic = [testArg substringWithRange:NSMakeRange(rangeOfColon.location+rangeOfColon.length, testArg.length-(rangeOfColon.location+rangeOfColon.length))];
+			NSMutableDictionary *infos = [[NSMutableDictionary alloc] init];
 			[infos setObject:topic forKey:@"T0PIC"];
 			[infos setObject:[testArg substringWithRange:NSMakeRange(endOfRoom.location+1, endOfUserCount.location-(endOfRoom.location+1))]	forKey:@"C0UNT"];
 			[socket addRoom:[testArg substringWithRange:NSMakeRange(0, endOfRoom.location)] withRoomInfo:infos];
+			[infos release];
 		}
-		@catch (id e) {
-			NSLog(@"wtff...  dumpp %@ %@ Ranges: er %@ eu %@ rc %@ ", infos, topic, NSStringFromRange(endOfRoom), NSStringFromRange(endOfUserCount), NSStringFromRange(rangeOfColon));
+		else {
+			if (!didSend) {
+			NSMutableDictionary *infos = [[NSMutableDictionary alloc] init];
+			[infos setObject:@"This server isn't supported just yet." forKey:@"T0PIC"];
+			[infos setObject:@"0" forKey:@"C0UNT"];
+			[socket addRoom:@"#Error" withRoomInfo:infos];
+			[infos release];
+				didSend = YES;
+			}
+			// what the actuall fuck...
 		}
+		//	2011-12-18 18:21:42.624 ShadowChat[7042:f803] Parsing user item... iPhone #mikebeas 1 :[+nt] 
+		//	2011-12-18 18:22:43.152 ShadowChat[7042:f803] Parsing user item... iPhone #ibye 4 :[+ntr] 
 		//	http://d.pr/AzCq
-
 	}
     else if ([command isEqualToString:@"001"]) {
 		socket.didRegister = YES;
 		NSLog(@"Did register");
 	}
 
-	
 	else if ([command isEqualToString:@"KICK"]) {
         NSString *nick = nil;
         NSString *chan = nil;
@@ -227,6 +235,9 @@ static SHIRCManager* sharedSHManager;
 		[chanCC didRecieveEvent:SHEventTypeMode from:nick to:target extra:message];
 
     }
+	else if ([command isEqualToString:@"366"]) {
+		didSend = NO;
+	}
 	else if ([command isEqualToString:@"JOIN"]) {
 		if ([argument hasPrefix:@":"]) {
 			NSScanner *scnr = [NSScanner scannerWithString:argument];

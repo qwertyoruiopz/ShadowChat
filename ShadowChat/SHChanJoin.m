@@ -125,7 +125,7 @@
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if (cell == nil) {
 		cell = [[[UITableViewCell alloc] initWithStyle:(indexPath.section == 0 ? UITableViewCellStyleDefault : UITableViewCellStyleSubtitle) reuseIdentifier:CellIdentifier] autorelease];
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+		cell.selectionStyle = (indexPath.section == 0 ? UITableViewCellSelectionStyleNone : UITableViewCellSelectionStyleBlue);
 	}
 	switch (indexPath.section) {
 		case 0:
